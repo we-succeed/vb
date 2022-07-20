@@ -1,3 +1,4 @@
+[![Board Status](https://dev.azure.com/we-succeed/1eae3e66-ee13-4c6e-86dd-0517448e93d7/44f47efe-9f73-4f65-b173-74b234f9580e/_apis/work/boardbadge/afc21827-92af-480c-b7ff-589ec4a7b24a)](https://dev.azure.com/we-succeed/1eae3e66-ee13-4c6e-86dd-0517448e93d7/_boards/board/t/44f47efe-9f73-4f65-b173-74b234f9580e/Microsoft.RequirementCategory)
 # vb Project
 
 Vancouver Bank Project for learning web service
