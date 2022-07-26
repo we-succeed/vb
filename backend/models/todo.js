@@ -11,6 +11,7 @@ const TodoSchema = new Schema({
 // Create model for todo
 const Todo = mongoose.model('todo', TodoSchema);
 
+
 module.exports = Todo;
 
 
