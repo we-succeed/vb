@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const jwt = require("jsonwebtoken");
 const Joi = require("joi"); //vaildation module
-const passwordComplexity = require("joi-password-complexity");
+const passwordComplexity = require("joi-password-complexity").default;
 
 const UserSchema = new Schema({
   firstName: { type: String, required: true },
@@ -11,7 +11,7 @@ const UserSchema = new Schema({
 	password: { type: String, required: true },
 });
 
-userSchema.methods.generateAuthToken = function () {
+UserSchema.methods.generateAuthToken = function () {
 	const token = jwt.sign({ _id: this._id }, process.env.JWTPRIVATEKEY, {
 		expiresIn: "7d",
 	});
