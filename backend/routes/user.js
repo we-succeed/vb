@@ -3,11 +3,11 @@ const router = express.Router();
 const userController = require('../controllers/userController')
 
 //restfullapi
-// router.get('/user', userController.findAll)
-// router.post('/user', userController.create)
-// router.delete('/user/:id', userController.deleteById)
+// router.get('/users', userController.findAll)
+//router.post('/users', userController.create)
+//router.delete('/users/:id', userController.deleteById)
 
-router.post('/', userController.create)
+router.post('/users', userController.create)
 
 
 module.exports = router;
