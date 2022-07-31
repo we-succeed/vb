@@ -4,11 +4,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const routes = require('./routes');
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5002
 
 //middleware
 app.use(bodyParser.json());  //express.json + express.urlencoded()
 app.use(routes);
+
 
 //handling CORS
 app.use((req, res, next) => {
@@ -28,8 +29,15 @@ app.use((err, req, res, next) => {
     res.status(500).json({err: 'error'});
 })
 
+
+app.get('/admin', (req,res) => {
+    res.send('Admin Page')
+})
+
+
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 })
+
 
 
