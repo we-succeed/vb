@@ -3,10 +3,12 @@ const Schema = mongoose.Schema;
 
 const AdminSchema = new Schema({
 
+
      //* user stuff *//
      name: {
-      type: String,
-      required: true
+            type: String,
+            required: true,
+            minlength: [2, "Users name must be 2 or more characters!"]
      },
 
      email: {

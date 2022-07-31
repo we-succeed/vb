@@ -30,14 +30,13 @@ app.use((err, req, res, next) => {
 })
 
 
-app.get('/admin', (req,res) => {
-    res.send('Admin Page')
-})
-
-
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 })
 
+
+app.get('/api/admins', (req, res) => {
+    res.json({message: "Get admins"});
+})
 
 

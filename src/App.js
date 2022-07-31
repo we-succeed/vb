@@ -8,6 +8,7 @@ import Home from "./components/home"
 import PageHeader from "./components/commons/PageHeader";
 import Container from '@mui/material/Container';
 import Todo from "./components/example/todo";
+import AdminDashboard from "components/example/admin";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/todo" element={<Todo />} />
+            <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
         </Container>
       </Router>

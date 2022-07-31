@@ -1,11 +1,12 @@
 const express = require('express'); 
 const router = express.Router();
 const adminController = require('../controllers/adminController')
-const auth = require('../middleware/auth')
+
 
 //restfullapi
-router.get('/admins', adminController.findAll)
-router.post('/admins', adminController.create)
-router.delete('/admins/:id', auth, adminController.deleteById)
+router.get('/admins', adminController.getAdmins)
+router.post('/admins', adminController.setAdmin) 
+router.put('/admins/:id', adminController.updateAdmin) 
+router.delete('/admins/:id', adminController.deleteAdmin)
 
 module.exports = router;
