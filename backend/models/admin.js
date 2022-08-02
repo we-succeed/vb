@@ -22,33 +22,11 @@ const AdminSchema = new Schema({
       required: true
      },
 
-    //*account stuff *//
+     user_id: {
+      type: String,
+      required: true
+     }
 
-     accounts: [
-       {
-          id: {
-            type: Number,
-            required: [false, "The todo text field is required"]
-          },
-
-          date: {
-            type: Date,
-            required: [false, "The todo text field is required"]
-           },
-
-           type: {
-            type: String,
-            required: [false, "The todo text field is required"]
-           },
-      
-           status: {
-            type: String,
-            required: [false, "The todo text field is required"]
-           }
-       }
-     ]
-
- 
 })
 
 // Create model for todo

@@ -35,8 +35,5 @@ app.listen(port, () => {
 })
 
 
-app.get('/api/admins', (req, res) => {
-    res.json({message: "Get admins"});
-})
 
 
