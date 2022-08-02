@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const Joi = require("joi"); //vaildation module
 
 const UserSchema = new Schema({
-    firstName: { type: String, required: true },
+  firstName: { type: String, required: true },
 	lastName: { type: String, required: true },
 	province: { type: String },
 	city: { type: String },
