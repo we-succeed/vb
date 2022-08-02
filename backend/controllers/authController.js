@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User } = require("../models/user");
+const { User, UserSchema } = require("../models/user");
 const bcrypt = require("bcrypt");
 const Joi = require("joi");
 
@@ -9,7 +9,7 @@ const create = (async (req, res) => {
 		if (error)
 			return res.status(400).send({ message: error.details[0].message });
 
-		const user = await User.findOne({ email: req.body.email });
+		let user = await User.findOne({ email: req.body.email });
 		if (!user)
 			return res.status(401).send({ message: "Invalid Email or Password" });
 
@@ -20,7 +20,7 @@ const create = (async (req, res) => {
 		if (!validPassword)
 			return res.status(401).send({ message: "Invalid Email or Password" });
 
-		const token = user.generateAuthToken();
+		const token = req.user.generateAuthToken();//req
 		res.status(200).send({ data: token, message: "logged in successfully" });
 	} catch (error) {
 		res.status(500).send({ message: "Internal Server Error" });

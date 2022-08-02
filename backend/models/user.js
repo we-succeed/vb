@@ -10,7 +10,7 @@ const UserSchema = new Schema({
 	city: { type: String },
 	address: { type: String },
 	postalCode: { type: String },
-	email: { type: String, required: true },
+	email: { type: String, required: true, unique: true },
 	password: { type: String, required: true },
 	phoneNumber: { type: Number },
 	accounts: [],
@@ -24,7 +24,7 @@ UserSchema.methods.generateAuthToken = function () {
 };
 
 // Create model for user
-const User = mongoose.model('user', UserSchema)
+const User = mongoose.model('User', UserSchema)
 
 //validation
 
@@ -34,7 +34,7 @@ const validate = (data) => {
 		firstName: Joi.string().required().label("First Name"),
 		lastName: Joi.string().required().label("Last Name"),
 		email: Joi.string().email().required().label("Email"),
-		password: Joi.string().max(5).required().label("Password"),
+		password: Joi.string().max(10).required().label("Password"),
 	});
 	return schema.validate(data);
 };
