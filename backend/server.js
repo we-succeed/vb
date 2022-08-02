@@ -19,11 +19,7 @@ app.use((req, res, next) => {
 })
 
 
-//handling error
-app.use((req, res, next) => {
-    console.log("handle 404 error");
-    res.status(404).send('404');
-})
+
 app.use((err, req, res, next) => {
     console.error(" handle middleware error >> " , err);
     res.status(500).json({err: 'error'});

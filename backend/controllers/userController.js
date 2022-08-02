@@ -28,7 +28,6 @@ const create = (async (req, res) => {
 	// console.log(hashPassword)
 
 	try {
-		console.log(req.body);
 		const { error }  = validate(req.body);
 	
 		if (error)
