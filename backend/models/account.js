@@ -2,31 +2,24 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const AccountSchema = new Schema({
-    number: {
-        type: Number,
-        required: [true]
-    },
     type: {
         type: String,
         required: [true]
     },
+    name: {
+        type: String,
+        required: [false]
+    },
+    description: {
+      type: String,
+      required: [false]
+    },
     balance: {
         type: Number,
         required: [false]
-    },
-    creationDate: {
-        type: String,
-        required: [true]
-    },
-    status:{
-        type: Number,
     }
-})
-
+}, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at'} })
 //Create model for account
-const AccountModel = mongoose.model('account', AccountSchema);
+const Account = mongoose.model('accounts', AccountSchema);
 
-module.exports = {
-    AccountSchema,
-    AccountModel
-};
+module.exports = Account
