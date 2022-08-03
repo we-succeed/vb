@@ -7,13 +7,9 @@ const getAdmins = async (req, res, next) => {
     
     try {
         const admins = await Admin.find()
-        // if(!admins) {
-        //     return res.status(204).json({error: "No users found"})
-        // }
+        if (admins && admins.length < 1)
+            return res.status(400).json({ error: "No create users found" })  
         res.status(200).json(admins)
-
-      
-  
     } catch(error)  {
         res.status(500).json({meg: 'error looking for users'})
     }
@@ -22,7 +18,6 @@ const getAdmins = async (req, res, next) => {
 const createAdmin = async (req, res, next) => {
 
     try {
-        console.log(req.body);
         const newAdmin = new Admin({
             name: req.body.name,
             email: req.body.email,
@@ -30,10 +25,7 @@ const createAdmin = async (req, res, next) => {
             user_id: req.body.user_id
         })
         const admin = await Admin.create(newAdmin)
-        if (!admin) {
-            return res.status(404).json({ error: "No create users found" })
-          }
-        res.status(200).json(admin)
+        res.status(200).json({ admin, message: 'newAdmin Added Successfully' });
     
     } catch(error)  {
         res.status(500).json({meg: 'you got the error for making users'})
@@ -43,20 +35,14 @@ const createAdmin = async (req, res, next) => {
 const updateAdmin = async (req, res, next) => {
 
     try {
-        const admin = await Admin.findById(req.params.id)
-
-        if(!admin) {
-            return res.status(404).json({ message: "User doesn't exist." });
-        }
-    
         const updatedAdmin = await Admin.findByIdAndUpdate(req.params.id, req.body, {
             new:true,
         })
     
-        res.status(200).json(updatedAdmin)
+        res.status(200).json({updatedAdmin, message:'User has been updated'})
 
     } catch(error)  {
-        res.status(500).json({meg: 'you got update error'})
+        res.status(500).json({message: 'you got update error'})
      }
 }
 
@@ -65,14 +51,9 @@ const deleteAdmin = async (req, res, next) => {
     try {
         const admin = await Admin.findById(req.params.id)
 
-        if(!admin) {
-            res.status(400)
-            throw new Error('admin not found')
-        }
-    
         await admin.remove()
-    
-        res.status(200).json( {id: req.params.id})
+        res.status(200).json( {id: req.params.id, meg: 'User has been deleted'})
+
     } catch(error)  {
         res.status(500).json({meg: 'you got delete error'})
      }
