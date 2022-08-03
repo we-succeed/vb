@@ -10,7 +10,7 @@ const UserSchema = new Schema({
 	city: { type: String },
 	address: { type: String },
 	postalCode: { type: String },
-	email: { type: String, required: true, unique: true },
+	email: { type: String, required: true },
 	password: { type: String, required: true },
 	phoneNumber: { type: Number },
 	accounts: [],
@@ -29,7 +29,6 @@ const User = mongoose.model('User', UserSchema)
 //validation
 
 const validate = (data) => {
-	console.log(data);
 	const schema = Joi.object({
 		firstName: Joi.string().required().label("First Name"),
 		lastName: Joi.string().required().label("Last Name"),

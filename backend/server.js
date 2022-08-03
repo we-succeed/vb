@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const routes = require('./routes');
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5003;
 //Dan changed port num 5000 to 6000 as 5000 is already used
 
 //middleware
