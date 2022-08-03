@@ -1,4 +1,3 @@
-const express = require('express'); 
 const Todo = require('../models/todo');
 
 //Define business logic for routes
