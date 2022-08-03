@@ -1,9 +1,8 @@
-const router = require("express").Router();
-const { User, UserSchema } = require("../models/user");
+const { User } = require("../models/user");
 const bcrypt = require("bcrypt");
 const Joi = require("joi");
 
-const create = (async (req, res) => {
+const login = (async (req, res) => {
   try {
 		const { error } = validate(req.body);
 		if (error)
@@ -11,17 +10,16 @@ const create = (async (req, res) => {
 
 		let user = await User.findOne({ email: req.body.email });
 		if (!user)
-			return res.status(401).send({ message: "Invalid Email or Password" });
+			return res.status(401).send({ message: "Invalid Email" });
 
 		const validPassword = await bcrypt.compare(
 			req.body.password,
 			user.password
 		);
 		if (!validPassword)
-			return res.status(401).send({ message: "Invalid Email or Password" });
-
-		const token = req.user.generateAuthToken();//req
-		res.status(200).send({ data: token, message: "logged in successfully" });
+			return res.status(401).send({ message: "Invalid Password" });
+		//const token =  user.generateAuthToken();
+		res.status(200).send({ message: "logged in successfully" });
 	} catch (error) {
 		res.status(500).send({ message: "Internal Server Error" });
 	}
@@ -34,7 +32,6 @@ const validate = (data) => {
 	});
 	return schema.validate(data);
 };
-
 module.exports = {
-  create
+  login
 };
