@@ -9,10 +9,10 @@ const UserSchema = new Schema({
 	province: { type: String },
 	city: { type: String },
 	address: { type: String },
-	postalCode: { type: String },
+	postalCode: {type: String },
 	email: { type: String, required: true },
 	password: { type: String, required: true },
-	phoneNumber: { type: Number },
+	phoneNumber: {type: String},
 	accounts: [],
 });
 
@@ -33,8 +33,13 @@ const validate = (data) => {
 		firstName: Joi.string().required().label("First Name"),
 		lastName: Joi.string().required().label("Last Name"),
 		email: Joi.string().email().required().label("Email"),
-		password: Joi.string().max(10).required().label("Password"),
-	});
+		password: Joi.string().min(6).required().label("Password"),
+	}).options(
+		{ 
+			abortEarly: false, //include all errors
+			allowUnknown: true, //ignore unknown props
+			stripUnknown: true  // remove unknown props
+		});
 	return schema.validate(data);
 };
 
