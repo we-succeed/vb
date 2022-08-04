@@ -14,7 +14,6 @@ function App() {
   return (
     <>
       <Router>
-        <PageHeader />
         <Container>
           <Routes>
             <Route path="/" element={<Home />} />
