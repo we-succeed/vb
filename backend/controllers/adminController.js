@@ -13,27 +13,23 @@ const getAdmins = async (req, res, next) => {
     }
 }
 
-const createAdmin = async (req, res, next) => {
+const createAdmin = async (req, res) => {
     try {
-        const newAdmin = new Admin({
-            name: req.body.name,
-            email: req.body.email,
-        })
-        const admin = await Admin.create(newAdmin)
-        res.status(200).json({admin, message: 'newAdmin Added Successfully'});
+        const admin = await new Admin(req.body).save();
+        if ( admin )
+            res.status(201).json({message: 'newAdmin Added Successfully'});
 
     } catch (error) {
         res.status(500).json({meg: 'you got the error for making users'})
     }
 }
 
-const updateAdmin = async (req, res, next) => {
+const updateAdmin = async (req, res) => {
 
     try {
         const updatedAdmin = await Admin.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
         })
-
         res.status(200).json({updatedAdmin, message: 'User has been updated'})
 
     } catch (error) {
@@ -41,11 +37,10 @@ const updateAdmin = async (req, res, next) => {
     }
 }
 
-const deleteAdmin = async (req, res, next) => {
+const deleteAdmin = async (req, res) => {
 
     try {
         const admin = await Admin.findById(req.params.id)
-
         await admin.remove()
         res.status(200).json({id: req.params.id, meg: 'User has been deleted'})
 
