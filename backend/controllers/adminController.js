@@ -1,5 +1,4 @@
 const {Admin} = require('../models/admin');
-const {User} = require("../models/user");
 
 //Define admins logic for routes
 const getAdmins = async (req, res, next) => {
