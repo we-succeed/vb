@@ -1,4 +1,6 @@
 import * as React from 'react';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 
 const Main = () => {
 	const handleLogout = () => {
@@ -7,14 +9,11 @@ const Main = () => {
 	};
 
 	return (
-		<div>
-			<nav>
-				<h1>fakebook</h1>
-				<button onClick={handleLogout}>
-					Logout
-				</button>
-			</nav>
-		</div>
+    <Stack direction="row" spacing={2}>
+    <Button onClick={handleLogout} variant="outlined" href="#outlined-buttons">
+      Link
+    </Button>
+  </Stack>
 	);
 };
 
