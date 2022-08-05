@@ -11,6 +11,7 @@ import Container from '@mui/material/Container';
 import Todo from "./components/example/todo";
 import AdminDashboard from "components/example/admin";
 import Signup from "components/Signup/signup";
+import Login from "components/Login/login";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/todo" element={<Todo />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </Container>
       </Router>
