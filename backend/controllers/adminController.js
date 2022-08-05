@@ -1,4 +1,5 @@
 const {Admin} = require('../models/admin');
+const {User} = require("../models/user");
 
 //Define admins logic for routes
 const getAdmins = async (req, res, next) => {
@@ -25,14 +26,16 @@ const createAdmin = async (req, res) => {
 }
 
 const updateAdmin = async (req, res) => {
-
+    console.log(req.body);
     try {
-        const updatedAdmin = await Admin.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
+        const updatedAdmin = await Admin.findOneAndUpdate(req.params.id, req.body, {
+            upsert: true,
+            setDefaultsOnInsert: true
         })
         res.status(200).json({updatedAdmin, message: 'User has been updated'})
 
     } catch (error) {
+        console.log(error)
         res.status(500).json({message: 'you got update error'})
     }
 }
