@@ -25,6 +25,8 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/material/Box";
+import Login from "./components/Login/login";
+import Signup from "./components/Signup/signup";
 
 const drawerWidth = 240;
 
@@ -153,6 +155,8 @@ function App() {
                       <Route path="/" element={<Home />} />
                       <Route path="/:userId" element={<Home />} />
                       <Route path="/admin/:adminId" element={<AdminDashboard />} />
+                      <Route path="/login" element={<Login />} />
+                      <Route path="/signup" element={<Signup />} />
                   </Routes>
               </Main>
           </Box>
