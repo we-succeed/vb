@@ -4,8 +4,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const routes = require('./routes');
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5003;
 
+var cors = require('cors')
+app.use(cors()) //prevent for cors error
 
 app.use(bodyParser.json());  //express.json + express.urlencoded()
 app.use(routes);
