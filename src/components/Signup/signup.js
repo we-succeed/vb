@@ -142,66 +142,6 @@ const Signup = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                fullWidth
-                name="province"
-                label="province"
-                type="text"
-                id="province"
-                onChange={handleChange}
-                value={data.province}
-                autoComplete="porvince"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                name="city"
-                label="city"
-                type="text"
-                id="city"
-                onChange={handleChange}
-                value={data.city}
-                autoComplete="city"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                name="address"
-                label="address"
-                type="text"
-                id="address"
-                onChange={handleChange}
-                value={data.address}
-                autoComplete="address"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                name="postalCode"
-                label="postalCode"
-                type="text"
-                id="postalCode"
-                onChange={handleChange}
-                value={data.postalCode}
-                autoComplete="postalCode"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                name="PhoneNumber"
-                label="PhoneNumber"
-                type="number"
-                id="PhoneNumber"
-                onChange={handleChange}
-                value={data.PhoneNumber}
-                autoComplete="PhoneNumber"
-              />
-            </Grid>
-            <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
                 label="I want to receive inspiration, marketing promotions and updates via email."
@@ -231,7 +171,5 @@ const Signup = () => {
   </ThemeProvider>
   );
 };
-
-
 
 export default Signup;

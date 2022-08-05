@@ -1,6 +1,6 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
-import { Box, Toolbar, Typography, Button } from "@mui/material/";
+import { Toolbar, Typography } from "@mui/material/";
 const PageHeader = () => {
   return (
     <AppBar position="static">
@@ -8,7 +8,6 @@ const PageHeader = () => {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             VB-BANK
         </Typography>
-        <Button color="inherit">Login</Button>
       </Toolbar>
     </AppBar>
   );
