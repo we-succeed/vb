@@ -5,7 +5,6 @@ import {
   Routes
 } from "react-router-dom";
 import Home from "./components/commons/Home"
-import AdminDashboard from "components/example/admin";
 import {styled, useTheme} from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -27,6 +26,8 @@ import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/material/Box";
 import Login from "./components/Login/login";
 import Signup from "./components/Signup/signup";
+import UserAdmin from "./components/user-admin";
+import New from "./components/new";
 
 const drawerWidth = 240;
 
@@ -154,9 +155,10 @@ function App() {
                   <Routes>
                       <Route path="/" element={<Home />} />
                       <Route path="/:userId" element={<Home />} />
-                      <Route path="/admin/:adminId" element={<AdminDashboard />} />
                       <Route path="/login" element={<Login />} />
                       <Route path="/signup" element={<Signup />} />
+                      <Route path="/user-admin" element={<UserAdmin />} />
+                      <Route path="/new" element={<New />} />
                   </Routes>
               </Main>
           </Box>
