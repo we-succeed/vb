@@ -84,10 +84,16 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: 'name',
+    id: 'firstName',
     numeric: false,
     disablePadding: true,
-    label: 'Name',
+    label: 'firstName',
+  },
+  {
+    id: 'lastName',
+    numeric: false,
+    disablePadding: true,
+    label: 'lastName',
   },
   {
     id: 'id',
@@ -100,30 +106,6 @@ const headCells = [
     numeric: false,
     disablePadding: false,
     label: 'Email',
-  },
-  {
-    id: 'phone',
-    numeric: true,
-    disablePadding: false,
-    label: 'Phone',
-  },
-  {
-    id: 'Register Date',
-    numeric: true,
-    disablePadding: false,
-    label: 'Register Date',
-  },
-  {
-    id: 'Update Date',
-    numeric: true,
-    disablePadding: false,
-    label: 'Update Date',
-  },
-  {
-    id: 'User Status',
-    numeric: false,
-    disablePadding: false,
-    label: 'User Status',
   },
 ];
 
@@ -328,49 +310,36 @@ export default function EnhancedTable() {
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
-                  const labelId = `enhanced-table-checkbox-${index}`;
-
+              {users && users.map((row, index) => {
                   return (
                     <TableRow
                       hover
                       onClick={(event) => handleClick(event, row.name)}
                       role="checkbox"
-                      aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row.name}
-                      selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
                         <Checkbox
                           color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            'aria-labelledby': labelId,
-                          }}
+                          checked={false}
                         />
                       </TableCell>
                       <TableCell
                         component="th"
-                        id={labelId}
                         scope="row"
                         padding="none"
                       >
                         {row.name} 
                       </TableCell>
                       <TableCell >{row.id}</TableCell>
+                      <TableCell >{row.firstName}</TableCell>
+                      <TableCell >{row.lastName}</TableCell>
                       <TableCell >{row.email}</TableCell>
-                      <TableCell >{row.phone}</TableCell>
-                      <TableCell >{row.register}</TableCell>
-                      <TableCell >{row.update}</TableCell>
-                      <TableCell >{row.status}</TableCell>
                     </TableRow>
                   );
                 })}
-              {emptyRows > 0 && (
+              {users.length > 0 && (
                 <TableRow
                   style={{
                     height: (dense ? 33 : 53) * emptyRows,
