@@ -2,7 +2,7 @@ import React from "react";
 import {
   BrowserRouter as Router,
   Route,
-  Routes
+  Routes,
 } from "react-router-dom";
 import Home from "./components/commons/Home"
 import AdminDashboard from "components/example/admin";
@@ -27,6 +27,14 @@ import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/material/Box";
 import Login from "./components/Login/login";
 import Signup from "./components/Signup/signup";
+
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormGroup from '@mui/material/FormGroup';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import {useEffect} from 'react'
 
 const drawerWidth = 240;
 
@@ -77,6 +85,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 function App() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    const [auth, setAuth] = React.useState(false);
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -84,11 +94,46 @@ function App() {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
+    useEffect(()=>{
+      if (localStorage.getItem('VB_token'))
+        setAuth(true);
+      else
+        setAuth(false);
+    },[])
+    const handleChange = (event) => {
+        setAuth(event.target.checked);
+      };
+    
+      const handleMenu = (event) => {
+        setAnchorEl(event.currentTarget);
+      };
+    
+      const handleClose = () => {
+        setAnchorEl(null);
+      };
+      const handleLogout = () => {
+        localStorage.removeItem('VB_token');
+        window.location = ("/");
+      }
+
   return (
     <>
       <Router>
           <Box sx={{ display: 'flex' }}>
               <CssBaseline />
+              <FormGroup>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={auth}
+              onChange={handleChange}
+              aria-label="login switch"
+            />
+          }
+          label={auth ? 'Logout' : 'Login'}
+        />
+      </FormGroup>
               <AppBar position="fixed" open={open}>
                   <Toolbar>
                       <IconButton
@@ -100,9 +145,42 @@ function App() {
                       >
                           <MenuIcon />
                       </IconButton>
-                      <Typography variant="h6" noWrap component="div">
+                      <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
                           VB Bank
                       </Typography>
+                      {auth && (
+            <div>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleLogout}>LogOut</MenuItem>
+              </Menu>
+            </div>
+          )}
                   </Toolbar>
               </AppBar>
               <Drawer
