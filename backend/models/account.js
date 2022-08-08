@@ -14,9 +14,17 @@ const AccountSchema = new Schema({
       type: String,
       required: [false]
     },
-    balance: {
+    quantity: {
+        type: Number,
+        required: [true]
+    },
+    remainder: {
         type: Number,
         required: [false]
+    },
+    interest : {
+        type: Number,
+        required: [true]
     }
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at'} })
 //Create model for account

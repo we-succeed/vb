@@ -27,6 +27,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/material/Box";
 import Login from "./components/Login/login";
 import Signup from "./components/Signup/signup";
+import AccountList from "./components/Account/AccountList";
 
 const drawerWidth = 240;
 
@@ -157,6 +158,8 @@ function App() {
                       <Route path="/admin/:adminId" element={<AdminDashboard />} />
                       <Route path="/login" element={<Login />} />
                       <Route path="/signup" element={<Signup />} />
+                      <Route path="/account" element={<AccountList />} />
+
                   </Routes>
               </Main>
           </Box>
