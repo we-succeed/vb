@@ -13,7 +13,7 @@ router.get('/users', userController.findAll)
 router.get('/users/:user_id', userController.findUserById)
 router.post('/users', middlewares, userController.create)
 router.delete('/users/:user_id', userController.deleteUserById)
-router.put('/users/:user_id', userController.updateUserById)
+router.put('/profile', userController.updateUserById)
 
 
 module.exports = router;

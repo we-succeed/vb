@@ -2,8 +2,9 @@ import React from "react";
 import {
   BrowserRouter as Router,
   Route,
-  Routes,
+  Routes, 
 } from "react-router-dom";
+
 import Home from "./components/commons/Home"
 import AdminDashboard from "components/example/admin";
 import {styled, useTheme} from "@mui/material/styles";
@@ -27,6 +28,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/material/Box";
 import Login from "./components/Login/login";
 import Signup from "./components/Signup/signup";
+import Profile from "./components/Profile/profile";
 
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Switch from '@mui/material/Switch';
@@ -105,16 +107,20 @@ function App() {
         setAuth(event.target.checked);
       };
     
-      const handleMenu = (event) => {
+    const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
       };
     
-      const handleClose = () => {
+    const handleClose = () => {
         setAnchorEl(null);
       };
-      const handleLogout = () => {
+    const handleLogout = () => {
         localStorage.removeItem('VB_token');
         window.location = ("/");
+      }
+      
+      const routeChange = () =>{  
+        window.location = ("/profile");
       }
 
   return (
@@ -175,7 +181,7 @@ function App() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={routeChange}>Profile</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
                 <MenuItem onClick={handleLogout}>LogOut</MenuItem>
               </Menu>
@@ -235,6 +241,7 @@ function App() {
                       <Route path="/admin/:adminId" element={<AdminDashboard />} />
                       <Route path="/login" element={<Login />} />
                       <Route path="/signup" element={<Signup />} />
+                      <Route path="/profile" element={<Profile />} />
                   </Routes>
               </Main>
           </Box>
