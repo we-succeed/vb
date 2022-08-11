@@ -26,7 +26,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/material/Box";
 import Login from "./components/Login/login";
 import Signup from "./components/Signup/signup";
-import UserAdmin from "./components/user-admin";
+import UserAdmin from "./components/admin/user-admin";
 import New from "./components/new";
 
 const drawerWidth = 240;

@@ -24,33 +24,6 @@ import { visuallyHidden } from '@mui/utils';
 import { useEffect, useState} from 'react';
 import axios from "axios";
 
-function createData(name, id, email, phone, register, update, status) {
-  return {
-    name,
-    id, 
-    email, 
-    phone, 
-    register,
-    update,
-    status
-  };
-}
-
-const rows = [
-  createData('Anna', 305, 'kimss@gamil.com', 7789178361, 20102123, 20102123, 'Active'),
-  createData('Brian', 452, 'kimss@gamil.com',7789178361, 20102123, 20102123, 'Inactive'),
-  createData('licy', 262, 'kimss@gamil.com', 24, 6.0),
-  createData('Free', 159, 'kimss@gamil.com', 24, 4.0),
-  createData('Gingerbread', 356, 'kimss@gamil.com', 49, 3.9),
-  createData('Honey', 408,'kimss@gamil.com', 87, 6.5),
-  createData('Ice', 237,'kimss@gamil.com', 37, 4.3),
-  createData('Jelly', 375,'kimss@gamil.com', 94, 0.0),
-  createData('KitKat', 518,'kimss@gamil.com', 65, 7.0),
-  createData('Lilly', 392,'kimss@gamil.com', 98, 0.0),
-  createData('Mark', 318,'kimss@gamil.com', 81, 2.0),
-  createData('Natalize', 360,'kimss@gamil.com', 9, 37.0),
-  createData('Luna', 437, 'kimss@gamil.com', 63, 4.0),
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -62,27 +35,13 @@ function descendingComparator(a, b, orderBy) {
   return 0;
 }
 
-function getComparator(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
-
 const headCells = [
+  {
+    // id: 'firstName',
+    // numeric: false,
+    // disablePadding: true,
+    // label: 'firstName',
+  },
   {
     id: 'firstName',
     numeric: false,
@@ -91,15 +50,9 @@ const headCells = [
   },
   {
     id: 'lastName',
-    numeric: false,
-    disablePadding: true,
-    label: 'lastName',
-  },
-  {
-    id: 'id',
     numeric: true,
     disablePadding: false,
-    label: 'Id',
+    label: 'lastName',
   },
   {
     id: 'Email',
@@ -133,8 +86,8 @@ function EnhancedTableHead(props) {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? '' : ''}
-            padding={headCell.disablePadding ? 'none' : 'normal'}
+            // align={headCell.numeric ? '' : ''}
+            // padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
@@ -226,7 +179,7 @@ export default function EnhancedTable() {
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(3);
   const [users, setUsers] = useState([]);
   
   useEffect(() => {
@@ -244,7 +197,7 @@ export default function EnhancedTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.name);
+      const newSelected = users.map((n) => n.name);
       setSelected(newSelected);
       return;
     }
@@ -288,7 +241,7 @@ export default function EnhancedTable() {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - users.length) : 0;
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
@@ -305,19 +258,19 @@ export default function EnhancedTable() {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={users.length}
             />
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-              {users && users.map((row, index) => {
+              {users && users.map((user, index) => {
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
+                      onClick={(event) => handleClick(event, user.id)}
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.name}
+                      key={user.id}
                     >
                       <TableCell padding="checkbox">
                         <Checkbox
@@ -330,12 +283,12 @@ export default function EnhancedTable() {
                         scope="row"
                         padding="none"
                       >
-                        {row.name} 
+                        {/* {user.name}  */}
                       </TableCell>
-                      <TableCell >{row.id}</TableCell>
-                      <TableCell >{row.firstName}</TableCell>
-                      <TableCell >{row.lastName}</TableCell>
-                      <TableCell >{row.email}</TableCell>
+                      {/* <TableCell >{user.id}</TableCell> */}
+                      <TableCell >{user.firstName}</TableCell>
+                      <TableCell >{user.lastName}</TableCell>
+                      <TableCell >{user.email}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -352,9 +305,9 @@ export default function EnhancedTable() {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[1, 4, 10]}
           component="div"
-          count={rows.length}
+          count={users.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
