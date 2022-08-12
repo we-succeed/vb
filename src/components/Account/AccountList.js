@@ -11,7 +11,8 @@ import {useEffect, useState} from "react";
 import {Button} from "@mui/material";
 import AccountDialogs from "./AccountDialogs";
 
-const AccountList = () => {
+
+const AccountList = ({onToggle, onDelete}) => {
     const [account, setAccount] = useState([]);
     const [openModal, setOpenModal] = useState(false);
 
@@ -30,6 +31,13 @@ const AccountList = () => {
         setOpenModal(false);
     };
 
+    const deleteTask = (data) => {
+        setAccount(account.filter((account) => account.data !==data))
+    }
+    
+    const addTask = (account) => {
+        console.log(account)
+    }
    
     return (
             <Container component="main">
@@ -53,12 +61,15 @@ const AccountList = () => {
                         </TableHead>
                         <TableBody>
                             {account && account.map((row, idx) => (
+                                
                                 <TableRow
                                     key={row.id}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                 
+                                    
                                 >
                                     <TableCell component="th" scope="row">
-                                        {idx + 1}
+                                        {idx + 1} 
                                     </TableCell>
                                     <TableCell>{row.type}</TableCell>
                                     <TableCell>{row.name}</TableCell>

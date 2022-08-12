@@ -75,6 +75,12 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
 }));
+
+
+const deleteTask = (type) => {
+    console.log('delete', type);
+}
+
 function App() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -85,6 +91,9 @@ function App() {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
+
+
   return (
     <>
       <Router>
@@ -158,7 +167,7 @@ function App() {
                       <Route path="/admin/:adminId" element={<AdminDashboard />} />
                       <Route path="/login" element={<Login />} />
                       <Route path="/signup" element={<Signup />} />
-                      <Route path="/account" element={<AccountList />} />
+                      <Route path="/account" element={<AccountList onDelete={deleteTask}/>}/>
 
                   </Routes>
               </Main>
