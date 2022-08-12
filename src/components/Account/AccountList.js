@@ -16,7 +16,7 @@ const AccountList = () => {
     const [openModal, setOpenModal] = useState(false);
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/admin/accounts')
+        fetch('http://localhost:5002/api/admin/accounts')
             .then((response) => response.json())
             .then((data) => {
                 setAccount(data);
@@ -30,6 +30,7 @@ const AccountList = () => {
         setOpenModal(false);
     };
 
+   
     return (
             <Container component="main">
                 <Typography variant="h5" gutterBottom component="div" mt={2}>

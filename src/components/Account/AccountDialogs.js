@@ -14,6 +14,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Box from "@mui/material/Box";
 import Radio from '@mui/material/Radio';
 
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
         padding: theme.spacing(2),
@@ -52,6 +53,14 @@ BootstrapDialogTitle.propTypes = {
     onClose: PropTypes.func.isRequired,
 };
 
+const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = new FormData(e.target)
+    console.log('working')
+}
+
+
+
 const AccountDialogs = (props) => {
     return (
         <div>
@@ -60,11 +69,11 @@ const AccountDialogs = (props) => {
                 aria-labelledby="customized-dialog-title"
                 open={props.open}
             >
-                <BootstrapDialogTitle id="customized-dialog-title" onClose={props.close}>
+                <BootstrapDialogTitle id="customized-dialog-title" onClose={props.close} color='red'>
                     Add Account
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
-                    <Box component="form" noValidate>
+                    <Box component="form" noValidate onSubmit={handleSubmit}>
                         <RadioGroup
                             row
                             aria-labelledby="demo-row-radio-buttons-group-label"
@@ -142,7 +151,7 @@ const AccountDialogs = (props) => {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >
-                        Save
+                        Submit
                     </Button>
                     <Button
                         type="reset"
