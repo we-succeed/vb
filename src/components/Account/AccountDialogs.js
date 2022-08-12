@@ -13,6 +13,9 @@ import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Box from "@mui/material/Box";
 import Radio from '@mui/material/Radio';
+import axios from "axios";
+import {useEffect, useState} from "react";
+
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -62,6 +65,28 @@ const handleSubmit = (e) => {
 
 
 const AccountDialogs = (props) => {
+
+    const url= "http://localhost:3000/account"
+    const [data, setData] = useState({
+        name: ''
+    })
+
+    function submit(e) {
+        e.preventDefault();
+        axios.post(url,{
+            name: data.name
+        })
+        .then(res=>{
+            console.log(res.data)
+        })
+    }
+    function handle(e) {
+        const newdata = {...data}
+        newdata[e.target.id] = e.target.value
+        setData(newdata)
+        console.log(newdata)
+    }
+
     return (
         <div>
             <BootstrapDialog
@@ -73,7 +98,7 @@ const AccountDialogs = (props) => {
                     Add Account
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
-                    <Box component="form" noValidate onSubmit={handleSubmit}>
+                    <Box component="form" noValidate onSubmit={(e) => submit(e)}>
                         <RadioGroup
                             row
                             aria-labelledby="demo-row-radio-buttons-group-label"
@@ -93,6 +118,8 @@ const AccountDialogs = (props) => {
                                     id="outlined-basic"
                                     label="Account Name"
                                     autoFocus
+                                    value={data.name}
+                                    onChange={(e) => handle(e)}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={12}>
@@ -150,6 +177,7 @@ const AccountDialogs = (props) => {
                         type="submit"
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
+                        onSubmit={(e) => submit(e)}
                     >
                         Submit
                     </Button>
