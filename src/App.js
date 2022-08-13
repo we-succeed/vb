@@ -168,7 +168,6 @@ function App() {
                       <Route path="/login" element={<Login />} />
                       <Route path="/signup" element={<Signup />} />
                       <Route path="/account" element={<AccountList onDelete={deleteTask}/>}/>
-
                   </Routes>
               </Main>
           </Box>

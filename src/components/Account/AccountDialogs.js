@@ -14,7 +14,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Box from "@mui/material/Box";
 import Radio from '@mui/material/Radio';
 import axios from "axios";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 
 
@@ -56,35 +56,39 @@ BootstrapDialogTitle.propTypes = {
     onClose: PropTypes.func.isRequired,
 };
 
-const handleSubmit = (e) => {
-    e.preventDefault();
-    const data = new FormData(e.target)
-    console.log('working')
-}
-
-
 
 const AccountDialogs = (props) => {
 
-    const url= 'http://localhost:5002/api/admin/accounts'
     const [data, setData] = useState({
-        name: ''
+        type: "",
+        name: "",
+        description: "",
+        quantity: 0,
+        remainder:0,
+        interest: 0,
+        status: ''
     })
-
     function submit(e) {
         e.preventDefault();
-        axios.post(url,{
-            name: data.name
-        })
+        const data2 = {
+            "type": "chequing",
+            "name": "VB 3 Account",
+            "description": "It's 3 account",
+            "quantity": 10,
+            "remainder": 5,
+            "interest": 2.5,
+            "status": "open"
+        }
+        axios.post('http://localhost:5000/api/admin/accounts',data2)
         .then(res=>{
             console.log(res.data)
         })
     }
-    function handle(e) {
+
+    function handleChange(e) {
         const newdata = {...data}
-        newdata[e.target.id] = e.target.value
+        newdata[e.target.name] = e.target.value
         setData(newdata)
-        console.log(newdata)
     }
 
     return (
@@ -98,7 +102,7 @@ const AccountDialogs = (props) => {
                     Add Account
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
-                    <Box component="form" noValidate onSubmit={(e) => submit(e)}>
+                    <Box component="form" noValidate >
                         <RadioGroup
                             row
                             aria-labelledby="demo-row-radio-buttons-group-label"
@@ -113,14 +117,14 @@ const AccountDialogs = (props) => {
                                 <TextField
                                     type="text"
                                     autoComplete="given-name"
-                                    name="accountName"
+                                    name="name"
                                     required
                                     fullWidth
                                     id="outlined-basic"
                                     label="Account Name"
                                     autoFocus
                                     value={data.name}
-                                    onChange={(e)=>handle(e)}
+                                    onChange={handleChange}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={12}>
@@ -178,7 +182,7 @@ const AccountDialogs = (props) => {
                         type="submit"
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
-                        onSubmit={(e) => submit(e)}
+                        onClick={(e) => submit(e)}
                     >
                         Submit
                     </Button>

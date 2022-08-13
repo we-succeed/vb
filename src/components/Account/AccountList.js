@@ -17,11 +17,7 @@ const AccountList = ({onToggle, onDelete}) => {
     const [openModal, setOpenModal] = useState(false);
 
     useEffect(() => {
-        fetch('http://localhost:5002/api/admin/accounts')
-            .then((response) => response.json())
-            .then((data) => {
-                setAccount(data);
-            });
+        getData();
     }, []);
 
     const handleModalOpen = () => {
@@ -29,6 +25,7 @@ const AccountList = ({onToggle, onDelete}) => {
     }
     const handleModalClose = () => {
         setOpenModal(false);
+        getData();
     };
 
     const deleteTask = (data) => {
@@ -38,7 +35,13 @@ const AccountList = ({onToggle, onDelete}) => {
     const addTask = (account) => {
         console.log(account)
     }
-   
+    const getData = () => {
+        fetch('http://localhost:5000/api/admin/accounts')
+            .then((response) => response.json())
+            .then((data) => {
+                setAccount(data);
+            });
+    }
     return (
             <Container component="main">
                 <Typography variant="h5" gutterBottom component="div" mt={2}>
