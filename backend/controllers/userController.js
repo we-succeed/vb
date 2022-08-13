@@ -63,10 +63,24 @@ const updateUserById = (async (req, res) => {
         res.status(500).send({message: "Internal Server Error"});
     }
 })
+
+const getUserAccounts = (async (req, res) => {
+    try {
+        const userAccounts = await User.findById({_id: req.params.user_id}, 'accounts')
+        console.log(userAccounts);
+        if (userAccounts)
+            return res.status(200).send(userAccounts);
+        else
+            return res.status(400).send({message: 'Bad request'})
+    } catch (e) {
+        res.status(500).send({message: "Internal Server Error"});
+    }
+})
 module.exports = {
     create,
     findAll,
     findUserById,
     deleteUserById,
-    updateUserById
+    updateUserById,
+    getUserAccounts
 }
