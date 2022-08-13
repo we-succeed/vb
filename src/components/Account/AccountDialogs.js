@@ -66,7 +66,7 @@ const handleSubmit = (e) => {
 
 const AccountDialogs = (props) => {
 
-    const url= "http://localhost:3000/account"
+    const url= 'http://localhost:5002/api/admin/accounts'
     const [data, setData] = useState({
         name: ''
     })
@@ -111,6 +111,7 @@ const AccountDialogs = (props) => {
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={12}>
                                 <TextField
+                                    type="text"
                                     autoComplete="given-name"
                                     name="accountName"
                                     required
@@ -119,7 +120,7 @@ const AccountDialogs = (props) => {
                                     label="Account Name"
                                     autoFocus
                                     value={data.name}
-                                    onChange={(e) => handle(e)}
+                                    onChange={(e)=>handle(e)}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={12}>
