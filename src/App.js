@@ -120,7 +120,9 @@ function App() {
       }
       
       const routeChange = () =>{  
-        window.location = ("/profile");
+        const user_id = localStorage.getItem('_id');
+        const url = "http://localhost:3000/users/" + user_id;
+        window.location = (url);
       }
 
   return (
@@ -241,7 +243,7 @@ function App() {
                       <Route path="/admin/:adminId" element={<AdminDashboard />} />
                       <Route path="/login" element={<Login />} />
                       <Route path="/signup" element={<Signup />} />
-                      <Route path="/profile" element={<Profile />} />
+                      <Route path="'/users/:user_id'" element={<Profile />} />
                   </Routes>
               </Main>
           </Box>

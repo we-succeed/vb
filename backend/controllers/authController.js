@@ -19,7 +19,7 @@ const login = (async (req, res) => {
         if (!validPassword)
             return res.status(401).send({message: "Invalid Password"});
             const token = user.generateAuthToken();
-        res.status(200).send({data:token, message: "logged in successfully"});
+        res.status(200).send({data:{token:token, test: '111'},  message: "logged in successfully"});
     } catch (error) {
         res.status(500).send({message: "Internal Server Error"});
     }

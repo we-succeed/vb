@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Avatar from '@mui/material/Avatar';
+//import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+//import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+// import { SettingsSystemDaydreamRounded } from '@mui/icons-material';
 
 function Copyright(props) {
   return (
@@ -30,7 +31,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-const Profile = () => {
+const Profile = ({history}) => {
   
   const [data, setData] = useState({
     firstName: "",
@@ -47,10 +48,26 @@ const Profile = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleChange = ({ currentTarget: input }) => {
-    setData({ ...data, [input.name]: input.value});
-    console.log(data);
-  }
+useEffect((e) => {
+    (async () => {
+      try {      
+        const user_id = e.param._id
+        const url = "http://localhost:5003/api/users/" + user_id;
+        const user = await axios.get(
+          url
+        );
+        setData(user.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [history]);
+
+
+  const handleInput = (e) => {
+    console.log(e.target.name, " : ", e.target.value);
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -83,11 +100,8 @@ const Profile = () => {
           alignItems: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Edit Profile
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
@@ -99,7 +113,7 @@ const Profile = () => {
                 fullWidth
                 id="firstName"
                 label="First Name"
-                onChange={handleChange}
+                onChange={handleInput}
                 value={data.firstName}
                 autoFocus
               />
@@ -111,7 +125,7 @@ const Profile = () => {
                 id="lastName"
                 label="Last Name"
                 name="lastName"
-                onChange={handleChange}
+                onChange={handleInput}
                 value={data.lastName}
                 autoComplete="family-name"
               />
@@ -123,7 +137,7 @@ const Profile = () => {
                 id="email"
                 label="Email Address"
                 name="email"
-                onChange={handleChange}
+                onChange={handleInput}
                 value={data.email}
                 autoComplete="email"
               />
@@ -136,15 +150,9 @@ const Profile = () => {
                 label="Password"
                 type="password"
                 id="password"
-                onChange={handleChange}
+                onChange={handleInput}
                 value={data.password}
                 autoComplete="new-password"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
               />
             </Grid>
           </Grid>
@@ -155,12 +163,12 @@ const Profile = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign Up
+            Edit
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/login" variant="body2">
-                Already have an account? Sign in
+              <Link href="/" variant="body2">
+                Cancel
               </Link>
             </Grid>
           </Grid>
