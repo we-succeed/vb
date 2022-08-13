@@ -15,6 +15,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -33,6 +34,7 @@ const theme = createTheme();
 
 
 const Login = () => {
+    let navigate = useNavigate();
 	const [data, setData] = useState({ email: "", password: "" });
 	const [error, setError] = useState("");
 
@@ -45,8 +47,8 @@ const Login = () => {
 		try {
 			const url = "http://localhost:5003/auth";
 			const { data: res } = await axios.post(url, data);
-			localStorage.setItem("VB_token", res.data);
-			window.location = ("/");
+			localStorage.setItem("VB_token", res.data.token);
+            navigate("../");
 		} catch (error) {
 			if (
 				error.response &&

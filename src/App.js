@@ -89,6 +89,7 @@ function App() {
     const [open, setOpen] = React.useState(false);
     const [auth, setAuth] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [auth2, setAuth2] = React.useState({})
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -98,15 +99,12 @@ function App() {
     };
 
     useEffect(()=>{
-      if (localStorage.getItem('VB_token'))
-        setAuth(true);
-      else
-        setAuth(false);
+
     },[])
     const handleChange = (event) => {
         setAuth(event.target.checked);
       };
-    
+
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
       };
@@ -124,7 +122,6 @@ function App() {
         const url = "http://localhost:3000/users/" + user_id;
         window.location = (url);
       }
-
   return (
     <>
       <Router>
@@ -134,12 +131,10 @@ function App() {
         <FormControlLabel
           control={
             <Switch
-              checked={auth}
               onChange={handleChange}
               aria-label="login switch"
             />
           }
-          label={auth ? 'Logout' : 'Login'}
         />
       </FormGroup>
               <AppBar position="fixed" open={open}>
@@ -241,9 +236,9 @@ function App() {
                       <Route path="/" element={<Home />} />
                       <Route path="/:userId" element={<Home />} />
                       <Route path="/admin/:adminId" element={<AdminDashboard />} />
-                      <Route path="/login" element={<Login />} />
+                      <Route path="/login" element={<Login auth = {auth}/>} />
                       <Route path="/signup" element={<Signup />} />
-                      <Route path="'/users/:user_id'" element={<Profile />} />
+                      <Route path="/users/:userId" element={<Profile />} />
                   </Routes>
               </Main>
           </Box>
