@@ -44,8 +44,8 @@ const Login = () => {
 		e.preventDefault();
 		try {
 			const url = "http://localhost:5003/api/auth";
-			const { data: res } = await axios.post(url, data);
-			localStorage.setItem("token", res.data);
+			const { data } = await axios.post(url, data);
+			localStorage.setItem("token", data);
 			window.location.href = ("/");
 		} catch (error) {
 			if (
