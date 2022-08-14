@@ -6,13 +6,24 @@ import {
 } from "react-router-dom";
 import Home from "./components/commons/Home"
 import AdminDashboard from "components/example/admin";
-import {styled} from "@mui/material/styles";
+import {styled, useTheme} from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Typography from "@mui/material/Typography";
+import Drawer from "@mui/material/Drawer";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import Divider from "@mui/material/Divider";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/material/Box";
 import Login from "./components/Login/login";
 import Signup from "./components/Signup/signup";
@@ -59,13 +70,19 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
 }));
 function App() {
+    const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+
     const handleDrawerOpen = () => {
-        setOpen(!open);
+        setOpen(true);
+    };
+    const handleDrawerClose = () => {
+        setOpen(false);
     };
   return (
     <>
@@ -79,7 +96,8 @@ function App() {
                           aria-label="open drawer"
                           onClick={handleDrawerOpen}
                           edge="start"
-                          sx={{ mr: 2, ...(open && { display: 'none' }) }}>
+                          sx={{ mr: 2, ...(open && { display: 'none' }) }}
+                      >
                           <MenuIcon />
                       </IconButton>
                       <Typography variant="h6" noWrap component="div">
@@ -87,7 +105,50 @@ function App() {
                       </Typography>
                   </Toolbar>
               </AppBar>
-              <DrawerMenu open={open} handleOpen={handleDrawerOpen}/>
+              <Drawer
+                  sx={{
+                      width: drawerWidth,
+                      flexShrink: 0,
+                      '& .MuiDrawer-paper': {
+                          width: drawerWidth,
+                          boxSizing: 'border-box',
+                      },
+                  }}
+                  variant="persistent"
+                  anchor="left"
+                  open={open}
+              >
+                  <DrawerHeader>
+                      <IconButton onClick={handleDrawerClose}>
+                          {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                      </IconButton>
+                  </DrawerHeader>
+                  <Divider />
+                  <List>
+                      {['Accounts', 'Transfer', 'Bill Payment'].map((text, index) => (
+                          <ListItem key={text} disablePadding>
+                              <ListItemButton>
+                                  <ListItemIcon>
+                                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                  </ListItemIcon>
+                                  <ListItemText primary={text} />
+                              </ListItemButton>
+                          </ListItem>
+                      ))}
+                  </List>
+                  <List>
+                      {['User management', 'Account management'].map((text, index) => (
+                          <ListItem key={text} disablePadding>
+                              <ListItemButton>
+                                  <ListItemIcon>
+                                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                  </ListItemIcon>
+                                  <ListItemText primary={text} />
+                              </ListItemButton>
+                          </ListItem>
+                      ))}
+                  </List>
+              </Drawer>
               <Main open={open}>
                   <DrawerHeader />
                   <Routes>
@@ -96,6 +157,7 @@ function App() {
                       <Route path="/admin/:adminId" element={<AdminDashboard />} />
                       <Route path="/login" element={<Login />} />
                       <Route path="/signup" element={<Signup />} />
+                      <Route path="/users/:userId" element={<Profile />} />
                   </Routes>
               </Main>
           </Box>
