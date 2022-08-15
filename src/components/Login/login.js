@@ -45,9 +45,9 @@ const Login = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const url = "http://localhost:5003/auth";
-			const { data: res } = await axios.post(url, data);
-			localStorage.setItem("VB_token", res.data.token);
+			const url = "http://localhost:5000/auth";
+			const result = await axios.post(url, data);
+			localStorage.setItem("vb", JSON.stringify(result.data.user));
             navigate("../");
 		} catch (error) {
 			if (
