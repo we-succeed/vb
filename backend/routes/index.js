@@ -9,7 +9,7 @@ router.use('/api', todoRoutes);
 router.use('/api', adminRoutes);
 router.use('/api', userRoutes);
 router.use('/api/admin', accountRoutes);
-router.use('/login',authRoutes);
+router.use('/auth',authRoutes);
 
 
 module.exports = router; 
