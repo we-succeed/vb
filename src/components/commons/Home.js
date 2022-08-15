@@ -18,7 +18,7 @@ export default function Home() {
                   Unlimited backing transcriptions
                 </Typography>
                 <Typography variant="h6">
-                  Annual fee rebate on select DV credit cards
+                  Annual fee rebate on select VB credit cards
                 </Typography>
                 <Typography variant="h6">
                   Free cheques, drafts & more
@@ -36,7 +36,7 @@ export default function Home() {
         </div>
         <div>
           <Container>
-            <Typography variant="h5" align="center">Welcome to DV ONLINE Banking</Typography>
+            <Typography variant="h5" align="center">Welcome to VB ONLINE Banking</Typography>
             <Grid container spacing={3}>
               <Grid item xs>
                 <StarsIcon fontSize="large"/>
@@ -93,7 +93,7 @@ export default function Home() {
             <Grid container spacing={3}>
               <Grid item x>
                 <Typography variant="h5">
-                  DV EVERY DAY <br/> SAVING ACCOUNT
+                  VB EVERY DAY <br/> SAVING ACCOUNT
                 </Typography>
                 <Typography variant="subtitle1">
                   Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -136,37 +136,6 @@ export default function Home() {
                   </Typography>
                 </Link>
 
-              </Grid>
-              <Grid item xs>
-                <img src="https://picsum.photos/id/1043/600/400.jpg"/>
-              </Grid>
-            </Grid>
-          </Container>
-        </div>
-        <div>
-          <Container>
-            <Typography variant="h5" align="left">DV BANK</Typography>
-            <Typography variant="h5" align="left">ANY WARE, ANY
-              TIME</Typography>
-            <Grid spacing={3} container
-                  direction="row"
-                  justify="center"
-                  alignItems="center">
-              <Grid item xs={6} spacing={0}>
-                <img src='https://picsum.photos/id/164/400/300.jpg'/>
-                <Typography variant="subtitle2" align="left">Travel</Typography>
-              </Grid>
-              <Grid item xs={6} spacing={0}>
-                <img src='https://picsum.photos/id/164/400/300.jpg'/>
-                <Typography variant="subtitle2" align="left">Diversity</Typography>
-              </Grid>
-              <Grid item xs={6} spacing={0}>
-                <img src='https://picsum.photos/id/164/400/300.jpg'/>
-                <Typography variant="subtitle2" align="left">Children's Library</Typography>
-              </Grid>
-              <Grid item xs={6} spacing={0}>
-                <img src='https://picsum.photos/id/164/400/300.jpg'/>
-                <Typography variant="subtitle2" align="left">Treedays</Typography>
               </Grid>
             </Grid>
           </Container>

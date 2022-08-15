@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {styled, useTheme} from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import Drawer from "@mui/material/Drawer";
@@ -9,9 +9,10 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import ListItemText from "@mui/material/ListItemText";
+import {Icon} from "@mui/material";
+import {USER_MENUS, ADMIN_MENUS} from '../commons/module'
+import {useNavigate} from "react-router-dom";
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -23,6 +24,14 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const DrawerMenu = (props) => {
     const theme = useTheme();
+    const navigate = useNavigate();
+    const [menus, setMenus] = useState();
+    useEffect(()=>{
+        if (props.userType === 'user')
+            setMenus(USER_MENUS)
+        else
+            setMenus(ADMIN_MENUS);
+    },[])
     return (
         <Drawer
             sx={{
@@ -38,19 +47,19 @@ const DrawerMenu = (props) => {
             open={props.open}
         >
             <DrawerHeader>
-                <IconButton onClick={props.handleOpen}>
+                <IconButton onClick={props.drawerOpen}>
                     {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                 </IconButton>
             </DrawerHeader>
             <Divider />
             <List>
-                {['Accounts', 'Transfer', 'Bill Payment'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
+                {menus && menus.map((elem, index) => (
+                    <ListItem key={index} disablePadding>
+                        <ListItemButton onClick={() => navigate(elem.path)}>
                             <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                <Icon>{elem.icon}</Icon>
                             </ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemText primary={elem.name} />
                         </ListItemButton>
                     </ListItem>
                 ))}
