@@ -33,15 +33,11 @@ const App = () => {
                         <CommonUI.DrawerHeader/>
                         <Routes>
                             <Route path="/" element={<Home/>}/>
-                            <Route path="user" element={<PrivateRoute auth={auth}/>}>
-                                <Route path=":userId" element={<Profile/>}/>
-                                <Route path=":userId/accounts" element={<AdminDashboard/>}/>
-                                <Route path=":userId/account/:accountId" element={<AdminDashboard/>}/>
-                            </Route>
-                            <Route path="admin" element={<PrivateRoute auth={auth}/>}>
-                                <Route path="" element={<AdminDashboard/>}/>
-                                <Route path="users" element={<AdminDashboard/>}/>
-                            </Route>
+                            <Route path="/user/:userId" element={<PrivateRoute auth={auth} children={<Profile/>}/>}/>
+                            <Route path="/user/:userId/accounts" element={<PrivateRoute auth={auth} children={<Home/>}/>}/>
+                            <Route path="/user/:userId/accounts/:accountId" element={<PrivateRoute auth={auth} children={<Home/>}/>}/>
+                            <Route path="/admin/users" element={<PrivateRoute auth={auth} children={<Home/>}/>}/>
+                            <Route path="/admin/accounts" element={<PrivateRoute auth={auth} children={<Home/>}/>}/>
                             <Route path="/login" element={<Login/>}/>
                             <Route path="/signup" element={<Signup/>}/>
                         </Routes>
