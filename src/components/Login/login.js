@@ -1,7 +1,6 @@
 import { useState } from "react";
 import * as React from 'react';
 import axios from "axios";
-// import { Link } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -45,7 +44,7 @@ const Login = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const url = "http://localhost:5000/auth";
+			const url = "http://localhost:5003/auth";
 			const result = await axios.post(url, data);
 			localStorage.setItem("vb", JSON.stringify(result.data.user));
             navigate("../");
@@ -79,6 +78,7 @@ const Login = () => {
             Sign in
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <form autoComplete="off">
             <TextField
               margin="normal"
               required
@@ -91,6 +91,7 @@ const Login = () => {
               autoComplete="email"
               autoFocus
             />
+            </form>
             <TextField
               margin="normal"
               required

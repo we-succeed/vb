@@ -91,6 +91,7 @@ const Signup = () => {
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
+            <form autoComplete='off'>
               <TextField
                 autoComplete="given-name"
                 name="firstName"
@@ -102,8 +103,10 @@ const Signup = () => {
                 value={data.firstName}
                 autoFocus
               />
+            </form>  
             </Grid>
             <Grid item xs={12} sm={6}>
+              <form autoComplete='off'>
               <TextField
                 required
                 fullWidth
@@ -114,8 +117,10 @@ const Signup = () => {
                 value={data.lastName}
                 autoComplete="family-name"
               />
+              </form>
             </Grid>
             <Grid item xs={12}>
+              <form autoComplete='off'>
               <TextField
                 required
                 fullWidth
@@ -126,8 +131,10 @@ const Signup = () => {
                 value={data.email}
                 autoComplete="email"
               />
+              </form>
             </Grid>
             <Grid item xs={12}>
+              <form autoComplete='off'>
               <TextField
                 required
                 fullWidth
@@ -139,12 +146,7 @@ const Signup = () => {
                 value={data.password}
                 autoComplete="new-password"
               />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
+              </form>
             </Grid>
           </Grid>
           {error && <div>{error}</div>}
