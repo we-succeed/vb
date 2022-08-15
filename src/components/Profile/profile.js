@@ -37,7 +37,7 @@ const Profile = () => {
         city: "",
         address: "",
         postalCode: "",
-        PhoneNumber: "",
+        phoneNumber: "",
     });
 
     const [error, setError] = useState("");
@@ -133,7 +133,7 @@ const Profile = () => {
                                     autoComplete="email"
                                 />
                             </Grid>
-                            <Grid item xs={12}>
+                            {/* <Grid item xs={12}>
                                 <TextField
                                     required
                                     fullWidth
@@ -145,10 +145,9 @@ const Profile = () => {
                                     value={data.password}
                                     autoComplete="new-password"
                                 />
-                            </Grid>
+                            </Grid> */}
                             <Grid item xs={12}>
                                 <TextField
-                                    required
                                     fullWidth
                                     name="address"
                                     label="address"
@@ -161,7 +160,6 @@ const Profile = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    required
                                     fullWidth
                                     name="city"
                                     label="city"
@@ -174,7 +172,6 @@ const Profile = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    required
                                     fullWidth
                                     name="province"
                                     label="province"
@@ -187,7 +184,6 @@ const Profile = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    required
                                     fullWidth
                                     name="postalCode"
                                     label="postalCode"
@@ -200,7 +196,6 @@ const Profile = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    required
                                     fullWidth
                                     name="phoneNumber"
                                     label="phoneNumber"
