@@ -105,9 +105,9 @@ const AccountDialogs = (props) => {
                     <Box component="form" noValidate >
                         <RadioGroup
                             row
-                            aria-labelledby="demo-row-radio-buttons-group-label"
-                            name="row-radio-buttons-group"
-                            value={'saving'}
+                            aria-labelledby="demo-radio-buttons-group-label"
+                            defaultValue="saving"
+                            name="radio-buttons-group"
                         >
                             <FormControlLabel value="saving" control={<Radio />} label="Saving" />
                             <FormControlLabel value="credit" control={<Radio />} label="Credit" />
