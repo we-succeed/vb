@@ -46,7 +46,7 @@ const MenuAppBar = (props) => {
                         <ProfileMenu user={props.auth}/>
                     </Toolbar>
                 </AppBar>
-                <DrawerMenu open={props.open} drawerOpen={props.drawerOpen} userType={'user'}/>
+                <DrawerMenu open={props.open} drawerOpen={props.drawerOpen} userType={'admin'}/>
             </>
         )
     }

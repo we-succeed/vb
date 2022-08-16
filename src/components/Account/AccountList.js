@@ -36,7 +36,7 @@ const AccountList = ({onToggle, onDelete}) => {
         console.log(account)
     }
     const getData = () => {
-        fetch('http://localhost:5000/api/admin/accounts')
+        fetch('http://localhost:5002/api/admin/accounts')
             .then((response) => response.json())
             .then((data) => {
                 setAccount(data);

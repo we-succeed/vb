@@ -59,29 +59,23 @@ BootstrapDialogTitle.propTypes = {
 
 const AccountDialogs = (props) => {
 
+
     const [data, setData] = useState({
         type: "",
         name: "",
         description: "",
-        quantity: 0,
+        quantity: 30,
         remainder:0,
         interest: 0,
         status: ''
     })
+
+
     function submit(e) {
         e.preventDefault();
-        const data2 = {
-            "type": "chequing",
-            "name": "VB 3 Account",
-            "description": "It's 3 account",
-            "quantity": 10,
-            "remainder": 5,
-            "interest": 2.5,
-            "status": "open"
-        }
-        axios.post('http://localhost:5000/api/admin/accounts',data2)
+        axios.post('http://localhost:5002/api/admin/accounts',data)
         .then(res=>{
-            console.log(res.data)
+            props.close();
         })
     }
 
@@ -94,7 +88,7 @@ const AccountDialogs = (props) => {
     return (
         <div>
             <BootstrapDialog
-                onClose={props.close}
+                // onClose={props.close}
                 aria-labelledby="customized-dialog-title"
                 open={props.open}
             >
@@ -106,8 +100,9 @@ const AccountDialogs = (props) => {
                         <RadioGroup
                             row
                             aria-labelledby="demo-radio-buttons-group-label"
-                            defaultValue="saving"
-                            name="radio-buttons-group"
+                            name="type"
+                            value={data.type}
+                            onChange={handleChange}                  
                         >
                             <FormControlLabel value="saving" control={<Radio />} label="Saving" />
                             <FormControlLabel value="credit" control={<Radio />} label="Credit" />
@@ -129,39 +124,51 @@ const AccountDialogs = (props) => {
                             </Grid>
                             <Grid item xs={12} sm={12}>
                                 <TextField
+                                    type="text"
                                     fullWidth
                                     id="outlined-multiline-static"
                                     multiline
                                     rows={4}
                                     label="Account Description"
                                     name="description"
+                                    value={data.description}
+                                    onChange={handleChange}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
                                 <TextField
+                                    type="number"
                                     required
                                     fullWidth
                                     id="outlined-basic"
                                     label="Quantity"
                                     name="quantity"
+                                    value={data.quantity}
+                                    onChange={handleChange}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
                                 <TextField
+                                    type="number"
                                     required
                                     fullWidth
                                     name="remainder"
                                     label="Remainder"
                                     id="outlined-basic"
+                                    value={data.remainder}
+                                    onChange={handleChange}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
                                 <TextField
+                                    type="number"
                                     required
                                     fullWidth
                                     name="interest"
                                     label="Interest"
                                     id="outlined-basic"
+                                    value={data.interest}
+                                    onChange={handleChange}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={12}>
@@ -171,7 +178,9 @@ const AccountDialogs = (props) => {
                                     }
                                     labelPlacement="start"
                                     label="Status"
+                                    value={data.status}
                                     sx={{ marginLeft: '0' }}
+                                    onChange={handleChange}
                                 />
                             </Grid>
                         </Grid>
@@ -182,8 +191,7 @@ const AccountDialogs = (props) => {
                         type="submit"
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
-                        onClick={(e) => submit(e)}
-                    >
+                        onClick={(e) => submit(e)}>
                         Submit
                     </Button>
                     <Button
