@@ -1,3 +1,5 @@
+
+
 export const DEFAULT_URL = "http://localhost:5000/api";
 export const API_LOGIN = '';
 export const API_GET_USER = '';
@@ -37,3 +39,11 @@ export const ADMIN_MENUS = [
         icon:'account_balance'
     },
 ]
+
+export const getRoute = (path, params) => {
+    let newPath = path
+    Object.entries(params).forEach(([key,value]) => {
+        newPath = newPath.replace(':' + key, value)
+    })
+    return newPath
+}

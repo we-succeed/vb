@@ -9,6 +9,7 @@ import MenuAppBar from "./components/commons/MenuAppBar";
 import Profile from "./components/Profile/profile";
 import CommonUI from "./components/commons/CommonUI";
 import PrivateRoute from "./components/commons/PrivateRoute";
+import AccountSummary from "./components/Account/AccountSummary";
 
 const App = () => {
     const [open, setOpen] = React.useState(false);
@@ -33,7 +34,7 @@ const App = () => {
                         <Routes>
                             <Route path="/" element={<Home/>}/>
                             <Route path="/user/:userId" element={<PrivateRoute auth={auth} children={<Profile/>}/>}/>
-                            <Route path="/user/:userId/accounts" element={<PrivateRoute auth={auth} children={<Home/>}/>}/>
+                            <Route path="/user/:userId/accounts" element={<PrivateRoute auth={auth} children={<AccountSummary/>}/>}/>
                             <Route path="/user/:userId/accounts/:accountId" element={<PrivateRoute auth={auth} children={<Home/>}/>}/>
                             <Route path="/admin/users" element={<PrivateRoute auth={auth} children={<Home/>}/>}/>
                             <Route path="/admin/accounts" element={<PrivateRoute auth={auth} children={<Home/>}/>}/>

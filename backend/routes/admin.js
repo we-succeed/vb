@@ -10,7 +10,7 @@ const middlewares = [
 ]
 //restfullapi
 router.get('/admins', adminController.getAdmins)
-router.post('/admins',middlewares, adminController.createAdmin)
+router.post('/admins', middlewares, adminController.createAdmin)
 router.put('/admins/:id', adminController.updateAdmin) 
 router.delete('/admins/:id', adminController.deleteAdmin)
 

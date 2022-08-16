@@ -11,7 +11,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import {Icon} from "@mui/material";
-import {USER_MENUS, ADMIN_MENUS} from '../commons/module'
+import {USER_MENUS, ADMIN_MENUS, getRoute} from '../commons/module'
 import {useNavigate} from "react-router-dom";
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -53,16 +53,18 @@ const DrawerMenu = (props) => {
             </DrawerHeader>
             <Divider />
             <List>
-                {menus && menus.map((elem, index) => (
+                {menus && menus.map((elem, index) => {
+                    const path = getRoute(elem.path, {'userId':props.user.id})
+                    return(
                     <ListItem key={index} disablePadding>
-                        <ListItemButton onClick={() => navigate(elem.path)}>
+                        <ListItemButton onClick={() => navigate(path)}>
                             <ListItemIcon>
                                 <Icon>{elem.icon}</Icon>
                             </ListItemIcon>
                             <ListItemText primary={elem.name} />
                         </ListItemButton>
                     </ListItem>
-                ))}
+                )})}
             </List>
         </Drawer>
     );
