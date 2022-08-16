@@ -1,170 +1,54 @@
-import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes
-} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Home from "./components/commons/Home"
-import {styled, useTheme} from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
+// import AdminDashboard from "components/example/admin";
 import CssBaseline from "@mui/material/CssBaseline";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import Typography from "@mui/material/Typography";
-import Drawer from "@mui/material/Drawer";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import Divider from "@mui/material/Divider";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/material/Box";
 import Login from "./components/Login/login";
 import Signup from "./components/Signup/signup";
-import UserAdmin from "./components/admin/user-admin";
-import New from "./components/new";
+import MenuAppBar from "./components/commons/MenuAppBar";
+import Profile from "./components/Profile/profile";
+import CommonUI from "./components/commons/CommonUI";
+import PrivateRoute from "./components/commons/PrivateRoute";
 
-const drawerWidth = 240;
 
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-    ({ theme, open }) => ({
-        flexGrow: 1,
-        padding: theme.spacing(3),
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        marginLeft: `-${drawerWidth}px`,
-        ...(open && {
-            transition: theme.transitions.create('margin', {
-                easing: theme.transitions.easing.easeOut,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
-            marginLeft: 0,
-        }),
-    }),
-);
-
-const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-    transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    ...(open && {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: `${drawerWidth}px`,
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    }),
-}));
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-}));
-function App() {
-    const theme = useTheme();
+const App = () => {
     const [open, setOpen] = React.useState(false);
-
+    const [auth, setAuth] = useState({});
     const handleDrawerOpen = () => {
-        setOpen(true);
+        setOpen(!open);
     };
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
-  return (
-    <>
-      <Router>
-          <Box sx={{ display: 'flex' }}>
-              <CssBaseline />
-              <AppBar position="fixed" open={open}>
-                  <Toolbar>
-                      <IconButton
-                          color="inherit"
-                          aria-label="open drawer"
-                          onClick={handleDrawerOpen}
-                          edge="start"
-                          sx={{ mr: 2, ...(open && { display: 'none' }) }}
-                      >
-                          <MenuIcon />
-                      </IconButton>
-                      <Typography variant="h6" noWrap component="div">
-                          VB Bank
-                      </Typography>
-                  </Toolbar>
-              </AppBar>
-              <Drawer
-                  sx={{
-                      width: drawerWidth,
-                      flexShrink: 0,
-                      '& .MuiDrawer-paper': {
-                          width: drawerWidth,
-                          boxSizing: 'border-box',
-                      },
-                  }}
-                  variant="persistent"
-                  anchor="left"
-                  open={open}
-              >
-                  <DrawerHeader>
-                      <IconButton onClick={handleDrawerClose}>
-                          {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                      </IconButton>
-                  </DrawerHeader>
-                  <Divider />
-                  <List>
-                      {['Accounts', 'Transfer', 'Bill Payment'].map((text, index) => (
-                          <ListItem key={text} disablePadding>
-                              <ListItemButton>
-                                  <ListItemIcon>
-                                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                  </ListItemIcon>
-                                  <ListItemText primary={text} />
-                              </ListItemButton>
-                          </ListItem>
-                      ))}
-                  </List>
-                  <List>
-                      {['User management', 'Account management'].map((text, index) => (
-                          <ListItem key={text} disablePadding>
-                              <ListItemButton>
-                                  <ListItemIcon>
-                                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                  </ListItemIcon>
-                                  <ListItemText primary={text} />
-                              </ListItemButton>
-                          </ListItem>
-                      ))}
-                  </List>
-              </Drawer>
-              <Main open={open}>
-                  <DrawerHeader />
-                  <Routes>
-                      <Route path="/" element={<Home />} />
-                      <Route path="/:userId" element={<Home />} />
-                      <Route path="/login" element={<Login />} />
-                      <Route path="/signup" element={<Signup />} />
-                      <Route path="/user-admin" element={<UserAdmin />} />
-                      <Route path="/new" element={<New />} />
-                  </Routes>
-              </Main>
-          </Box>
-      </Router>
-    </>
-  );
+
+    const getToken = () => {
+        return JSON.parse(localStorage.getItem('vb'))
+    }
+    useEffect(() => {
+        setAuth(getToken())
+    }, [])
+    return (
+        <>
+            <Box sx={{display: 'flex'}}>
+                <Router>
+                    <CssBaseline/>
+                    <MenuAppBar open={open} drawerOpen={handleDrawerOpen} auth={auth}/>
+                    <CommonUI.Main open={open} auth={auth}>
+                        <CommonUI.DrawerHeader/>
+                        <Routes>
+                            <Route path="/" element={<Home/>}/>
+                            <Route path="/user/:userId" element={<PrivateRoute auth={auth} children={<Profile/>}/>}/>
+                            <Route path="/user/:userId/accounts" element={<PrivateRoute auth={auth} children={<Home/>}/>}/>
+                            <Route path="/user/:userId/accounts/:accountId" element={<PrivateRoute auth={auth} children={<Home/>}/>}/>
+                            <Route path="/admin/users" element={<PrivateRoute auth={auth} children={<Home/>}/>}/>
+                            <Route path="/admin/accounts" element={<PrivateRoute auth={auth} children={<Home/>}/>}/>
+                            <Route path="/login" element={<Login/>}/>
+                            <Route path="/signup" element={<Signup/>}/>
+                        </Routes>
+                    </CommonUI.Main>
+                </Router>
+            </Box>
+        </>
+    );
 }
 
 export default App;
