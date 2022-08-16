@@ -48,7 +48,9 @@ const createAccount = async (req, res) => {
 //update Account
 const updateAccount = async (req, res) => {
     try {
-        const result = await Account.updateOne({_id: req.params.account_id}, {description: req.body.description})
+        const result = await Account.updateOne({_id: req.params.account_id}, req.body,{
+            upsert: true
+        })
         if (result && result.modifiedCount > 0)
             res.status(200).send({message: 'Update completed.'})
         else

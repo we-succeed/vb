@@ -32,10 +32,12 @@ const MenuAppBar = (props) => {
                 <AppBar position="fixed" open={props.open}>
                     <Toolbar>
                         <IconButton
+
                             color="inherit"
                             aria-label="open drawer"
                             onClick={props.drawerOpen}
-                            edge="start">
+                            edge="start"
+                        >
                             <MenuIcon/>
                         </IconButton>
                         <Typography variant="h6" noWrap component="div" sx={{flexGrow: 1}}>
@@ -45,6 +47,7 @@ const MenuAppBar = (props) => {
                     </Toolbar>
                 </AppBar>
                 <DrawerMenu open={props.open} drawerOpen={props.drawerOpen} userType={'user'} user={props.auth}/>
+                <DrawerMenu open={props.open} drawerOpen={props.drawerOpen} userType={'admin'}/>
             </>
         )
     }

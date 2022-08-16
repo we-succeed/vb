@@ -11,6 +11,7 @@ import CommonUI from "./components/commons/CommonUI";
 import PrivateRoute from "./components/commons/PrivateRoute";
 import AccountSummary from "./components/Account/AccountSummary";
 
+import AccountList from "./components/Account/AccountList"
 const App = () => {
     const [open, setOpen] = React.useState(false);
     const [auth, setAuth] = useState({});
@@ -37,7 +38,7 @@ const App = () => {
                             <Route path="/user/:userId/accounts" element={<PrivateRoute auth={auth} children={<AccountSummary/>}/>}/>
                             <Route path="/user/:userId/accounts/:accountId" element={<PrivateRoute auth={auth} children={<Home/>}/>}/>
                             <Route path="/admin/users" element={<PrivateRoute auth={auth} children={<Home/>}/>}/>
-                            <Route path="/admin/accounts" element={<PrivateRoute auth={auth} children={<Home/>}/>}/>
+                            <Route path="/admin/accounts" element={<PrivateRoute auth={auth} children={<AccountList/>}/>}/>
                             <Route path="/login" element={<Login/>}/>
                             <Route path="/signup" element={<Signup/>}/>
                         </Routes>

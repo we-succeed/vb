@@ -45,7 +45,7 @@ const Login = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const url = "http://localhost:5000/auth";
+			const url = "http://localhost:5002/auth";
 			const result = await axios.post(url, data);
 			localStorage.setItem("vb", JSON.stringify(result.data.user));
             navigate("../");
