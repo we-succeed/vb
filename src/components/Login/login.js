@@ -12,9 +12,11 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import axios from "axios";
+import { API_AUTH } from 'components/commons/module';
 import * as React from 'react';
 import {useEffect, useState} from "react";
 import {useNavigate} from 'react-router-dom';
+
 
 const theme = createTheme();
 
@@ -43,8 +45,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const url = "http://localhost:5000/auth";
-            const result = await axios.post(url, data);
+            const result = await axios.post(API_AUTH, data);
             localStorage.setItem("vb", JSON.stringify(result.data.user));
             window.location.assign("../")
         } catch (error) {
@@ -103,7 +104,6 @@ const Login = () => {
                             value={data.password}
                             autoComplete="current-password"
                         />
-                        {/* {error && <div>{error}</div>} */}
                         <Button
                             type="submit"
                             fullWidth

@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import { API_USERS } from 'components/commons/module';
 
 const theme = createTheme();
 
@@ -52,8 +53,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://localhost:5003/api/users";
-      const result = await axios.post(url, data);
+      const result = await axios.post(API_USERS, data);
       navigate("/login");
     } catch (error) {
       if (

@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 
 const UserSchema = new Schema({
+    role: {type: String, required: true},
     firstName: {type: String, required: true},
     lastName: {type: String, required: true},
     province: {type: String},
@@ -12,6 +13,7 @@ const UserSchema = new Schema({
     postalCode: {type: String},
     email: {type: String, required: true},
     password: {type: String, required: true},
+    confirmPassword: {type: String, required: true},
     phoneNumber: {type: String, required: true},
     accounts: [],
 });
@@ -30,6 +32,8 @@ const validateUser = (data) => {
 		lastName: Joi.string().required().label("Last Name"),
 		email: Joi.string().email().required().label("Email"),
 		password: Joi.string().min(6).required().label("Password"),
+        confirmPassword: Joi.string().valid(Joi.ref('password')).required(),
+        role: Joi.string().valid('Admin', 'User').required()
 	}).options(
 		{
 			abortEarly: false, //include all errors
