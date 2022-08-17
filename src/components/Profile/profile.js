@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {useNavigate, useParams} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -9,25 +9,14 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import {createTheme, ThemeProvider} from '@mui/material/styles';
-
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 const theme = createTheme();
 
 const Profile = () => {
-    const {userId} =  useParams();
+    const { userId } = useParams();
     const [data, setData] = useState({
         firstName: "",
         lastName: "",
@@ -41,7 +30,17 @@ const Profile = () => {
     });
 
     const [error, setError] = useState("");
-    const navigate = useNavigate();
+    const [alert, setAlert] = useState({
+        open: false,
+        message: '',
+        severity:'info'
+    });
+
+    const handleClose = () => {
+        setAlert({ ...alert, open: false });
+    };
+
+
 
     useEffect(() => {
         (async () => {
@@ -58,16 +57,19 @@ const Profile = () => {
 
     const handleInput = (e) => {
         console.log(e.target.name, " : ", e.target.value);
-        setData({...data, [e.target.name]: e.target.value});
+        setData({ ...data, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const url = `http://localhost:5003/api/users/${userId}`;
-            const {data: res} = await axios.put(url, data);
-            navigate("/");
-            console.log(res.message);
+            const result  = await axios.put(url, data);
+            if (result.status === 200)
+                setAlert({ ...alert, open: true, message: result.data.message, severity:'success' });
+            else
+                setAlert({ ...alert, open: true, message: 'bed request', severity:'warning' });
+            
         } catch (error) {
             if (
                 error.response &&
@@ -75,6 +77,7 @@ const Profile = () => {
                 error.response.status <= 500
             ) {
                 setError(error.response.data.message)
+                setAlert({ ...alert, open: true, message: 'bed request', severity:'warning' });
             }
         }
     }
@@ -82,7 +85,7 @@ const Profile = () => {
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
-                <CssBaseline/>
+                <CssBaseline />
                 <Box
                     sx={{
                         marginTop: 8,
@@ -94,7 +97,7 @@ const Profile = () => {
                     <Typography component="h1" variant="h5">
                         Edit Profile
                     </Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 3}}>
+                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -128,24 +131,10 @@ const Profile = () => {
                                     id="email"
                                     label="Email Address"
                                     name="email"
-                                    onChange={handleInput}
                                     value={data.email}
                                     autoComplete="email"
                                 />
                             </Grid>
-                            {/* <Grid item xs={12}>
-                                <TextField
-                                    required
-                                    fullWidth
-                                    name="password"
-                                    label="Password"
-                                    type="password"
-                                    id="password"
-                                    onChange={handleInput}
-                                    value={data.password}
-                                    autoComplete="new-password"
-                                />
-                            </Grid> */}
                             <Grid item xs={12}>
                                 <TextField
                                     fullWidth
@@ -206,16 +195,32 @@ const Profile = () => {
                                     autoComplete="phoneNumber"
                                 />
                             </Grid>
+
                         </Grid>
                         {error && <div>{error}</div>}
+                        {/* <Box sx={{ width: '100%' }}> */}
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{mt: 3, mb: 2}}
+                            sx={{ mt: 3, mb: 2 }}
+                            onClick={handleSubmit}
                         >
                             Edit
                         </Button>
+                        <Snackbar
+                            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                            open={alert.open}
+                            onClose={handleClose}
+                            key={'123'}
+                        >
+                            <Alert onClose={handleClose} severity={alert.severity} sx={{ mt: '4rem', width: '100%' }}>
+                                {alert.message}
+                            </Alert>
+                        </Snackbar>
+
+                        {/* </Box> */}
+
                         <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <Link href="/" variant="body2">
@@ -225,7 +230,6 @@ const Profile = () => {
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{mt: 5}}/>
             </Container>
         </ThemeProvider>
     );
