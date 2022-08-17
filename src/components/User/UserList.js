@@ -23,7 +23,7 @@ const initialUser = {
 
 }
 
-const BasicTable = () => {
+const UserList = () => {
 
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState(initialUser);
@@ -116,4 +116,4 @@ const BasicTable = () => {
 };
 
 
-export default BasicTable;
+export default UserList;

@@ -1,13 +1,12 @@
 
-
-export const DEFAULT_URL = "http://localhost:5000/api";
+export const DEFAULT_URL = `http://localhost:5000/api`;
 export const API_LOGIN = '';
 export const API_GET_USER = '';
 export const API_GET_USER_ACCOUNTS = '';
 export const API_ADMIN = '';
 export const API_ADMIN_USERS = '';
-export const API_ADMIN_ACCOUNTS_ALL = 'http://localhost:5000/api/admin/accounts';
-
+export const API_ADMIN_ACCOUNTS_ALL = `${DEFAULT_URL}/admin/accounts`;
+export const API_ACCOUNTS_ALL = `${DEFAULT_URL}/admin/accounts`;
 
 export const USER_MENUS = [
     {

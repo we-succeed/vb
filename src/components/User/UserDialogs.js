@@ -8,12 +8,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import {Grid, RadioGroup, Switch} from "@mui/material";
+import {Grid} from "@mui/material";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Box from "@mui/material/Box";
-import Radio from '@mui/material/Radio';
 import axios from "axios";
+
 import {useEffect, useState} from "react";
 
 
@@ -58,7 +57,6 @@ BootstrapDialogTitle.propTypes = {
 
 const UserDialogs = (props) => {
     const [data, setData] = useState({})
-    const [switchToggle, setSwitchToggle] = useState(false);
     useEffect(() => {
         setData(props.data);
     }, [props.data])
@@ -94,16 +92,6 @@ const UserDialogs = (props) => {
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
                     <Box component="form" noValidate>
-                        {/* <RadioGroup
-                            row
-                            aria-labelledby="demo-radio-buttons-group-label"
-                            name="type"
-                            value={data.type}
-                            onChange={handleChange}
-                        >
-                            <FormControlLabel value="saving" control={<Radio/>} label="Saving"/>
-                            <FormControlLabel value="chequing" control={<Radio/>} label="Credit"/>
-                        </RadioGroup> */}
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={12}>
                                 <TextField

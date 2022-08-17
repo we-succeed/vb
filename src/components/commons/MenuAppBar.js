@@ -8,8 +8,14 @@ import MuiAppBar from "@mui/material/AppBar";
 import ProfileMenu from "./ProfileMenu";
 import DrawerMenu from "./Drawer";
 import {useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
 
 const MenuAppBar = (props) => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    useEffect (() => {
+        if (localStorage.getItem('vb'))
+            setIsLoggedIn(true)
+    })
     const AppBar = styled(MuiAppBar, {
         shouldForwardProp: (prop) => prop !== 'open',
     })(({theme, open}) => ({
@@ -76,7 +82,7 @@ const MenuAppBar = (props) => {
     }
     return (
         <>
-            {props.isLoggedIn ? <LoggedMenu/> : <CommonMenu/>}
+            {isLoggedIn ? <LoggedMenu/> : <CommonMenu/>}
         </>
     )
 }

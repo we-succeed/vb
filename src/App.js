@@ -10,8 +10,6 @@ import Profile from "./components/Profile/profile";
 import CommonUI from "./components/commons/CommonUI";
 import PrivateRoute from "./components/commons/PrivateRoute";
 import AccountSummary from "./components/Account/AccountSummary";
-
-import AccountList from "./components/Account/AccountList"
 import AccountContract from "./components/Account/accountContract/AccountContract";
 import AccountList from "./components/Account/AccountList";
 import BasicTable from "./components/User/UserList";
@@ -19,27 +17,21 @@ import BasicTable from "./components/User/UserList";
 const App = () => {
     const [open, setOpen] = React.useState(false);
     const [auth, setAuth] = useState({});
-    const [login, setLogin] = useState(false);
     useEffect(() => {
         setAuth(getToken())
-        handleIsLogIn();
     }, [])
     const handleDrawerOpen = () => {
         setOpen(!open);
     };
-
     const getToken = () => {
         return JSON.parse(localStorage.getItem('vb'))
-    }
-    const handleIsLogIn = () => {
-        setLogin(!!localStorage.getItem('vb'));
     }
     return (
         <>
             <Box sx={{display: 'flex'}}>
                 <Router>
                     <CssBaseline/>
-                    <MenuAppBar open={open} drawerOpen={handleDrawerOpen} auth={auth} isLoggedIn={login}/>
+                    <MenuAppBar open={open} drawerOpen={handleDrawerOpen} auth={auth} />
                     <CommonUI.Main open={open} auth={auth}>
                         <CommonUI.DrawerHeader/>
                         <Routes>
@@ -48,12 +40,9 @@ const App = () => {
                             <Route path="/user/:userId/accounts" element={<PrivateRoute auth={auth} children={<AccountSummary/>}/>}/>
                             <Route path="/user/:userId/accounts/:accountId" exact element={<PrivateRoute auth={auth} children={<Home/>}/>}/>
                             <Route path="/accounts/:accountId/open" exact element={<PrivateRoute auth={auth} children={<AccountContract auth={auth}/>}/>}/>
-                            <Route path="/admin/users" element={<PrivateRoute auth={auth} children={<Home/>}/>}/>
-                            <Route path="/user/:userId/accounts" element={<PrivateRoute auth={auth} children={<Home/>}/>}/>
-                            <Route path="/user/:userId/accounts/:accountId" element={<PrivateRoute auth={auth} children={<Home/>}/>}/>
                             <Route path="/admin/users" element={<PrivateRoute auth={auth} children={<BasicTable/>}/>}/>
                             <Route path="/admin/accounts" element={<PrivateRoute auth={auth} children={<AccountList/>}/>}/>
-                            <Route path="/login" element={<Login/>}/>
+                            <Route path="/login" element={<Login/>} />
                             <Route path="/signup" element={<Signup/>}/>
                         </Routes>
                     </CommonUI.Main>
