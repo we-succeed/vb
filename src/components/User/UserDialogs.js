@@ -1,323 +1,213 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { alpha } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import Checkbox from '@mui/material/Checkbox';
+import Button from '@mui/material/Button';
+import {styled} from '@mui/material/styles';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
-import { visuallyHidden } from '@mui/utils';
-import { useEffect, useState} from 'react';
+import CloseIcon from '@mui/icons-material/Close';
+import {Grid, RadioGroup, Switch} from "@mui/material";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Box from "@mui/material/Box";
+import Radio from '@mui/material/Radio';
 import axios from "axios";
+import {useEffect, useState} from "react";
 
 
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
+const BootstrapDialog = styled(Dialog)(({theme}) => ({
+    '& .MuiDialogContent-root': {
+        padding: theme.spacing(2),
+    },
+    '& .MuiDialogActions-root': {
+        padding: theme.spacing(1),
+    },
+}));
 
-const headCells = [
-  {
-    // id: 'firstName',
-    // numeric: false,
-    // disablePadding: true,
-    // label: 'firstName',
-  },
-  {
-    id: 'firstName',
-    numeric: false,
-    disablePadding: true,
-    label: 'firstName',
-  },
-  {
-    id: 'lastName',
-    numeric: true,
-    disablePadding: false,
-    label: 'lastName',
-  },
-  {
-    id: 'Email',
-    numeric: false,
-    disablePadding: false,
-    label: 'Email',
-  },
-];
+const BootstrapDialogTitle = (props) => {
+    const {children, onClose, ...other} = props;
 
-function EnhancedTableHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
-    props;
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead>
-      <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'select all desserts',
-            }}
-          />
-        </TableCell>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            // align={headCell.numeric ? '' : ''}
-            // padding={headCell.disablePadding ? 'none' : 'normal'}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </Box>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
-
-const EnhancedTableToolbar = (props) => {
-  const { numSelected } = props;
-
-  return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-        }),
-      }}
-    >
-      {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          User Management
-        </Typography>
-      )}
-
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
-    </Toolbar>
-  );
-};
-
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
-
-export default function EnhancedTable() {
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(3);
-  const [users, setUsers] = useState([]);
-  
-  useEffect(() => {
-    axios.get('http://localhost:5002/api/users')
-    .then((result) => {
-      setUsers(result.data);
-    })
-  }, [])
-
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelected = users.map((n) => n.name);
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
-
-    setSelected(newSelected);
-  };
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const handleChangeDense = (event) => {
-    setDense(event.target.checked);
-  };
-
-  const isSelected = (name) => selected.indexOf(name) !== -1;
-
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - users.length) : 0;
-  return (
-    <Box sx={{ width: '100%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
-        <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
-          >
-            <EnhancedTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={users.length}
-            />
-            <TableBody>
-              {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                 rows.slice().sort(getComparator(order, orderBy)) */}
-              {users && users.map((user, index) => {
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, user.id)}
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={user.id}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={false}
-                        />
-                      </TableCell>
-                      <TableCell
-                        component="th"
-                        scope="row"
-                        padding="none"
-                      >
-                        {/* {user.name}  */}
-                      </TableCell>
-                      {/* <TableCell >{user.id}</TableCell> */}
-                      <TableCell >{user.firstName}</TableCell>
-                      <TableCell >{user.lastName}</TableCell>
-                      <TableCell >{user.email}</TableCell>
-                    </TableRow>
-                  );
-                })}
-              {users.length > 0 && (
-                <TableRow
-                  style={{
-                    height: (dense ? 33 : 53) * emptyRows,
-                  }}
+    return (
+        <DialogTitle sx={{m: 0, p: 2}} {...other}>
+            {children}
+            {onClose ? (
+                <IconButton
+                    aria-label="close"
+                    onClick={onClose}
+                    sx={{
+                        position: 'absolute',
+                        right: 8,
+                        top: 8,
+                        color: (theme) => theme.palette.grey[500],
+                    }}
                 >
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[1, 4, 10]}
-          component="div"
-          count={users.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
-    </Box>
-  );
+                    <CloseIcon/>
+                </IconButton>
+            ) : null}
+        </DialogTitle>
+    );
+};
+
+BootstrapDialogTitle.propTypes = {
+    children: PropTypes.node,
+    onClose: PropTypes.func.isRequired,
+};
+
+
+const UserDialogs = (props) => {
+    const [data, setData] = useState({})
+    const [switchToggle, setSwitchToggle] = useState(false);
+    useEffect(() => {
+        setData(props.data);
+    }, [props.data])
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        axios.post('http://localhost:5002/api/users', data)
+            .then(res => {
+                props.close();
+            })
+    }
+
+    const handleEdit = (e) => {
+        e.preventDefault();
+        axios.put(`http://localhost:5002/api/users/${data._id}`, data)
+            .then(res => {
+                props.close();
+            })
+    }
+    function handleChange(e) {
+        const newdata = {...data}
+        newdata[e.target.name] = e.target.value
+        setData(newdata)
+    } 
+    return (
+        <div>
+            <BootstrapDialog
+                aria-labelledby="customized-dialog-title"
+                open={props.open}
+            >
+                <BootstrapDialogTitle id="customized-dialog-title" onClose={props.close} color='red'>
+                    {data['_id'] === undefined ? 'Add User' : 'Edit user'}
+                </BootstrapDialogTitle>
+                <DialogContent dividers>
+                    <Box component="form" noValidate>
+                        {/* <RadioGroup
+                            row
+                            aria-labelledby="demo-radio-buttons-group-label"
+                            name="type"
+                            value={data.type}
+                            onChange={handleChange}
+                        >
+                            <FormControlLabel value="saving" control={<Radio/>} label="Saving"/>
+                            <FormControlLabel value="chequing" control={<Radio/>} label="Credit"/>
+                        </RadioGroup> */}
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} sm={12}>
+                                <TextField
+                                    type="text"
+                                    autoComplete="given-name"
+                                    name="name"
+                                    required
+                                    fullWidth
+                                    id="outlined-basic"
+                                    label="User Name"
+                                    autoFocus
+                                    value={data.name}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={12}>
+                                <TextField
+                                    type="text"
+                                    fullWidth
+                                    id="outlined-multiline-static"
+                                    multiline
+                                    rows={1}
+                                    label="User Email"
+                                    name="User Email"
+                                    value={data.email}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <TextField
+                                    type="number"
+                                    required
+                                    fullWidth
+                                    id="outlined-basic"
+                                    label="PhoneNumber"
+                                    name="phonenumber"
+                                    value={data.phonenumber}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <TextField
+                                    type="text"
+                                    required
+                                    fullWidth
+                                    name="province"
+                                    label="Province"
+                                    id="outlined-basic"
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <TextField
+                                    type="text"
+                                    required
+                                    fullWidth
+                                    name="city"
+                                    label="City"
+                                    id="outlined-basic"
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={12}>
+                                {/* <FormControlLabel
+                                    control={
+                                        <Switch name="Status"
+                                                checked={switchToggle}
+                                                onClick={handleStatusToggle}
+                                        />
+                                    }
+                                    labelPlacement="start"
+                                    label="Status"
+                                    value={data.status}
+                                    sx={{marginLeft: '0'}}/> */}
+                            </Grid>
+                        </Grid>
+                    </Box>
+                </DialogContent>
+                <DialogActions>
+                    {data['_id'] === undefined ? <Button
+                        type="submit"
+                        variant="contained"
+                        sx={{mt: 3, mb: 2}}
+                        onClick={handleSubmit}>
+                        Submit
+                    </Button> : <Button
+                        type="submit"
+                        variant="contained"
+                        sx={{mt: 3, mb: 2}}
+                        onClick={handleEdit}>
+                        Edit
+                    </Button>}
+                    <Button
+                        type="reset"
+                        variant="outlined"
+                        sx={{mt: 3, mb: 2}}
+                        onClick={()=>props.close()}
+                    >
+                        Cancel
+                    </Button>
+                </DialogActions>
+            </BootstrapDialog>
+        </div>
+    );
 }
+
+export default UserDialogs

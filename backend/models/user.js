@@ -12,7 +12,7 @@ const UserSchema = new Schema({
     postalCode: {type: String},
     email: {type: String, required: true},
     password: {type: String, required: true},
-    phoneNumber: {type: String},
+    phoneNumber: {type: String, required: true},
     accounts: [],
 });
 
