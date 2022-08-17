@@ -25,6 +25,10 @@ const AccountSchema = new Schema({
     interest : {
         type: Number,
         required: [true]
+    },
+    status: {
+        type: String,
+        required: [true]
     }
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at'} })
 //Create model for account

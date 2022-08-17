@@ -6,7 +6,7 @@ export const API_GET_USER = '';
 export const API_GET_USER_ACCOUNTS = '';
 export const API_ADMIN = '';
 export const API_ADMIN_USERS = '';
-export const API_ADMIN_ACCOUNTS_ALL = 'http://localhost:5002/api/admin/accounts';
+export const API_ADMIN_ACCOUNTS_ALL = 'http://localhost:5000/api/admin/accounts';
 
 
 export const USER_MENUS = [

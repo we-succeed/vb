@@ -26,12 +26,13 @@ const DrawerMenu = (props) => {
     const theme = useTheme();
     const navigate = useNavigate();
     const [menus, setMenus] = useState();
+
     useEffect(()=>{
-        if (props.userType === 'user')
+        if (props['userType'] === 'user')
             setMenus(USER_MENUS)
         else
             setMenus(ADMIN_MENUS);
-    },[])
+    })
     return (
         <Drawer
             sx={{

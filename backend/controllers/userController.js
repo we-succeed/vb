@@ -67,7 +67,6 @@ const updateUserById = (async (req, res) => {
 const getUserAccounts = (async (req, res) => {
     try {
         const userAccounts = await User.findById({_id: req.params.user_id}, 'accounts')
-        console.log(userAccounts);
         if (userAccounts)
             return res.status(200).send(userAccounts);
         else

@@ -33,7 +33,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 
-const Login = () => {
+const Login = (props) => {
     let navigate = useNavigate();
 	const [data, setData] = useState({ email: "", password: "" });
 	const [error, setError] = useState("");
@@ -45,10 +45,14 @@ const Login = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const url = "http://localhost:5002/auth";
+			const url = "http://localhost:5000/auth";
 			const result = await axios.post(url, data);
-			localStorage.setItem("vb", JSON.stringify(result.data.user));
-            navigate("../");
+            if (result.status === 200) {
+                localStorage.setItem("vb", JSON.stringify(result.data.user));
+                props.loginToggle();
+                navigate("../");
+            }
+
 		} catch (error) {
 			if (
 				error.response &&

@@ -10,7 +10,6 @@ import DrawerMenu from "./Drawer";
 import {useNavigate} from "react-router-dom";
 
 const MenuAppBar = (props) => {
-    const isLoggedIn = !!props.auth;
     const AppBar = styled(MuiAppBar, {
         shouldForwardProp: (prop) => prop !== 'open',
     })(({theme, open}) => ({
@@ -47,7 +46,6 @@ const MenuAppBar = (props) => {
                     </Toolbar>
                 </AppBar>
                 <DrawerMenu open={props.open} drawerOpen={props.drawerOpen} userType={'user'} user={props.auth}/>
-                <DrawerMenu open={props.open} drawerOpen={props.drawerOpen} userType={'admin'}/>
             </>
         )
     }
@@ -78,7 +76,7 @@ const MenuAppBar = (props) => {
     }
     return (
         <>
-            {isLoggedIn ? <LoggedMenu/> : <CommonMenu/>}
+            {props.isLoggedIn ? <LoggedMenu/> : <CommonMenu/>}
         </>
     )
 }

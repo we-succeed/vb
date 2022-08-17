@@ -55,7 +55,7 @@ const AccountList = () => {
         setAccount(initialAccount)
     }
     const deleteAccount = (id) => {
-        axios.delete(`http://localhost:5002/api/admin/accounts/${id}`)
+        axios.delete(`http://localhost:5000/api/admin/accounts/${id}`)
             .then(res => {
                 getData();
                 // console.log(res.data.message)
@@ -73,6 +73,7 @@ const AccountList = () => {
                         <TableRow>
                             <TableCell>No</TableCell>
                             <TableCell>Types</TableCell>
+                            <TableCell>Number</TableCell>
                             <TableCell>Name</TableCell>
                             <TableCell>Quantity</TableCell>
                             <TableCell>Remainder</TableCell>
@@ -92,6 +93,7 @@ const AccountList = () => {
                                     {idx + 1}
                                 </TableCell>
                                 <TableCell>{row.type}</TableCell>
+                                <TableCell>12312</TableCell>
                                 <TableCell>{row.name}</TableCell>
                                 <TableCell>{row.quantity}</TableCell>
                                 <TableCell>{row.remainder}</TableCell>

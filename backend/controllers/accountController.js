@@ -1,4 +1,5 @@
 const Account = require('../models/account');
+const {User} = require("../models/user");
 
 //get all accounts
 const findAccountAll = async (req, res) => {
@@ -48,7 +49,7 @@ const createAccount = async (req, res) => {
 //update Account
 const updateAccount = async (req, res) => {
     try {
-        const result = await Account.updateOne({_id: req.params.account_id}, req.body,{
+        const result = await Account.updateOne({_id: req.params.account_id}, req.body, {
             upsert: true
         })
         if (result && result.modifiedCount > 0)
@@ -72,10 +73,52 @@ const deleteAccount = async (req, res) => {
         res.status(500).json({message: 'Internal Server Error', error: e})
     }
 }
+
+//AccountItem
+const findAccountItemAll = async (req, res) => {
+    try {
+        const result = await Account.find({
+            status: "open",
+            remainder: {$gte: 0}
+        }, 'name type description _id remainder');
+        if (result)
+            res.status(200).send(result);
+        else
+            res.status(400).send({message: 'Not Fount Account'})
+    } catch (e) {
+        res.status(500).json({message: 'Internal Server Error', error: e})
+    }
+}
+//AccountItem
+const openAccount = async (req, res) => {
+    let data = {}
+    try {
+        const account = await Account.findById({_id: req.params.account_id}, '_id type interest name description');
+        const user = await User.findById({_id: req.body.user_id},'_id firstName lastName email accounts');
+
+        if (account && user) {
+            data['account'] = account;
+            data['user'] = user;
+            res.status(200).send(data);
+        } else {
+            res.status(400).send({message: 'Not Fount Account'})
+        }
+    } catch (e) {
+        res.status(500).json({message: 'Internal Server Error'})
+    }
+}
+//AddAccountItem
+const addAccountItem = async(req, res) => {
+    console.log(res);
+    console.log(Math.floor(1000 + Math.random() * 90000));
+}
 module.exports = {
     findAccountAll,
     findAccountById,
     createAccount,
     updateAccount,
-    deleteAccount
+    deleteAccount,
+    findAccountItemAll,
+    addAccountItem,
+    openAccount
 }
