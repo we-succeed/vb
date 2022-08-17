@@ -37,7 +37,7 @@ const Profile = () => {
         city: "",
         address: "",
         postalCode: "",
-        PhoneNumber: "",
+        phoneNumber: "",
     });
 
     const [error, setError] = useState("");
@@ -64,8 +64,7 @@ const Profile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const user_id = e.param._id
-            const url = "http://localhost:5003/api/users/" + user_id;
+            const url = `http://localhost:5003/api/users/${userId}`;
             const {data: res} = await axios.put(url, data);
             navigate("/");
             console.log(res.message);
@@ -134,7 +133,7 @@ const Profile = () => {
                                     autoComplete="email"
                                 />
                             </Grid>
-                            <Grid item xs={12}>
+                            {/* <Grid item xs={12}>
                                 <TextField
                                     required
                                     fullWidth
@@ -145,6 +144,66 @@ const Profile = () => {
                                     onChange={handleInput}
                                     value={data.password}
                                     autoComplete="new-password"
+                                />
+                            </Grid> */}
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    name="address"
+                                    label="address"
+                                    type="address"
+                                    id="address"
+                                    onChange={handleInput}
+                                    value={data.address}
+                                    autoComplete="address"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    name="city"
+                                    label="city"
+                                    type="city"
+                                    id="city"
+                                    onChange={handleInput}
+                                    value={data.city}
+                                    autoComplete="city"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    name="province"
+                                    label="province"
+                                    type="province"
+                                    id="province"
+                                    onChange={handleInput}
+                                    value={data.province}
+                                    autoComplete="province"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    name="postalCode"
+                                    label="postalCode"
+                                    type="postalCode"
+                                    id="postalCode"
+                                    onChange={handleInput}
+                                    value={data.postalCode}
+                                    autoComplete="postalCode"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    name="phoneNumber"
+                                    label="phoneNumber"
+                                    type="phoneNumber"
+                                    id="phoneNumber"
+                                    onChange={handleInput}
+                                    value={data.phoneNumber}
+                                    autoComplete="phoneNumber"
                                 />
                             </Grid>
                         </Grid>
