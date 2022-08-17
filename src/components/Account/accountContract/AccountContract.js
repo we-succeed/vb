@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import AccountInfoForm from "./AccountInfoForm";
 import AdditionalInfoForm from "./AdditionalInfoForm";
 import AccountReview from "./AccountReview";
+import {API_ACCOUNT_ITEM, getApiRoute} from "../../commons/module";
 
 const steps = ['Account Information', 'Additional Information', 'Review your account'];
 
@@ -43,7 +44,7 @@ export default function AccountContract(props) {
         getData()
     }, [params.accountId])
     const getData = () => {
-        fetch(`http://localhost:5000/api/accounts/${params.accountId}`, {
+        fetch(getApiRoute(API_ACCOUNT_ITEM, {'accountId': params.accountId}), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

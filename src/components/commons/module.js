@@ -1,12 +1,10 @@
+import {API_PORT} from "../../env";
 
-export const DEFAULT_URL = `http://localhost:5000/api`;
-export const API_LOGIN = '';
-export const API_GET_USER = '';
-export const API_GET_USER_ACCOUNTS = '';
-export const API_ADMIN = '';
-export const API_ADMIN_USERS = '';
-export const API_ADMIN_ACCOUNTS_ALL = `${DEFAULT_URL}/admin/accounts`;
-export const API_ACCOUNTS_ALL = `${DEFAULT_URL}/admin/accounts`;
+export const DEFAULT_URL = `http://localhost:${API_PORT}/api`;
+export const API_ADMIN_ACCOUNTS_ALL = `/admin/accounts`;
+export const API_ACCOUNTS_ALL = `/accounts`;
+export const API_USER_ACCOUNTS_ALL = `/users/:userId/accounts`;
+export const API_ACCOUNT_ITEM = `/accounts/:accountId`;
 
 export const USER_MENUS = [
     {
@@ -40,9 +38,25 @@ export const ADMIN_MENUS = [
 ]
 
 export const getRoute = (path, params) => {
-    let newPath = path
-    Object.entries(params).forEach(([key,value]) => {
-        newPath = newPath.replace(':' + key, value)
-    })
-    return newPath
+    if (params === undefined)
+        return path
+    else {
+        let newPath = path
+        Object.entries(params).forEach(([key, value]) => {
+            newPath = newPath.replace(':' + key, value)
+        })
+        return newPath
+    }
+}
+
+export const getApiRoute = (path, params) => {
+    if (params === undefined)
+        return `${DEFAULT_URL}${path}`
+    else {
+        let newPath = path
+        Object.entries(params).forEach(([key,value]) => {
+            newPath = newPath.replace(':' + key, value)
+        })
+        return `${DEFAULT_URL}${newPath}`
+    }
 }

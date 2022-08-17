@@ -5,12 +5,13 @@ import Typography from "@mui/material/Typography";
 import AccountItem from "./AccountItem";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {API_ACCOUNTS_ALL, getApiRoute} from "../commons/module";
 
 export default function AccountItemList(props) {
     const [accounts, setAccounts] = useState([]);
     useEffect(()=> {
         axios
-            .get(`http://localhost:5000/api/accounts`)
+            .get(getApiRoute(API_ACCOUNTS_ALL))
             .then((res) => {
                 if (res.status === 200)
                     setAccounts(res.data);

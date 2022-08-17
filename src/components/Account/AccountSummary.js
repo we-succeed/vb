@@ -11,13 +11,14 @@ import axios from "axios";
 import {useParams} from "react-router-dom";
 import AccountItemList from "./AccountItemList";
 import Typography from "@mui/material/Typography";
+import {API_USER_ACCOUNTS_ALL, getApiRoute} from "../commons/module";
 
 const AccountSummary = () => {
     const params = useParams();
     const [accounts, setAccounts] = useState([]);
     useEffect(()=> {
         axios
-            .get(`http://localhost:5000/api/users/${params.userId}/accounts`)
+            .get(getApiRoute(API_USER_ACCOUNTS_ALL, {'userId': params.userId}))
             .then((res) => {
                 setAccounts(res.data.accounts);
             })
