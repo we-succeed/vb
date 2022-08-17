@@ -1,45 +1,45 @@
-import { useState } from "react";
-import * as React from 'react';
-import axios from "axios";
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
+import Alert from '@mui/material/Alert';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
+import Snackbar from '@mui/material/Snackbar';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from "react-router-dom";
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import axios from "axios";
+import * as React from 'react';
+import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
 
 const Login = () => {
-    let navigate = useNavigate();
+  const navigate = useNavigate();
+  useEffect(()=>{
+   if(localStorage.getItem('vb'))
+    navigate("../")
+  },[])
 	const [data, setData] = useState({ email: "", password: "" });
 	const [error, setError] = useState("");
+  const [alert, setAlert] = useState({
+    open: false,
+    message: '',
+    severity:'info'
+  });
 
 	const handleChange = ({ currentTarget: input }) => {
 		setData({ ...data, [input.name]: input.value });
 	};
+
+  const handleClose = () => {
+    setAlert({ ...alert, open: false });
+  };
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -47,7 +47,7 @@ const Login = () => {
 			const url = "http://localhost:5003/auth";
 			const result = await axios.post(url, data);
 			localStorage.setItem("vb", JSON.stringify(result.data.user));
-            navigate("../");
+      window.location.assign("../")
 		} catch (error) {
 			if (
 				error.response &&
@@ -55,6 +55,7 @@ const Login = () => {
 				error.response.status <= 500
 			) {
 				setError(error.response.data.message);
+        setAlert({ ...alert, open: true, message: error.response.data.message, severity:'warning' });
 			}
 		}
 	};
@@ -104,11 +105,7 @@ const Login = () => {
 							value={data.password}
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            {error && <div>{error}</div>}
+            {/* {error && <div>{error}</div>} */}
             <Button
               type="submit"
               fullWidth
@@ -117,12 +114,17 @@ const Login = () => {
             >
               Sign In
             </Button>
+            <Snackbar
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            open={alert.open}
+            onClose={handleClose}
+            key={'123'}
+          >
+            <Alert onClose={handleClose} severity={alert.severity} sx={{ mt: '4rem', width: '100%' }}>
+              {alert.message}
+            </Alert>
+          </Snackbar>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
               <Grid item>
                 <Link href="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
@@ -131,7 +133,6 @@ const Login = () => {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
 	);

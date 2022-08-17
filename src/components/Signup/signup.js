@@ -12,19 +12,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 const theme = createTheme();
 
@@ -43,20 +32,28 @@ const Signup = () => {
   });
   
   const [error, setError] = useState("");
+  const [alert, setAlert] = useState({
+    open: false,
+    message: '',
+    severity:'info'
+  });
+
+  const handleClose = () => {
+    setAlert({ ...alert, open: false });
+  };
+
   const navigate = useNavigate();
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value});
-    console.log(data);
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const url = "http://localhost:5003/api/users";
-      const { data: res } = await axios.post(url, data);
+      const result = await axios.post(url, data);
       navigate("/login");
-      console.log(res.message);
     } catch (error) {
       if (
         error.response &&
@@ -64,7 +61,8 @@ const Signup = () => {
         error.response.status <= 500
       ) {
         setError(error.response.data.message)
-      }
+        setAlert({ ...alert, open: true, message: error.response.data.message, severity:'warning' });
+      } 
     }
   }
 
@@ -147,7 +145,6 @@ const Signup = () => {
               </form>
             </Grid>
           </Grid>
-          {error && <div>{error}</div>}
           <Button
             type="submit"
             fullWidth
@@ -156,6 +153,17 @@ const Signup = () => {
           >
             Sign Up
           </Button>
+          <Snackbar
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            open={alert.open}
+            onClose={handleClose}
+            key={'123'}
+          >
+            <Alert onClose={handleClose} severity={alert.severity} sx={{ mt: '4rem', width: '100%' }}>
+              {alert.message}
+            </Alert>
+          </Snackbar>
+          
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="/login" variant="body2">
@@ -165,7 +173,6 @@ const Signup = () => {
           </Grid>
         </Box>
       </Box>
-      <Copyright sx={{ mt: 5 }} />
     </Container>
   </ThemeProvider>
   );
