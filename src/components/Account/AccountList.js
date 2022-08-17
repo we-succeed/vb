@@ -32,11 +32,11 @@ const AccountList = () => {
         getData();
     }, []);
 
+
     const getData = () => {
-        fetch(API_ADMIN_ACCOUNTS_ALL)
-            .then((response) => response.json())
-            .then((data) => {
-                setAccounts(data);
+        axios.get(API_ADMIN_ACCOUNTS_ALL)
+            .then((res) => {
+                setAccounts(res.data);
             });
     }
     const handleModalOpen = () => {
