@@ -1,5 +1,5 @@
 const Account = require('../models/account');
-const {User} = require("../models/user");
+const {User, AccountItem} = require("../models/user");
 
 //get all accounts
 const findAccountAll = async (req, res) => {
@@ -90,12 +90,11 @@ const findAccountItemAll = async (req, res) => {
     }
 }
 //AccountItem
-const openAccount = async (req, res) => {
-    let data = {}
+const userAccountInfo = async (req, res) => {
     try {
+        let data = {}
         const account = await Account.findById({_id: req.params.account_id}, '_id type interest name description');
-        const user = await User.findById({_id: req.body.user_id},'_id firstName lastName email accounts');
-
+        const user = await User.findById({_id: req.body.user_id},'_id firstName lastName email');
         if (account && user) {
             data['account'] = account;
             data['user'] = user;
@@ -107,10 +106,32 @@ const openAccount = async (req, res) => {
         res.status(500).json({message: 'Internal Server Error'})
     }
 }
+//Open User Account
+const openUserAccount = async(req, res) => {
+    let user = req.body.user.user;
+    try {
+        let accountItem = AccountItem;
+        accountItem['accountId'] = req.params.account_id
+        accountItem['number'] = accountNumber()
+        accountItem['name'] = req.body.userAccount.name
+        accountItem['description'] = req.body.userAccount.description
+        accountItem['created_at'] = new Date();
+        accountItem['updated_at'] = new Date();
+        const result  = await User.findOneAndUpdate({_id: user._id}, { $push: { accounts: accountItem } },{
+            upsert: true,
+            setDefaultsOnInsert: true
+        })
+        if (result)
+            res.status(200).json({'accountNumber': accountItem['number']})
+    } catch (e) {
+        res.status(500).json({message: 'Internal Server Error'})
+    }
+
+
+}
 //AddAccountItem
-const addAccountItem = async(req, res) => {
-    console.log(res);
-    console.log(Math.floor(1000 + Math.random() * 90000));
+const accountNumber = () => {
+    return (Math.floor(1000 + Math.random() * 90000));
 }
 module.exports = {
     findAccountAll,
@@ -119,6 +140,6 @@ module.exports = {
     updateAccount,
     deleteAccount,
     findAccountItemAll,
-    addAccountItem,
-    openAccount
+    userAccountInfo,
+    openUserAccount
 }

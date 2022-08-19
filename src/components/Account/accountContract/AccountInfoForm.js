@@ -5,19 +5,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import {useEffect, useState} from "react";
 
-const initialAccount ={
-    type: '',
-    name: '',
-    description: '',
-    interest: 0
-}
 export default function AccountInfoForm(props) {
-    const [account, setAccount] = useState(initialAccount);
-    useEffect(()=>{
-        setAccount(props.data.account);
-    },[])
     return (
         <>
             <Typography variant="h6" gutterBottom mb={3}>
@@ -27,19 +16,19 @@ export default function AccountInfoForm(props) {
                 <ListItem sx={{ py: 1, px: 0 }}>
                     <ListItemText primary="Type" />
                     <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                        {account.type}
+                        {props.data.account.type.toUpperCase()}
                     </Typography>
                 </ListItem>
                 <ListItem sx={{ py: 1, px: 0 }}>
                     <ListItemText primary="Name" />
                     <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                        {account.name}
+                        {props.data.account.name}
                     </Typography>
                 </ListItem>
                 <ListItem sx={{ py: 1, px: 0 }}>
                     <ListItemText primary="Interest" />
                     <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                        {account.interest}
+                        {props.data.account.interest}%
                     </Typography>
                 </ListItem>
             </List>
@@ -54,7 +43,7 @@ export default function AccountInfoForm(props) {
                         fullWidth
                         variant={"filled"}
                         disabled={true}
-                        value={account.description}
+                        value={props.data.account.description}
                     />
                 </Grid>
             </Grid>

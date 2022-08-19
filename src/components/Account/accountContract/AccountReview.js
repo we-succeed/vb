@@ -4,30 +4,69 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
-
-
-export default function AccountReview() {
+import TextField from "@mui/material/TextField";
+export default function AccountReview(props) {
     return (
-        <React.Fragment>
-            <Typography variant="h6" gutterBottom>
+        <>
+            <Typography variant="h5" sx={{ fontWeight: 700 }}>
+                {props.userAccount?.name}
+            </Typography>
+            <Typography variant="h6" gutterBottom mt={3}>
+                User Information
+            </Typography>
+            <List disablePadding>
+                <ListItem sx={{ py: 1, px: 0 }}>
+                    <ListItemText primary="User Name" />
+                    <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                        {props.data.user?.firstName}{props.data.user?.lastName}
+                    </Typography>
+                </ListItem>
+                <ListItem sx={{ py: 1, px: 0 }}>
+                    <ListItemText primary="User Email" />
+                    <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                        {props.data.user?.email}
+                    </Typography>
+                </ListItem>
+            </List>
+            <Typography variant="h6" gutterBottom  mt={3}>
                 Account summary
             </Typography>
             <List disablePadding>
                 <ListItem sx={{ py: 1, px: 0 }}>
-                    <ListItemText primary="Total" />
+                    <ListItemText primary="Account Type" />
                     <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                        $34.06
+                        {props.data.account?.type}
                     </Typography>
                 </ListItem>
-            </List>
-            <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                    <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-                        Shipping
+                <ListItem sx={{ py: 1, px: 0 }}>
+                    <ListItemText primary="Account Interest" />
+                    <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                        {props.data.account?.interest} %
                     </Typography>
-                    <Typography gutterBottom>John Smith</Typography>
+                </ListItem>
+                <ListItem sx={{ py: 1, px: 0 }}>
+                    <ListItemText primary="Account Name" />
+                    <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                        {props.data.account?.name}
+                    </Typography>
+                </ListItem>
+                <Grid container spacing={3}>
+                    <Grid item xs={12} md={12} mt={1}>
+                        <Typography variant="subtitle1">
+                            Description
+                        </Typography>
+                        <TextField
+                            multiline
+                            rows={4}
+                            fullWidth
+                            variant={"filled"}
+                            disabled={true}
+                            value={props.data.account?.description}
+                        />
+                    </Grid>
                 </Grid>
-            </Grid>
-        </React.Fragment>
+
+            </List>
+        </>
     );
 }

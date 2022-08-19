@@ -76,6 +76,7 @@ const getUserAccounts = (async (req, res) => {
         res.status(500).send({message: "Internal Server Error"});
     }
 })
+
 module.exports = {
     create,
     findAll,

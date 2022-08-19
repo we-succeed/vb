@@ -34,12 +34,12 @@ const AccountSummary = () => {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>No</TableCell>
-                            <TableCell align="right">Type</TableCell>
-                            <TableCell align="right">Name</TableCell>
-                            <TableCell align="right">Description</TableCell>
-                            <TableCell align="right">Interest</TableCell>
-                            <TableCell align="right">Balance</TableCell>
+                            <TableCell style={{width: '5%', fontWeight: 'bold'}}>No</TableCell>
+                            <TableCell style={{width: '5%', fontWeight: 'bold'}}>Type</TableCell>
+                            <TableCell style={{width: '10%', fontWeight: 'bold'}}>Interest</TableCell>
+                            <TableCell style={{fontWeight: 'bold'}}>Name</TableCell>
+                            <TableCell style={{fontWeight: 'bold'}}>Description</TableCell>
+                            <TableCell align='right' style={{fontWeight: 'bold'}}>Balance($)</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -49,13 +49,13 @@ const AccountSummary = () => {
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell component="th" scope="row">
-                                    {idx}
+                                    {idx + 1}
                                 </TableCell>
-                                <TableCell align="right">{account.type}</TableCell>
-                                <TableCell align="right">{account.name}</TableCell>
-                                <TableCell align="right">{account.description}</TableCell>
-                                <TableCell align="right">{account.interest}</TableCell>
-                                <TableCell align="right">{account.balance}</TableCell>
+                                <TableCell>{account.type}</TableCell>
+                                <TableCell>{account.name}</TableCell>
+                                <TableCell>{account.description}</TableCell>
+                                <TableCell>{account.interest}</TableCell>
+                                <TableCell align='right'>{account.balance}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

@@ -5,6 +5,8 @@ export const API_ADMIN_ACCOUNTS_ALL = `/admin/accounts`;
 export const API_ACCOUNTS_ALL = `/accounts`;
 export const API_USER_ACCOUNTS_ALL = `/users/:userId/accounts`;
 export const API_ACCOUNT_ITEM = `/accounts/:accountId`;
+export const API_ACCOUNT_ADD_ITEM = `/accounts/:accountId/open`;
+
 
 export const USER_MENUS = [
     {
