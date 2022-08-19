@@ -2,17 +2,8 @@ import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
-import {useEffect, useState} from "react";
 
-const initialUserAccount = {
-    name: '',
-    description: ''
-}
 export default function AdditionalInfoForm(props) {
-    const [userAccount,setUserAccount] = useState(initialUserAccount);
-    useEffect(() =>{
-        setUserAccount(props.data.user)
-    })
     return (
         <>
             <Typography variant="h6" gutterBottom mb={3}>
@@ -20,15 +11,22 @@ export default function AdditionalInfoForm(props) {
             </Typography>
             <Grid container spacing={3}>
                 <Grid item xs={12} md={12}>
-                    <TextField fullWidth label="Nick Name" value={userAccount.name}/>
+                    <TextField
+                        fullWidth
+                        label="name"
+                        value={props.data.name}
+                        name="name"
+                        onChange={props.onHandleChange}/>
                 </Grid>
                 <Grid item xs={12} md={12}>
                     <TextField
-                        label="Description"
+                        label="Account Description"
+                        name="description"
                         multiline
                         rows={4}
                         fullWidth
-                        value={userAccount.description}
+                        value={props.data.description}
+                        onChange={props.onHandleChange}
                     />
                 </Grid>
             </Grid>

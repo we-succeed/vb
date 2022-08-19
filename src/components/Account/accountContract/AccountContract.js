@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import axios from "axios";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -10,7 +9,8 @@ import Box from "@mui/material/Box";
 import AccountInfoForm from "./AccountInfoForm";
 import AdditionalInfoForm from "./AdditionalInfoForm";
 import AccountReview from "./AccountReview";
-import {API_ACCOUNT_ITEM, getApiRoute} from "../../commons/module";
+import {API_ACCOUNT_ADD_ITEM, API_ACCOUNT_ITEM, getApiRoute} from "../../commons/module";
+import axios from "axios";
 
 const steps = ['Account Information', 'Additional Information', 'Review your account'];
 
@@ -23,18 +23,28 @@ export default function AccountContract(props) {
     const handleNext = () => {
         setActiveStep(activeStep + 1);
     };
+    const [userAccount, setUserAccount] = useState({
+        name: '',
+        description: '',
+        accountNumber: 0
+    });
+
     const handleBack = () => {
         setActiveStep(activeStep - 1);
     };
-
+    const handleChange = (e) => {
+        const newdata = {...userAccount}
+        newdata[e.target.name] = e.target.value
+        setUserAccount(newdata)
+    }
     function getStepContent(step, data) {
         switch (step) {
             case 0:
                 return <AccountInfoForm data={data}/>;
             case 1:
-                return <AdditionalInfoForm data={data}/>;
+                return <AdditionalInfoForm data={userAccount} onHandleChange={handleChange}/>;
             case 2:
-                return <AccountReview data={data}/>;
+                return <AccountReview data={data} userAccount = {userAccount}/>;
             default:
                 throw new Error('Unknown step');
         }
@@ -43,6 +53,7 @@ export default function AccountContract(props) {
     useEffect(() => {
         getData()
     }, [params.accountId])
+
     const getData = () => {
         fetch(getApiRoute(API_ACCOUNT_ITEM, {'accountId': params.accountId}), {
             method: 'POST',
@@ -56,6 +67,18 @@ export default function AccountContract(props) {
             setUser(data);
             setIsLoading(true);
         });
+    }
+    const handleSubmit = async() => {
+        let data = {user, userAccount}
+        const result = await axios.post(getApiRoute(API_ACCOUNT_ADD_ITEM, {'accountId': params.accountId}), data);
+        if (result.status === 200) {
+            setActiveStep(activeStep + 1);
+            setUserAccount((prevState) => ({
+                ...prevState,
+                accountNumber: result.data.accountNumber,
+            }));
+        }
+
     }
     return (
         <>
@@ -75,7 +98,7 @@ export default function AccountContract(props) {
                                     Thank you for opening an account.
                                 </Typography>
                                 <Typography variant="subtitle1">
-                                    Your account number is #2001539. We have emailed your opening
+                                    Your account number is #{userAccount.accountNumber}. We have emailed your opening
                                     account, and will send you an update when your account has
                                     opened.
                                 </Typography>
@@ -89,13 +112,23 @@ export default function AccountContract(props) {
                                             Back
                                         </Button>
                                     )}
-                                    <Button
-                                        variant="contained"
-                                        onClick={handleNext}
-                                        sx={{mt: 3, ml: 1}}
-                                    >
-                                        {activeStep === steps.length - 1 ? 'Create Account' : 'Next'}
-                                    </Button>
+                                    {activeStep === steps.length - 1 ?
+                                        <>
+                                            <Button
+                                                variant="contained"
+                                                onClick={handleSubmit}
+                                                sx={{mt: 3, ml: 1}}>
+                                                Create Account
+                                            </Button>
+                                        </> : <>
+                                            <Button
+                                                variant="contained"
+                                                onClick={handleNext}
+                                                sx={{mt: 3, ml: 1}}
+                                            >
+                                                Next
+                                            </Button>
+                                        </>}
                                 </Box>
                             </>
                         )}

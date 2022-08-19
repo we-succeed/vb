@@ -15,6 +15,8 @@ export const API_USER_DELETE = `/users/:userId`;
 export const API_USER_INFO = `/users/:userId`;
 export const API_AUTH = `http://localhost:${API_PORT}/auth`
 export const API_USERS = `http://localhost:${API_PORT}/api/users`
+export const API_ACCOUNT_ADD_ITEM = `/accounts/:accountId/open`;
+
 
 export const USER_MENUS = [
     {

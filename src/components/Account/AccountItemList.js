@@ -21,13 +21,13 @@ export default function AccountItemList(props) {
     return (
         <>
             <Typography variant="h5" gutterBottom component="div" mt={2}>
-                Recommended accounts
+                Recommended Accounts
             </Typography>
             <Box sx={{flexGrow: 1}}>
                 <Grid container spacing={2}>
                     {accounts && accounts.map((account, idx) => (
                         <AccountItem key={idx} account={account} userId={props.userId}/>
-                    ))}
+                    )).splice(0,4)}
                 </Grid>
             </Box>
         </>

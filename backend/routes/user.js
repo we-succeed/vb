@@ -18,9 +18,11 @@ router.delete('/users/:user_id', userController.deleteUserById)
 
 
 router.get('/users/:user_id/accounts', userController.getUserAccounts);
-router.get('/accounts', accountController.findAccountItemAll);
-router.post('/accounts/:account_id', accountController.openAccount);
+router.get('/users/:user_id/accounts/:account_id', userController.getUserAccounts);
 
+router.get('/accounts', accountController.findAccountItemAll);
+router.post('/accounts/:account_id', accountController.userAccountInfo);
+router.post('/accounts/:account_id/open', accountController.openUserAccount)
 
 
 module.exports = router;
