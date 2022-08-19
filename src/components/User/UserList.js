@@ -11,6 +11,7 @@ import {useEffect, useState} from "react";
 import {Button, Switch} from "@mui/material";
 import axios from "axios";
 import UserDialogs from "./UserDialogs";
+import {API_USERS_ALL, API_USER_DELETE, getApiRoute} from "../commons/module";
 
 const initialUser = {
   name: "",
@@ -34,7 +35,7 @@ const UserList = () => {
   }, [])
 
   const getData = () => {
-    axios.get('http://localhost:5002/api/users')
+    axios.get(getApiRoute(API_USERS_ALL))
         .then((res) => {
           setUsers(res.data);
         });
@@ -57,10 +58,9 @@ const UserList = () => {
     setUser(initialUser)
   }
   const deleteUser = (id) => {
-    axios.delete(`http://localhost:5002/api/users/${id}`)
+    axios.delete(getApiRoute(API_USER_DELETE,{'userId':id}))
         .then(res => {
             getData();
-            console.log(res.data.message)
         })
   }
 

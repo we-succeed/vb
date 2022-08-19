@@ -11,7 +11,7 @@ import {useEffect, useState} from "react";
 import {Button, Switch} from "@mui/material";
 import AccountDialogs from "./AccountDialogs";
 import axios from "axios";
-import {API_ADMIN_ACCOUNTS_ALL} from "../commons/module";
+import {API_ACCOUNT_DELETE, API_ADMIN_ACCOUNTS_ALL, getApiRoute} from "../commons/module";
 
 const initialAccount = {
     type: "saving",
@@ -34,7 +34,7 @@ const AccountList = () => {
 
 
     const getData = () => {
-        axios.get(API_ADMIN_ACCOUNTS_ALL)
+        axios.get(getApiRoute(API_ADMIN_ACCOUNTS_ALL))  
             .then((res) => {
                 setAccounts(res.data);
             });
@@ -53,9 +53,10 @@ const AccountList = () => {
     }
     const reset = () => {
         setAccount(initialAccount)
-    }
+    }         
+
     const deleteAccount = (id) => {
-        axios.delete(`http://localhost:5000/api/admin/accounts/${id}`)
+        axios.delete(getApiRoute(API_ACCOUNT_DELETE,{'accountId': id}))
             .then(res => {
                 getData();
                 // console.log(res.data.message)

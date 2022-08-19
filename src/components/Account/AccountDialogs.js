@@ -66,7 +66,7 @@ const AccountDialogs = (props) => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        axios.post('http://localhost:5000/api/admin/accounts', data)
+        axios.post('http://localhost:5002/api/admin/accounts', data)
             .then(res => {
                 props.close();
             })
@@ -74,7 +74,7 @@ const AccountDialogs = (props) => {
 
     const handleEdit = (e) => {
         e.preventDefault();
-        axios.put(`http://localhost:5000/api/admin/accounts/${data._id}`, data)
+        axios.put(`http://localhost:5002/api/admin/accounts/${data._id}`, data)
             .then(res => {
                 props.close();
             })
