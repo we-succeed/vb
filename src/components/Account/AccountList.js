@@ -88,7 +88,8 @@ const AccountList = () => {
                         {accounts && accounts.map((row, idx) => (
                             <TableRow
                                 key={row.id}
-                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                sx={{'&:last-child td, &:last-child th': {border: 0}, 'cursor':'pointer'}}
+                                onClick={(e) => handleEditModal(row)}
                             >
                                 <TableCell component="th" scope="row">
                                     {idx + 1}

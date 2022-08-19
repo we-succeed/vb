@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useEffect, useState} from 'react';
 import Container from '@mui/material/Container';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,11 +8,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from "@mui/material/Typography";
-import {useEffect, useState} from "react";
-import {Button, Switch} from "@mui/material";
+import {Button} from "@mui/material";
 import axios from "axios";
 import UserDialogs from "./UserDialogs";
-import {API_USERS_ALL, API_USER_DELETE, getApiRoute} from "../commons/module";
+import {API_USER_DELETE, API_USERS_ALL, getApiRoute} from "../commons/module";
 
 const initialUser = {
   firstName: "",
@@ -23,7 +23,7 @@ const initialUser = {
   address:"",
   postalCode:"",
   password:'000000',
-  accounts:""
+  accounts:[]
 }
 
 const UserList = () => {
@@ -88,7 +88,8 @@ const UserList = () => {
                         {users && users.map((row, idx) => (
                             <TableRow
                                 key={row.id}
-                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                sx={{'&:last-child td, &:last-child th': {border: 0}, 'cursor':'pointer'}}
+                                onClick={(e) => handleEditModal(row)}
                             >
                                 <TableCell component="th" scope="row">
                                     {idx + 1}

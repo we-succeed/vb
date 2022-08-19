@@ -139,19 +139,10 @@ const UserDialogs = (props) => {
                                     onChange={handleChange}
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={12}>
+                            <Grid item xs={12} sm={12} hidden = {!(data['_id'])}>
                                 <Typography variant="body2" component="span" >
-                                    <button>{data.accounts.length}</button>
+                                    <button>{data.accounts?.length}</button>
                                 </Typography>
-
-                                  {/* name='accounts'
-                                  type="text"
-                                  fullWidth
-                                  id="outlined-basic"
-                                  label="accounts"
-                                  value={data.accounts}
-                                  onChange={handleChange} */}
-                                
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -220,8 +211,7 @@ const UserDialogs = (props) => {
                         type="reset"
                         variant="outlined"
                         sx={{mt: 3, mb: 2}}
-                        onClick={()=>props.close()}
-                    >
+                        onClick={()=>props.close()}>
                         Cancel
                     </Button>
                 </DialogActions>
