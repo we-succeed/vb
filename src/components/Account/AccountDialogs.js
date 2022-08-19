@@ -15,6 +15,7 @@ import Box from "@mui/material/Box";
 import Radio from '@mui/material/Radio';
 import axios from "axios";
 import {useEffect, useState} from "react";
+import {API_ACCOUNT_PUT, API_ADMIN_ACCOUNTS_ALL, getApiRoute} from "../commons/module";
 
 
 const BootstrapDialog = styled(Dialog)(({theme}) => ({
@@ -66,7 +67,7 @@ const AccountDialogs = (props) => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        axios.post('http://localhost:5002/api/admin/accounts', data)
+        axios.post(getApiRoute(API_ADMIN_ACCOUNTS_ALL), data)
             .then(res => {
                 props.close();
             })
@@ -74,7 +75,7 @@ const AccountDialogs = (props) => {
 
     const handleEdit = (e) => {
         e.preventDefault();
-        axios.put(`http://localhost:5002/api/admin/accounts/${data._id}`, data)
+        axios.put(getApiRoute(API_ACCOUNT_PUT,{'dataId': data._id}) ,data)
             .then(res => {
                 props.close();
             })

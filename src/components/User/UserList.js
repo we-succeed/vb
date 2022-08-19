@@ -14,14 +14,16 @@ import UserDialogs from "./UserDialogs";
 import {API_USERS_ALL, API_USER_DELETE, getApiRoute} from "../commons/module";
 
 const initialUser = {
-  name: "",
+  firstName: "",
+  lastName: "",
+  email:"",
+  phoneNumber:"",
   province: "",
   city: "",
   address:"",
   postalCode:"",
-  email:"",
-  phoneNumber:""
-
+  password:'000000',
+  accounts:""
 }
 
 const UserList = () => {
@@ -78,10 +80,7 @@ const UserList = () => {
                             <TableCell>Name</TableCell>
                             <TableCell>Email</TableCell>
                             <TableCell>PhoneNumber</TableCell>
-                            <TableCell>Province</TableCell>
-                            <TableCell>City</TableCell>
-                            <TableCell>Address</TableCell>
-                            <TableCell>PostalCode</TableCell>
+                            <TableCell>Account</TableCell>
                             <TableCell>Action</TableCell>
                         </TableRow>
                     </TableHead>
@@ -97,10 +96,7 @@ const UserList = () => {
                                 <TableCell>{row.firstName + row.lastName}</TableCell>
                                 <TableCell>{row.email}</TableCell>
                                 <TableCell>{row.phoneNumber}</TableCell>
-                                <TableCell>{row.province}</TableCell>
-                                <TableCell>{row.city}</TableCell>
-                                <TableCell>{row.address}</TableCell>
-                                <TableCell>{row.postalCode}</TableCell>
+                                <TableCell>{row.accounts.length}</TableCell>
                                 <TableCell>
                                     <Button variant="contained" onClick={(e) => handleEditModal(row)}>update</Button>
                                     <Button variant="outlined" color="error" onClick={(e) => deleteUser(row._id)}>delete</Button>

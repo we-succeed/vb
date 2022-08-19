@@ -8,12 +8,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import {Grid} from "@mui/material";
+import {Grid, Typography} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import axios from "axios";
-
 import {useEffect, useState} from "react";
+import {API_USER_PUT, API_USERS_ALL, getApiRoute} from "../commons/module";
 
 
 const BootstrapDialog = styled(Dialog)(({theme}) => ({
@@ -63,7 +63,7 @@ const UserDialogs = (props) => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        axios.post('http://localhost:5002/api/users', data)
+        axios.post(getApiRoute(API_USERS_ALL), data)
             .then(res => {
                 props.close();
             })
@@ -71,10 +71,11 @@ const UserDialogs = (props) => {
 
     const handleEdit = (e) => {
         e.preventDefault();
-        axios.put(`http://localhost:5002/api/users/${data._id}`, data)
+        axios.put(getApiRoute(API_USER_PUT,{'dataId': data._id}) ,data)
             .then(res => {
                 props.close();
             })
+      
     }
     function handleChange(e) {
         const newdata = {...data}
@@ -93,79 +94,110 @@ const UserDialogs = (props) => {
                 <DialogContent dividers>
                     <Box component="form" noValidate>
                         <Grid container spacing={2}>
-                            <Grid item xs={12} sm={12}>
+                        <Grid item xs={12} sm={6}>
                                 <TextField
                                     type="text"
-                                    autoComplete="given-name"
-                                    name="name"
-                                    required
                                     fullWidth
                                     id="outlined-basic"
-                                    label="User Name"
-                                    autoFocus
-                                    value={data.name}
+                                    label="firstName"
+                                    name="firstName"
+                                    value={data.firstName}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    type="text"
+                                    fullWidth
+                                    name="lastName"
+                                    label="lastName"
+                                    id="outlined-basic"
+                                    value={data.lastName}
                                     onChange={handleChange}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={12}>
                                 <TextField
+                                    disabled = {(data['_id'])}
                                     type="text"
                                     fullWidth
-                                    id="outlined-multiline-static"
-                                    multiline
-                                    rows={1}
-                                    label="User Email"
-                                    name="User Email"
+                                    id="outlined-basic"
+                                    label="email"
+                                    name="email"
                                     value={data.email}
                                     onChange={handleChange}
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={4}>
+                            <Grid item xs={12} sm={12}>
                                 <TextField
                                     type="number"
-                                    required
                                     fullWidth
                                     id="outlined-basic"
-                                    label="PhoneNumber"
-                                    name="phonenumber"
-                                    value={data.phonenumber}
-                                    onChange={handleChange}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <TextField
-                                    type="text"
-                                    required
-                                    fullWidth
-                                    name="province"
-                                    label="Province"
-                                    id="outlined-basic"
-                                    onChange={handleChange}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <TextField
-                                    type="text"
-                                    required
-                                    fullWidth
-                                    name="city"
-                                    label="City"
-                                    id="outlined-basic"
+                                    label="phoneNumber"
+                                    name="phoneNumber"
+                                    value={data.phoneNumber}
                                     onChange={handleChange}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={12}>
-                                {/* <FormControlLabel
-                                    control={
-                                        <Switch name="Status"
-                                                checked={switchToggle}
-                                                onClick={handleStatusToggle}
-                                        />
-                                    }
-                                    labelPlacement="start"
-                                    label="Status"
-                                    value={data.status}
-                                    sx={{marginLeft: '0'}}/> */}
+                                <Typography variant="body2" component="span" >
+                                    <button>{data.accounts.length}</button>
+                                </Typography>
+
+                                  {/* name='accounts'
+                                  type="text"
+                                  fullWidth
+                                  id="outlined-basic"
+                                  label="accounts"
+                                  value={data.accounts}
+                                  onChange={handleChange} */}
+                                
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    type="text"
+                                    fullWidth
+                                    name="province"
+                                    label="province"
+                                    id="outlined-basic"
+                                   value={data.province}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    type="text"
+                                    fullWidth
+                                    name="city"
+                                    label="city"
+                                    id="outlined-basic"
+                                    value={data.city}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={12}>
+                                <TextField
+                                    type="text"
+                                    fullWidth
+                                    name="address"
+                                    label="address"
+                                    id="outlined-basic"
+                                    value={data.address}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <TextField
+                                    type="text"
+                                    fullWidth
+                                    name="postalCode"
+                                    label="postalCode"
+                                    id="outlined-basic"
+                                    value={data.postalCode}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={12}>
                             </Grid>
                         </Grid>
                     </Box>
