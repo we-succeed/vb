@@ -13,8 +13,7 @@ const UserSchema = new Schema({
     postalCode: {type: String},
     email: {type: String, required: true},
     password: {type: String, required: true},
-    confirmPassword: {type: String, required: true},
-    phoneNumber: {type: String, required: true},
+    phoneNumber: {type: String},
     accounts: [],
 });
 

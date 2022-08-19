@@ -2,6 +2,7 @@ const {User} = require("../models/user");
 const bcrypt = require("bcrypt");
 const Joi = require("joi");
 
+
 const login = (async (req, res) => {
     try {
         const {error} = validate(req.body);
@@ -18,9 +19,8 @@ const login = (async (req, res) => {
         );
         if (!validPassword)
             return res.status(401).send({message: "Invalid Password"});
-        const token = user.generateAuthToken();
-        res.status(200).send({user: {token: token, id: user._id}, message: "logged in successfully"});
-
+        const token = user.generateAuthToken();    
+        res.status(200).send({user: {token: token, id: user._id}, message: " Adim logged in successfully"});  
     } catch (error) {
         res.status(500).send({message: "Internal Server Error"});
     }
