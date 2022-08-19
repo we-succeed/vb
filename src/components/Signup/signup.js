@@ -14,21 +14,29 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import { API_USERS } from 'components/commons/module';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+
 
 const theme = createTheme();
 
 const Signup = () => {
   
   const [data, setData] = useState({
+    role: "User",
     firstName: "",
     lastName: "",
     email: "",
     password: "",
+    confirmPassword: "",
     province: "",
     city: "",
     address: "",
     postalCode: "",
-    PhoneNumber: "",
+    phoneNumber: "",
   });
   
   const [error, setError] = useState("");
@@ -46,14 +54,12 @@ const Signup = () => {
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value});
-    console.log(data);
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://localhost:5003/api/users";
-      const result = await axios.post(url, data);
+      const result = await axios.post(API_USERS, data);
       navigate("/login");
     } catch (error) {
       if (
@@ -86,6 +92,17 @@ const Signup = () => {
           Sign up
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <FormControl>
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+        value={data.role}
+      >
+        <FormControlLabel value="Admin" name="role" onChange={handleChange} control={<Radio />} label="Admin" />
+        <FormControlLabel value="User"  name="role" onChange={handleChange} control={<Radio />} label="User" />
+      </RadioGroup>
+    </FormControl>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
             <form autoComplete='off'>
@@ -145,8 +162,22 @@ const Signup = () => {
               />
               </form>
             </Grid>
-          </Grid>
-          {error && <div>{error}</div>}
+            <Grid item xs={12}>
+              <form autoComplete='off'>
+              <TextField
+                required
+                fullWidth
+                name="confirmPassword"
+                label="confirmPassword"
+                type="password"
+                id="confirmPassword"
+                onChange={handleChange}
+                value={data.confirmPassword}
+                autoComplete="new-password"
+              />
+              </form>
+            </Grid>
+                </Grid>
           <Button
             type="submit"
             fullWidth

@@ -12,11 +12,12 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import { API_USER_INFO, getApiRoute } from 'components/commons/module';
 
 const theme = createTheme();
 
 const Profile = () => {
-    const { userId } = useParams();
+    const {userId} = useParams();
     const [data, setData] = useState({
         firstName: "",
         lastName: "",
@@ -45,7 +46,8 @@ const Profile = () => {
     useEffect(() => {
         (async () => {
             try {
-                const url = `http://localhost:5003/api/users/${userId}`;
+                
+                const url = getApiRoute(API_USER_INFO, {userId});
                 const user = await axios.get(url);
                 setData(user.data);
             } catch (error) {
@@ -63,7 +65,7 @@ const Profile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const url = `http://localhost:5003/api/users/${userId}`;
+            const url = getApiRoute(API_USER_INFO, {userId});
             const result  = await axios.put(url, data);
             if (result.status === 200)
                 setAlert({ ...alert, open: true, message: result.data.message, severity:'success' });

@@ -21,7 +21,6 @@ const findAll = (async (req, res) => {
         else
             return res.status(400).send({'message': 'no data'});
     } catch (error) {
-        console.log(error)
         res.status(500).send({message: "Internal Server Error"});
     }
 });
@@ -32,7 +31,6 @@ const findUserById = (async (req, res) => {
         if (user)
             return res.status(200).send(user);
     } catch (e) {
-        console.log(e);
         res.status(500).send({message: "Internal Server Error"});
     }
 })
@@ -55,7 +53,6 @@ const updateUserById = (async (req, res) => {
             upsert: true,
             setDefaultsOnInsert: true
         })
-        console.log(result.modifiedCount)
         if (result && result.modifiedCount > 0)
             return res.status(200).send({message: 'update'})
         else
