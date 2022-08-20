@@ -14,6 +14,8 @@ import Box from "@mui/material/Box";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import {API_USER_PUT, API_USERS_ALL, getApiRoute} from "../commons/module";
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 
 const BootstrapDialog = styled(Dialog)(({theme}) => ({
@@ -25,63 +27,65 @@ const BootstrapDialog = styled(Dialog)(({theme}) => ({
     },
 }));
 
+
+
 const BootstrapDialogTitle = (props) => {
     const {children, onClose, ...other} = props;
 
     return (
-        <DialogTitle sx={{m: 0, p: 2}} {...other}>
-            {children}
-            {onClose ? (
-                <IconButton
-                    aria-label="close"
-                    onClick={onClose}
-                    sx={{
-                        position: 'absolute',
-                        right: 8,
-                        top: 8,
-                        color: (theme) => theme.palette.grey[500],
-                    }}
-                >
-                    <CloseIcon/>
-                </IconButton>
-            ) : null}
-        </DialogTitle>
-    );
-};
+                <DialogTitle sx={{m: 0, p: 2}} {...other}>
+                    {children}
+                    {onClose ? (
+                        <IconButton
+                            aria-label="close"
+                            onClick={onClose}
+                            sx={{
+                                position: 'absolute',
+                                right: 8,
+                                top: 8,
+                                color: (theme) => theme.palette.grey[500],
+                            }}
+                        >
+                            <CloseIcon/>
+                        </IconButton>
+                    ) : null}
+                </DialogTitle>
+            );
+        };
 
-BootstrapDialogTitle.propTypes = {
-    children: PropTypes.node,
-    onClose: PropTypes.func.isRequired,
-};
+        BootstrapDialogTitle.propTypes = {
+            children: PropTypes.node,
+            onClose: PropTypes.func.isRequired,
+        };
 
 
-const UserDialogs = (props) => {
-    const [data, setData] = useState({})
-    useEffect(() => {
-        setData(props.data);
-    }, [props.data])
+        const UserDialogs = (props) => {
+            const [data, setData] = useState({})
+            useEffect(() => {
+                setData(props.data);
+            }, [props.data])
 
-    function handleSubmit(e) {
-        e.preventDefault();
-        axios.post(getApiRoute(API_USERS_ALL), data)
-            .then(res => {
-                props.close();
-            })
-    }
-
-    const handleEdit = (e) => {
-        e.preventDefault();
-        axios.put(getApiRoute(API_USER_PUT,{'dataId': data._id}) ,data)
-            .then(res => {
-                props.close();
-            })
-      
-    }
-    function handleChange(e) {
-        const newdata = {...data}
-        newdata[e.target.name] = e.target.value
-        setData(newdata)
-    } 
+            function handleSubmit(e) {
+                e.preventDefault();
+                axios.post(getApiRoute(API_USERS_ALL), data)
+                    .then(res => {
+                        props.close();
+                    })
+            }
+            const handleEdit = (e) => {
+                e.preventDefault();
+                    axios.put(getApiRoute(API_USER_PUT,{'dataId': data._id}) ,data)
+                    .then(res => {
+                        props.handleAlert(res.data);
+                        props.close();
+                    })
+            
+            }
+            function handleChange(e) {
+                const newdata = {...data}
+                newdata[e.target.name] = e.target.value
+                setData(newdata)
+            } 
     return (
         <div>
             <BootstrapDialog
@@ -206,7 +210,8 @@ const UserDialogs = (props) => {
                         sx={{mt: 3, mb: 2}}
                         onClick={handleEdit}>
                         Edit
-                    </Button>}
+                    </Button>
+                    }
                     <Button
                         type="reset"
                         variant="outlined"

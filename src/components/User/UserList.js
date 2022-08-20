@@ -8,10 +8,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from "@mui/material/Typography";
-import {Button} from "@mui/material";
+import {Alert, Button, Snackbar} from "@mui/material";
 import axios from "axios";
 import UserDialogs from "./UserDialogs";
 import {API_USER_DELETE, API_USERS_ALL, getApiRoute} from "../commons/module";
+
 
 const initialUser = {
   firstName: "",
@@ -23,7 +24,9 @@ const initialUser = {
   address:"",
   postalCode:"",
   password:'000000',
-  accounts:[]
+  accounts:[],
+  confirmPassword:'000000',
+  role:'User'
 }
 
 const UserList = () => {
@@ -31,6 +34,12 @@ const UserList = () => {
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState(initialUser);
   const [openModal, setOpenModal] = useState(false);
+  const [alert, setAlert] = useState({
+    'open':true,
+    'severity':'info',
+    'message':'',
+  })
+
 
   useEffect(() => {
     getData();
@@ -52,17 +61,27 @@ const UserList = () => {
     setOpenModal(false);
     getData();
   };
+
   const handleEditModal = (row) => {
     setUser(row);
     setOpenModal(true);
   }
+
   const reset = () => {
     setUser(initialUser)
+  }
+  const handleAlert = (data) => {
+    setAlert({open: true, severity: 'success', message: data.message})
   }
   const deleteUser = (id) => {
     axios.delete(getApiRoute(API_USER_DELETE,{'userId':id}))
         .then(res => {
             getData();
+            setAlert({
+              'open': true,
+              'severity': 'info',
+              'message': res.data.message
+            })
         })
   }
 
@@ -77,6 +96,7 @@ const UserList = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell>No</TableCell>
+                            <TableCell>Role</TableCell>
                             <TableCell>Name</TableCell>
                             <TableCell>Email</TableCell>
                             <TableCell>PhoneNumber</TableCell>
@@ -89,11 +109,12 @@ const UserList = () => {
                             <TableRow
                                 key={row.id}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}, 'cursor':'pointer'}}
-                                onClick={(e) => handleEditModal(row)}
+                                // onClick={(e) => handleEditModal(row)}
                             >
                                 <TableCell component="th" scope="row">
                                     {idx + 1}
                                 </TableCell>
+                                <TableCell>{row.role}</TableCell>
                                 <TableCell>{row.firstName + row.lastName}</TableCell>
                                 <TableCell>{row.email}</TableCell>
                                 <TableCell>{row.phoneNumber}</TableCell>
@@ -107,7 +128,16 @@ const UserList = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <UserDialogs open={openModal} close={handleModalClose} data={user}/>
+            <UserDialogs open={openModal} close={handleModalClose} data={user} handleAlert={handleAlert}/>
+            <Snackbar
+                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                    open={alert.open}
+                    key={'123'}
+                >
+                    <Alert severity={alert.severity} sx={{ mt: '4rem', width: '100%' }}>
+                    {alert.message}
+                    </Alert>
+                </Snackbar>
         </Container>
   );
 };
