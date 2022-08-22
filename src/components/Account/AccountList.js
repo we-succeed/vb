@@ -61,7 +61,7 @@ const AccountList = () => {
                 getData();
             })
 
-        console.log('Delete Sucess')
+        // console.log('Delete Sucess')
     }
     return (
         <Container component="main">

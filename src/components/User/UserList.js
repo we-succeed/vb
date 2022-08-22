@@ -35,7 +35,7 @@ const UserList = () => {
   const [user, setUser] = useState(initialUser);
   const [openModal, setOpenModal] = useState(false);
   const [alert, setAlert] = useState({
-    'open':true,
+    'open':false,
     'severity':'info',
     'message':'',
   })
