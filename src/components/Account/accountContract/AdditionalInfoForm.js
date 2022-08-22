@@ -14,7 +14,7 @@ export default function AdditionalInfoForm(props) {
                     <TextField
                         fullWidth
                         label="name"
-                        value={props.data.name}
+                        value={props.userAccount.name}
                         name="name"
                         onChange={props.onHandleChange}/>
                 </Grid>
@@ -25,7 +25,7 @@ export default function AdditionalInfoForm(props) {
                         multiline
                         rows={4}
                         fullWidth
-                        value={props.data.description}
+                        value={props.userAccount.description}
                         onChange={props.onHandleChange}
                     />
                 </Grid>

@@ -12,9 +12,9 @@ const create = (async (req, res) => {
     }
 });
 
-const findAll = (async (req, res) => {
+const findAllUser = (async (req, res) => {
     try {
-        const users = await User.find({});
+        const users = await User.find({}, 'firstName lastName province city address postalCode email accounts phoneNumber role');
         if (users)
             return res
                 .status(200).send(users);
@@ -27,7 +27,7 @@ const findAll = (async (req, res) => {
 
 const findUserById = (async (req, res) => {
     try {
-        const user = await User.findById({_id: req.params.user_id});
+        const user = await User.findById({_id: req.params.user_id}, 'firstName lastName province city address postalCode email accounts phoneNumber role');
         if (user)
             return res.status(200).send(user);
     } catch (e) {
@@ -65,9 +65,10 @@ const updateUserById = (async (req, res) => {
 const getUserAccounts = (async (req, res) => {
     try {
         const userAccounts = await User.findById({_id: req.params.user_id}, 'accounts')
-        if (userAccounts)
+            .populate({ path : 'accounts', populate:{path: 'account', model: 'Account'}})
+        if (userAccounts) {
             return res.status(200).send(userAccounts);
-        else
+        } else
             return res.status(400).send({message: 'Bad request'})
     } catch (e) {
         res.status(500).send({message: "Internal Server Error"});
@@ -76,7 +77,7 @@ const getUserAccounts = (async (req, res) => {
 
 module.exports = {
     create,
-    findAll,
+    findAllUser,
     findUserById,
     deleteUserById,
     updateUserById,

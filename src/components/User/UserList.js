@@ -22,7 +22,6 @@ const initialUser = {
   city: "",
   address:"",
   postalCode:"",
-  password:'000000',
   accounts:[]
 }
 
@@ -39,7 +38,8 @@ const UserList = () => {
   const getData = () => {
     axios.get(getApiRoute(API_USERS_ALL))
         .then((res) => {
-          setUsers(res.data);
+         //console.log(res.data);
+            setUsers(res.data);
         });
 }
 
@@ -80,7 +80,7 @@ const UserList = () => {
                             <TableCell>Name</TableCell>
                             <TableCell>Email</TableCell>
                             <TableCell>PhoneNumber</TableCell>
-                            <TableCell>Account</TableCell>
+                            <TableCell>Accounts</TableCell>
                             <TableCell>Action</TableCell>
                         </TableRow>
                     </TableHead>
@@ -97,7 +97,7 @@ const UserList = () => {
                                 <TableCell>{row.firstName + row.lastName}</TableCell>
                                 <TableCell>{row.email}</TableCell>
                                 <TableCell>{row.phoneNumber}</TableCell>
-                                <TableCell>{row.accounts.length}</TableCell>
+                                <TableCell>{row.accounts?.length}</TableCell>
                                 <TableCell>
                                     <Button variant="contained" onClick={(e) => handleEditModal(row)}>update</Button>
                                     <Button variant="outlined" color="error" onClick={(e) => deleteUser(row._id)}>delete</Button>

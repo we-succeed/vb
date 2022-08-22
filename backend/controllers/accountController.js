@@ -1,5 +1,5 @@
 const Account = require('../models/account');
-const {User, AccountItem} = require("../models/user");
+const {User, UserAccount} = require("../models/user");
 
 //get all accounts
 const findAccountAll = async (req, res) => {
@@ -108,26 +108,20 @@ const userAccountInfo = async (req, res) => {
 }
 //Open User Account
 const openUserAccount = async(req, res) => {
-    let user = req.body.user.user;
     try {
-        let accountItem = AccountItem;
-        accountItem['accountId'] = req.params.account_id
-        accountItem['number'] = accountNumber()
-        accountItem['name'] = req.body.userAccount.name
-        accountItem['description'] = req.body.userAccount.description
-        accountItem['created_at'] = new Date();
-        accountItem['updated_at'] = new Date();
-        const result  = await User.findOneAndUpdate({_id: user._id}, { $push: { accounts: accountItem } },{
+        const userAccount = await new UserAccount({
+            account: req.body.account._id,
+            name: req.body.userAccount.name,
+            description: req.body.userAccount.description,
+            number: accountNumber()
+        }).save();
+        const result  = await User.findOneAndUpdate({_id: req.body.user._id}, { $push: { accounts: {_id: userAccount._id} } },{
             upsert: true,
             setDefaultsOnInsert: true
         })
-        if (result)
-            res.status(200).json({'accountNumber': accountItem['number']})
     } catch (e) {
         res.status(500).json({message: 'Internal Server Error'})
     }
-
-
 }
 //AddAccountItem
 const accountNumber = () => {

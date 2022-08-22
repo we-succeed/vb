@@ -39,6 +39,6 @@ yarn-error.log*
 
 .idea/*
 
-/backend/.env
+backend/.env
 
 src/env.js

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const accountController = require('../controllers/accountController')
 
-//restfullapi
+//restfullAPI
 router.get('/accounts', accountController.findAccountAll)
 router.get('/accounts/:account_id', accountController.findAccountById)
 router.post('/accounts', accountController.createAccount)
