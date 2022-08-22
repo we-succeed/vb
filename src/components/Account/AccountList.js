@@ -59,8 +59,9 @@ const AccountList = () => {
         axios.delete(getApiRoute(API_ACCOUNT_DELETE,{'accountId': id}))
             .then(res => {
                 getData();
-                // console.log(res.data.message)
             })
+
+        console.log('Delete Sucess')
     }
     return (
         <Container component="main">
@@ -89,7 +90,6 @@ const AccountList = () => {
                             <TableRow
                                 key={row.id}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}, 'cursor':'pointer'}}
-                                onClick={(e) => handleEditModal(row)}
                             >
                                 <TableCell component="th" scope="row">
                                     {idx + 1}

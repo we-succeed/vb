@@ -110,7 +110,7 @@ const AccountDialogs = (props) => {
                             onChange={handleChange}
                         >
                             <FormControlLabel value="saving" control={<Radio/>} label="Saving"/>
-                            <FormControlLabel value="chequing" control={<Radio/>} label="Credit"/>
+                            <FormControlLabel value="chequing" control={<Radio/>} label="Chequing"/>
                         </RadioGroup>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={12}>
