@@ -34,6 +34,11 @@ export const USER_MENUS = [
         path:'/user/:userId/bills',
         icon:'monetization_on'
     },
+    {
+        name:'Contact',
+        path:'/user/:userId/contacts',
+        icon:'monetization_on'
+    }
 ]
 
 export const ADMIN_MENUS = [

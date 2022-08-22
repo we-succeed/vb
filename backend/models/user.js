@@ -18,9 +18,9 @@ const UserSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'UserAccount'
     }],
-    contract: [{
+    contacts: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Contract'
+        ref: 'Contact'
     }]
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at'} });
 
@@ -56,6 +56,10 @@ const UserAccountSchema = new Schema({
     name: {type: String},
     description: {type: String},
     balance: {type: Number, defaultValue: 0},
+    transactions: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Tx'
+    }],
     transfers: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Transfer'
