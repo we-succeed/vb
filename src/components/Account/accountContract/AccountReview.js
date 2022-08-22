@@ -18,13 +18,13 @@ export default function AccountReview(props) {
                 <ListItem sx={{ py: 1, px: 0 }}>
                     <ListItemText primary="User Name" />
                     <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                        {props.data.user?.firstName}{props.data.user?.lastName}
+                        {props.user?.firstName}{props.user?.lastName}
                     </Typography>
                 </ListItem>
                 <ListItem sx={{ py: 1, px: 0 }}>
                     <ListItemText primary="User Email" />
                     <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                        {props.data.user?.email}
+                        {props.user?.email}
                     </Typography>
                 </ListItem>
             </List>
@@ -35,19 +35,19 @@ export default function AccountReview(props) {
                 <ListItem sx={{ py: 1, px: 0 }}>
                     <ListItemText primary="Account Type" />
                     <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                        {props.data.account?.type}
+                        {props.account?.type}
                     </Typography>
                 </ListItem>
                 <ListItem sx={{ py: 1, px: 0 }}>
                     <ListItemText primary="Account Interest" />
                     <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                        {props.data.account?.interest} %
+                        {props.account?.interest} %
                     </Typography>
                 </ListItem>
                 <ListItem sx={{ py: 1, px: 0 }}>
                     <ListItemText primary="Account Name" />
                     <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                        {props.data.account?.name}
+                        {props.account?.name}
                     </Typography>
                 </ListItem>
                 <Grid container spacing={3}>
@@ -61,7 +61,7 @@ export default function AccountReview(props) {
                             fullWidth
                             variant={"filled"}
                             disabled={true}
-                            value={props.data.account?.description}
+                            value={props.account?.description}
                         />
                     </Grid>
                 </Grid>

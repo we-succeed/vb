@@ -3,17 +3,6 @@ const Schema = mongoose.Schema;
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 
-const AccountItem = {
-    accountId: '',
-    number: 0,
-    name: '',
-    description: '',
-    balance: 0,
-    transfers: [],
-    created_at: '',
-    updated_at: ''
-};
-
 const UserSchema = new Schema({
     role: {type: String, required: true},
     firstName: {type: String, required: true},
@@ -25,8 +14,15 @@ const UserSchema = new Schema({
     email: {type: String, required: true},
     password: {type: String, required: true},
     phoneNumber: {type: String},
-    accounts: [AccountItem],
-});
+    accounts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'UserAccount'
+    }],
+    contract: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Contract'
+    }]
+}, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at'} });
 
 
 UserSchema.methods.generateAuthToken = function () {
@@ -54,7 +50,19 @@ const validateUser = (data) => {
 	return schema.validate(data);
 };
 
+const UserAccountSchema = new Schema({
+    account: {type: mongoose.Schema.Types.ObjectId, ref: 'Account'},
+    number: {type: Number},
+    name: {type: String},
+    description: {type: String},
+    balance: {type: Number, defaultValue: 0},
+    transfers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Transfer'
+    }]
+}, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at'} })
 // Create model for user
 const User = mongoose.model('User', UserSchema)
+const UserAccount = mongoose.model('UserAccount', UserAccountSchema)
 
-module.exports = {User, validateUser, AccountItem}
+module.exports = {User, validateUser, UserAccount}

@@ -10,7 +10,7 @@ const middlewares = [
     hashingPassword
 ]
 
-router.get('/users', userController.findAll)
+router.get('/users', userController.findAllUser)
 router.get('/users/:user_id', userController.findUserById)
 router.post('/users', middlewares, userController.create)
 router.put('/users/:user_id', userController.updateUserById)
