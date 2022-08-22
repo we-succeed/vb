@@ -41,4 +41,4 @@ yarn-error.log*
 
 /backend/.env
 
-src/env.js
+/src/env.js

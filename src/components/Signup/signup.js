@@ -19,6 +19,8 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { IconButton, InputAdornment, OutlinedInput } from '@mui/material';
 
 
 const theme = createTheme();
@@ -37,9 +39,24 @@ const Signup = () => {
     address: "",
     postalCode: "",
     phoneNumber: "",
+    showPassword: false,
+    showConfirmPassword: false,
   });
   
-  const [error, setError] = useState("");
+  const [error, setError] = useState({
+    role: "User",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    province: "",
+    city: "",
+    address: "",
+    postalCode: "",
+    phoneNumber: "",
+  });
+
   const [alert, setAlert] = useState({
     open: false,
     message: '',
@@ -73,6 +90,71 @@ const Signup = () => {
     }
   }
 
+  const onInputChange = e => {
+    const { name, value } = e.target;
+    setData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    validateInput(e);
+  }
+
+  const validateInput = e => {
+    let { name, value } = e.target;
+    setError(prev => {
+      const stateObj = { ...prev, [name]: "" };
+   
+      switch (name) {
+        case "username":
+          if (!value) {
+            stateObj[name] = "Please enter Username.";
+          }
+          break;
+   
+        case "password":
+          if (!value) {
+            stateObj[name] = "Please enter Password.";
+          } else if (data.confirmPassword && value !== data.confirmPassword) {
+            stateObj["confirmPassword"] = "Password and Confirm Password does not match.";
+          } else {
+            stateObj["confirmPassword"] = data.confirmPassword ? "" : error.confirmPassword;
+          }
+          break;
+   
+        case "confirmPassword":
+          if (!value) {
+            stateObj[name] = "Please enter Confirm Password.";
+          } else if (data.password && value !== data.password) {
+            stateObj[name] = "Password and Confirm Password does not match.";
+          }
+          break;
+   
+        default:
+          break;
+      }
+   
+      return stateObj;
+    });
+  }
+
+  const handleClickShowPassword = () => {
+    setData({
+      ...data,
+      showPassword: !data.showPassword,
+    });
+  };
+
+  const handleClickShowConfirmPassword = () => {
+    setData({
+      ...data,
+      showConfirmPassword: !data.showConfirmPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <ThemeProvider theme={theme}>
     <Container component="main" maxWidth="xs">
@@ -95,6 +177,7 @@ const Signup = () => {
           <FormControl>
       <RadioGroup
         row
+        space-around
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="row-radio-buttons-group"
         value={data.role}
@@ -149,32 +232,58 @@ const Signup = () => {
             </Grid>
             <Grid item xs={12}>
               <form autoComplete='off'>
-              <TextField
+              <OutlinedInput
+                id='standard-adornment-password'
                 required
                 fullWidth
                 name="password"
                 label="Password"
-                type="password"
-                id="password"
-                onChange={handleChange}
+                type={data.showPassword ? 'text' : 'password'}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {data.showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
                 value={data.password}
-                autoComplete="new-password"
-              />
+                onChange={onInputChange}
+                onBlur={validateInput}
+                />
+                {error.password && <span className='err'>{error.password}</span>}
               </form>
             </Grid>
             <Grid item xs={12}>
               <form autoComplete='off'>
-              <TextField
+              <OutlinedInput
+                id='standard-adornment-password'
                 required
                 fullWidth
                 name="confirmPassword"
-                label="confirmPassword"
-                type="password"
-                id="confirmPassword"
-                onChange={handleChange}
+                label="Confirm Password"
+                type={data.showConfirmPassword ? 'text' : 'password'}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowConfirmPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {data.showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
                 value={data.confirmPassword}
-                autoComplete="new-password"
-              />
+                onChange={onInputChange}
+                onBlur={validateInput}
+                />
+                {error.confirmPassword && <span className='err'>{error.confirmPassword}</span>}
               </form>
             </Grid>
                 </Grid>

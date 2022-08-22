@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import AccountInfoForm from "./AccountInfoForm";
 import AdditionalInfoForm from "./AdditionalInfoForm";
 import AccountReview from "./AccountReview";
-import {API_ACCOUNT_ADD_ITEM, API_ACCOUNT_ITEM, getApiRoute} from "../../commons/module";
+import {API_ACCOUNT_ITEM, API_OPEN_ACCOUNT, getApiRoute} from "../../commons/module";
 import axios from "axios";
 
 const steps = ['Account Information', 'Additional Information', 'Review your account'];
@@ -18,6 +18,7 @@ const steps = ['Account Information', 'Additional Information', 'Review your acc
 export default function AccountContract(props) {
     const params = useParams();
     const [user, setUser] = useState({});
+    const [account, setAccount] = useState({});
     const [activeStep, setActiveStep] = useState(0);
     const [isLoading, setIsLoading] = useState(false)
     const handleNext = () => {
@@ -37,14 +38,15 @@ export default function AccountContract(props) {
         newdata[e.target.name] = e.target.value
         setUserAccount(newdata)
     }
+
     function getStepContent(step, data) {
         switch (step) {
             case 0:
-                return <AccountInfoForm data={data}/>;
+                return <AccountInfoForm account={account}/>;
             case 1:
-                return <AdditionalInfoForm data={userAccount} onHandleChange={handleChange}/>;
+                return <AdditionalInfoForm userAccount={userAccount} onHandleChange={handleChange}/>;
             case 2:
-                return <AccountReview data={data} userAccount = {userAccount}/>;
+                return <AccountReview user={user} account={account} userAccount={userAccount} />;
             default:
                 throw new Error('Unknown step');
         }
@@ -62,15 +64,16 @@ export default function AccountContract(props) {
             },
             body: JSON.stringify({'user_id': props.auth.id}),
         })
-        .then((response) => response.json())
-        .then((data) => {
-            setUser(data);
-            setIsLoading(true);
-        });
+            .then((response) => response.json())
+            .then((data) => {
+                setUser(data.user);
+                setAccount(data.account)
+                setIsLoading(true);
+            });
     }
-    const handleSubmit = async() => {
-        let data = {user, userAccount}
-        const result = await axios.post(getApiRoute(API_ACCOUNT_ADD_ITEM, {'accountId': params.accountId}), data);
+    const handleSubmit = async () => {
+        let data = {user, account, userAccount}
+        const result = await axios.post(getApiRoute(API_OPEN_ACCOUNT, {'accountId': params.accountId}), data);
         if (result.status === 200) {
             setActiveStep(activeStep + 1);
             setUserAccount((prevState) => ({

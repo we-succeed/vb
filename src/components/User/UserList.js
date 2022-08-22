@@ -8,11 +8,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from "@mui/material/Typography";
-import {Alert, Button, Snackbar} from "@mui/material";
+import {Button} from "@mui/material";
 import axios from "axios";
 import UserDialogs from "./UserDialogs";
 import {API_USER_DELETE, API_USERS_ALL, getApiRoute} from "../commons/module";
-
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 const initialUser = {
   firstName: "",
@@ -96,11 +97,10 @@ const UserList = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell>No</TableCell>
-                            <TableCell>Role</TableCell>
                             <TableCell>Name</TableCell>
                             <TableCell>Email</TableCell>
                             <TableCell>PhoneNumber</TableCell>
-                            <TableCell>Account</TableCell>
+                            <TableCell>Accounts</TableCell>
                             <TableCell>Action</TableCell>
                         </TableRow>
                     </TableHead>
@@ -109,7 +109,7 @@ const UserList = () => {
                             <TableRow
                                 key={row.id}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}, 'cursor':'pointer'}}
-                                // onClick={(e) => handleEditModal(row)}
+                                onClick={(e) => handleEditModal(row)}
                             >
                                 <TableCell component="th" scope="row">
                                     {idx + 1}
@@ -118,7 +118,7 @@ const UserList = () => {
                                 <TableCell>{row.firstName + row.lastName}</TableCell>
                                 <TableCell>{row.email}</TableCell>
                                 <TableCell>{row.phoneNumber}</TableCell>
-                                <TableCell>{row.accounts.length}</TableCell>
+                                <TableCell>{row.accounts?.length}</TableCell>
                                 <TableCell>
                                     <Button variant="contained" onClick={(e) => handleEditModal(row)}>update</Button>
                                     <Button variant="outlined" color="error" onClick={(e) => deleteUser(row._id)}>delete</Button>

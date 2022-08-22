@@ -32,6 +32,6 @@ const AccountSchema = new Schema({
     }
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at'} })
 //Create model for account
-const Account = mongoose.model('accounts', AccountSchema);
+const Account = mongoose.model('Account', AccountSchema);
 
 module.exports = Account

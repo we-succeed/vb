@@ -16,19 +16,19 @@ export default function AccountInfoForm(props) {
                 <ListItem sx={{ py: 1, px: 0 }}>
                     <ListItemText primary="Type" />
                     <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                        {props.data.account.type.toUpperCase()}
+                        {props.account.type.toUpperCase()}
                     </Typography>
                 </ListItem>
                 <ListItem sx={{ py: 1, px: 0 }}>
                     <ListItemText primary="Name" />
                     <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                        {props.data.account.name}
+                        {props.account.name}
                     </Typography>
                 </ListItem>
                 <ListItem sx={{ py: 1, px: 0 }}>
                     <ListItemText primary="Interest" />
                     <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                        {props.data.account.interest}%
+                        {props.account.interest}%
                     </Typography>
                 </ListItem>
             </List>
@@ -43,7 +43,7 @@ export default function AccountInfoForm(props) {
                         fullWidth
                         variant={"filled"}
                         disabled={true}
-                        value={props.data.account.description}
+                        value={props.account.description}
                     />
                 </Grid>
             </Grid>

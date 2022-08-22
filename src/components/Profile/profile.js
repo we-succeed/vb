@@ -135,13 +135,14 @@ const Profile = () => {
                                     name="email"
                                     value={data.email}
                                     autoComplete="email"
+                                    disabled
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
                                     fullWidth
                                     name="address"
-                                    label="address"
+                                    label="Address"
                                     type="address"
                                     id="address"
                                     onChange={handleInput}
@@ -153,7 +154,7 @@ const Profile = () => {
                                 <TextField
                                     fullWidth
                                     name="city"
-                                    label="city"
+                                    label="City"
                                     type="city"
                                     id="city"
                                     onChange={handleInput}
@@ -165,7 +166,7 @@ const Profile = () => {
                                 <TextField
                                     fullWidth
                                     name="province"
-                                    label="province"
+                                    label="Province"
                                     type="province"
                                     id="province"
                                     onChange={handleInput}
@@ -177,7 +178,7 @@ const Profile = () => {
                                 <TextField
                                     fullWidth
                                     name="postalCode"
-                                    label="postalCode"
+                                    label="Postal Code"
                                     type="postalCode"
                                     id="postalCode"
                                     onChange={handleInput}
@@ -189,7 +190,7 @@ const Profile = () => {
                                 <TextField
                                     fullWidth
                                     name="phoneNumber"
-                                    label="phoneNumber"
+                                    label="Phone Number"
                                     type="phoneNumber"
                                     id="phoneNumber"
                                     onChange={handleInput}

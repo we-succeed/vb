@@ -43,19 +43,19 @@ const AccountSummary = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {accounts && accounts.map((account, idx) => (
+                        {accounts && accounts.map((ua, idx) => (
                             <TableRow
-                                key={account.name}
+                                key={ua.name}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell component="th" scope="row">
                                     {idx + 1}
                                 </TableCell>
-                                <TableCell>{account.type}</TableCell>
-                                <TableCell>{account.name}</TableCell>
-                                <TableCell>{account.description}</TableCell>
-                                <TableCell>{account.interest}</TableCell>
-                                <TableCell align='right'>{account.balance}</TableCell>
+                                <TableCell>{ua.account.type}</TableCell>
+                                <TableCell>{ua.account.interest}</TableCell>
+                                <TableCell>{ua.name}</TableCell>
+                                <TableCell>{ua.description}</TableCell>
+                                <TableCell align='right'>{ua.balance}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
