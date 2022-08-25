@@ -10,9 +10,11 @@ import TableRow from '@mui/material/TableRow';
 import Typography from "@mui/material/Typography";
 import {Button} from "@mui/material";
 import axios from "axios";
+import ContactDialogs from "./ContactDialogs";
 // import {API_USER_DELETE, API_USERS_ALL, getApiRoute} from "../commons/module";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { useParams } from 'react-router-dom';
 
 const initialContact = {
   name: "",
@@ -21,7 +23,7 @@ const initialContact = {
 }
 
 const ContactList = () => {
-
+  const params = useParams();
   const [contacts, setContacts] = useState([]);
   const [contact, setContact] = useState(initialContact);
   const [openModal, setOpenModal] = useState(false);
@@ -32,7 +34,7 @@ const ContactList = () => {
   }, [])
 
   const getData = () => {
-    axios.get(`http://localhost:5003/api/user/:userId/contacts`)
+    axios.get(`http://localhost:5003/api/contacts/${params.userId}`)
         .then((res) => {
           setContacts(res.data);
         });
@@ -57,19 +59,19 @@ const ContactList = () => {
     setContact(initialContact)
   }
 
-  // const deleteUser = (id) => {
-  //   axios.delete(getApiRoute(API_USER_DELETE,{'userId':id}))
-  //       .then(res => {
-  //           getData();
-  //       })
-  // }
+  const deleteContact = (id) => {
+    axios.delete(`http://localhost:5003/api/contacts/${id}`)
+        .then(res => {
+            getData();
+        })
+}
 
   return (
     <Container component="main">
             <Typography variant="h5" gutterBottom component="div" mt={2}>
                 Contact Management
             </Typography>
-            {/* <Button variant="contained" onClick={handleModalOpen}> Add User </Button> */}
+            <Button variant="contained" onClick={handleModalOpen}> Add Contact </Button>
             <TableContainer>
                 <Table aria-label="simple table">
                     <TableHead>
@@ -85,23 +87,24 @@ const ContactList = () => {
                             <TableRow
                                 key={row.id}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}, 'cursor':'pointer'}}
-                                onClick={(e) => handleEditModal(row)}
+                                
                             >
                                 <TableCell component="th" scope="row">
                                     {idx + 1}
                                 </TableCell>
                                 <TableCell>{row.name}</TableCell>
                                 <TableCell>{row.email}</TableCell>
-                                <TableCell>{row.phoneNumber}</TableCell>
+                                <TableCell>{row.mobile}</TableCell>
                                 <TableCell>
                                     <Button variant="contained" onClick={(e) => handleEditModal(row)}>update</Button>
-                                    <Button variant="outlined" color="error">delete</Button>
+                                    <Button variant="outlined" color="error" onClick={(e) => deleteContact(row._id)}>delete</Button>
                                 </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
+            <ContactDialogs open={openModal} close={handleModalClose} data={contact} userId={params.userId}/>
         </Container>
   );
 };

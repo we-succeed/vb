@@ -10,6 +10,7 @@ export const API_ACCOUNT_DELETE = `/admin/accounts/:accountId`;
 export const API_USERS_ALL = `/users`;
 export const API_USER_PUT = `/users/:dataId`;
 export const API_USER_DELETE = `/users/:userId`;
+export const API_CONTACT_PUT = `/contacts/:dataId`;
 
 
 export const API_USER_INFO = `/users/:userId`;
@@ -37,8 +38,11 @@ export const USER_MENUS = [
     {
         name:'Contact',
         path:'/user/:userId/contacts',
-        icon:'monetization_on'
+        icon:'perm_phone_msg'
     }
+
+  
+    
 ]
 
 export const ADMIN_MENUS = [
