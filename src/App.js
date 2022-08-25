@@ -13,6 +13,9 @@ import AccountSummary from "./components/Account/AccountSummary";
 import AccountContract from "./components/Account/accountContract/AccountContract";
 import AccountList from "./components/Account/AccountList";
 import UserList from "./components/User/UserList";
+import Transaction from "./components/Transfer/Transaction/Tx";
+import TxHistory from "./components/Transfer/Transaction/TxHistory";
+import UserAccounts from "components/Transfer/Transaction/userAccountList";
 
 const App = () => {
     const [open, setOpen] = React.useState(false);
@@ -44,6 +47,9 @@ const App = () => {
                             <Route path="/admin/accounts" element={<PrivateRoute auth={auth} children={<AccountList/>}/>}/>
                             <Route path="/login" element={<Login/>} />
                             <Route path="/signup" element={<Signup/>}/>
+                            <Route path="/tx" element={<PrivateRoute auth={auth} children={<Transaction/>}/>}/>
+                            <Route path="/tx/:userAccountId" element={<PrivateRoute auth={auth} children={<TxHistory/>}/>}/>
+                            <Route path="/user/:userId/txs" element={<PrivateRoute auth={auth} children={<UserAccounts/>}/>}/>
                         </Routes>
                     </CommonUI.Main>
                 </Router>

@@ -65,6 +65,7 @@ const UserAccountSchema = new Schema({
         ref: 'Transfer'
     }]
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at'} })
+
 // Create model for user
 const User = mongoose.model('User', UserSchema)
 const UserAccount = mongoose.model('UserAccount', UserAccountSchema)
