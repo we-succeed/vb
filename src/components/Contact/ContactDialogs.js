@@ -110,7 +110,6 @@ const BootstrapDialogTitle = (props) => {
                             </Grid>
                             <Grid item xs={12} sm={12}>
                                 <TextField
-                                    disabled = {(data['_id'])}
                                     type="text"
                                     fullWidth
                                     id="outlined-basic"

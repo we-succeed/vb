@@ -39,6 +39,7 @@ const deleteContractById = (async (req, res) => {
     }
 })
 
+
 const updateContactById = (async (req, res) => {
     try {
         const result = await Contact.updateOne({ _id: req.params.contact_id }, req.body, {
@@ -48,13 +49,13 @@ const updateContactById = (async (req, res) => {
         if (result && result.modifiedCount > 0)
             return res.status(200).send({ message: 'update' })
         else
-            return res.status(400).send({ message: '' })
+            return res.status(400).send({ message: 'no update' })
     } catch (e) {
         res.status(500).send({ message: "Internal Server Error" });
     }
 })
 
-const openContact = async (req, res) => {
+const addContact = async (req, res) => {
     try {
         const user = await new User({
             contact: req.body.contact._id
@@ -74,5 +75,5 @@ module.exports = {
     findContactById,
     deleteContractById,
     updateContactById,
-    openContact
+    addContact
 }
