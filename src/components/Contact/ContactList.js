@@ -1,25 +1,55 @@
-import * as React from 'react';
-import {useEffect, useState} from 'react';
+import { Button } from "@mui/material";
 import Container from '@mui/material/Container';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import Typography from "@mui/material/Typography";
-import {Button} from "@mui/material";
 import axios from "axios";
-import ContactDialogs from "./ContactDialogs";
+import * as React from 'react';
+import { useEffect, useState } from 'react';
 // import {API_USER_DELETE, API_USERS_ALL, getApiRoute} from "../commons/module";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 import { useParams } from 'react-router-dom';
+import AddEditDialog from "../../components/shared-dialog/AddEditDialog";
+import AlertDialog from "../../components/shared-dialog/AlertDialog";
+import DynamicTable from "../../components/shared-forms/DynamicTable";
+import VBInputField from "../../components/shared-forms/VBInputField";
+import SnackbarAlert from "components/shared-dialog/SnackbarAlert";
 
 const initialContact = {
   name: "",
   email: "",
   mobile:""
+}
+const initialAlert = {
+  open: false,
+  message: '',
+  status: 0
+}
+const ContactTemplate = (props) => {
+  const [contact, setContact] = useState(props.data);
+  console.log(contact);
+  useEffect(()=>{
+    setContact(props.data);
+  },[props.data])
+  //Data that make up page
+  const FormFields = {
+      schema: [
+          {id: 'name', label: 'Name', name: 'name', type: 'default', required:true},
+          {id: 'email', label: 'Email', name: 'email', type: 'default', required:true},
+          {id: 'mobile', label: 'Mobile', name: 'mobile', type: 'default', required:true},
+      ]
+  }
+
+  return (
+      <Box component="form" noValidate>
+          <Grid container spacing={2}>
+            {FormFields.schema.map((form, idx) => (
+                    <Grid key={`user-grid-${idx}`} item xs={12} sm={(['name', 'email'].includes(form.id)) ? 6 : 12}>
+                        <VBInputField key={`user-profile-grid-${idx}`} form={form} data={contact} cb={props.cb}/>
+                    </Grid>
+                ))}
+          </Grid>
+      </Box>
+  )
 }
 
 const ContactList = () => {
@@ -27,7 +57,8 @@ const ContactList = () => {
   const [contacts, setContacts] = useState([]);
   const [contact, setContact] = useState(initialContact);
   const [openModal, setOpenModal] = useState(false);
-
+  const [openAlertModal, setOpenAlertModal] = useState(false);
+  const [alert, setAlert] = useState(initialAlert);
 
   useEffect(() => {
     getData();
@@ -39,31 +70,91 @@ const ContactList = () => {
           setContacts(res.data);
         });
 }
+  const addContact= () => {
+    axios.post(`http://localhost:5003/api/contacts/${params.userId}`, contact)
+        .then(res => {
+          setAlert({...alert, open: true, message: res.data.message, status: res.status});
+          handleModalClose();
+        })
+  }
+  const updateContact = (id) => {
+    axios.put(`http://localhost:5003/api/contacts/${id}`, contact)
+    .then(res => {
+      setAlert({...alert, open: true, message: res.data.message, status: res.status});
+      handleModalClose();
+    })
+
+  }
+  const deleteContact = (id) => {
+    axios.delete(`http://localhost:5003/api/contacts/${id}`)
+        .then(res => {
+          setAlert({...alert, open: true, message: res.data.message, status: res.status});
+          handleAlertModalClose();
+        })
+}
+const resetContact = () => {
+  setContact(initialContact);
+}
 
   const handleModalOpen = () => {
     setOpenModal(true)
 }
 
-  const handleModalClose = () => {
-    reset();
-    setOpenModal(false);
-    getData();
-  };
-
-  const handleEditModal = (row) => {
-    setContact(row);
-    setOpenModal(true);
+const handleModalClose = () => {
+  setOpenModal(false);
+  getData();
+  resetContact();
+};
+const handleAlertModalClose = () => {
+  setOpenAlertModal(false);
+  getData();
+};
+const AlertFormData = {
+  title: "Are you absolutely sure?",
+  template: "",
+  cb: {
+      handleDelete: (contact) => {
+          deleteContact(contact._id)
+      }
   }
+}
 
-  const reset = () => {
-    setContact(initialContact)
+
+const ContactTBData = {
+  schema: [
+      {head: 'Name', cols: 'name', format: 'default'},
+      {head: 'Email', cols: 'email', format: 'default'},
+      {head: 'Mobile', cols: 'mobile', format: 'default'},
+      {head: 'Action', cols: 'action', format: 'btnGroup'},
+
+  ],
+  cb: {
+      handleEdit: (row) => {
+          setContact(row);
+          setOpenModal(true);
+      },
+      handleDelete: (row) => {
+          setContact(row);
+          setOpenAlertModal(true);
+      }
   }
-
-  const deleteContact = (id) => {
-    axios.delete(`http://localhost:5003/api/contacts/${id}`)
-        .then(res => {
-            getData();
-        })
+}
+const AddEditFormData = {
+  title:  contact._id === undefined ? 'Add Account' : 'Edit Account',
+  cb: {
+      add: () => {
+          addContact(contact)
+      },
+      edit: () => {
+          updateContact(contact._id);
+      }
+  }
+}
+//Callback functions that make up page
+const PageCallBack = {
+  inputChange: (e) => {
+      setContact({...contact, [e.target.name]: e.target.value});
+  }
 }
 
   return (
@@ -72,39 +163,19 @@ const ContactList = () => {
                 Contact Management
             </Typography>
             <Button variant="contained" onClick={handleModalOpen}> Add Contact </Button>
-            <TableContainer>
-                <Table aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>No</TableCell>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Email</TableCell>
-                            <TableCell>PhoneNumber</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {contacts && contacts.map((row, idx) => (
-                            <TableRow
-                                key={row.id}
-                                sx={{'&:last-child td, &:last-child th': {border: 0}, 'cursor':'pointer'}}
-                                
-                            >
-                                <TableCell component="th" scope="row">
-                                    {idx + 1}
-                                </TableCell>
-                                <TableCell>{row.name}</TableCell>
-                                <TableCell>{row.email}</TableCell>
-                                <TableCell>{row.mobile}</TableCell>
-                                <TableCell>
-                                    <Button variant="contained" onClick={(e) => handleEditModal(row)}>update</Button>
-                                    <Button variant="outlined" color="error" onClick={(e) => deleteContact(row._id)}>delete</Button>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <ContactDialogs open={openModal} close={handleModalClose} data={contact} userId={params.userId}/>
+            {contacts.length !== 0 ?
+                <DynamicTable form={ContactTBData} data={contacts}/>
+                :
+                <Typography variant="h5" gutterBottom component="div" mt={2}>
+                    No data
+                </Typography>
+            }
+            <AlertDialog open={openAlertModal} close={handleAlertModalClose} data={contact} form={AlertFormData}/>
+            <AddEditDialog open={openModal} close={handleModalClose} form={AddEditFormData}>
+                <ContactTemplate data={contact} cb={PageCallBack}/>
+            </AddEditDialog>
+             <SnackbarAlert alert={alert} />   
+
         </Container>
   );
 };
