@@ -31,6 +31,11 @@ export const USER_MENUS = [
         icon:'currency_exchange'
     },
     {
+        name:'Etransfer',
+        path:'/user/:userId/transfer',
+        icon:'monetization_on'
+    },
+    {
         name:'Bill Payment',
         path:'/user/:userId/bills',
         icon:'monetization_on'

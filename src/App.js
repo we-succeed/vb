@@ -8,6 +8,7 @@ import AccountContract from "./components/Account/accountContract/AccountContrac
 import Transaction from "./components/Transfer/Transaction/Tx";
 import TxHistory from "./components/Transfer/Transaction/TxHistory";
 import UserAccounts from "components/Transfer/Transaction/userAccountList";
+<<<<<<< Updated upstream
 import ContactList from "./components/Contact/ContactList";
 import Profile from "./pages/Profile";
 import User from "./pages/admin/User";
@@ -17,6 +18,10 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import VBStyledCollection from "./components/VBStyledCollection";
 import Home from "./pages/Home";
+=======
+import TransferHistory from "components/Transfer/SendMoney/transferHistory";
+import UserAccount from "components/Transfer/SendMoney/userAccountList";
+>>>>>>> Stashed changes
 
 const App = () => {
     const [open, setOpen] = React.useState(false);
@@ -51,7 +56,12 @@ const App = () => {
                             <Route path="/tx" element={<PrivateRoute auth={auth} children={<Transaction/>}/>}/>
                             <Route path="/tx/:userAccountId" element={<PrivateRoute auth={auth} children={<TxHistory/>}/>}/>
                             <Route path="/user/:userId/txs" element={<PrivateRoute auth={auth} children={<UserAccounts/>}/>}/>
+<<<<<<< Updated upstream
                             <Route path="/signup" element={<SignUp/>}/>
+=======
+                            <Route path="/transfer/:userAccountId" element={<PrivateRoute auth={auth} children={<TransferHistory/>}/>}/>
+                            <Route path="/user/:userId/transfer" element={<PrivateRoute auth={auth} children={<UserAccount/>}/>}/>
+>>>>>>> Stashed changes
                         </Routes>
                     </VBStyledCollection.Main>
                 </Router>
