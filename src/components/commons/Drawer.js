@@ -13,7 +13,7 @@ import ListItemText from "@mui/material/ListItemText";
 import {Icon} from "@mui/material";
 import {USER_MENUS, getRoute} from './module'
 import {useNavigate} from "react-router-dom";
-import VBStyledCollection from "../shared-dialog/VBStyledCollection";
+import VBStyledCollection from "../VBStyledCollection";
 
 const DrawerMenu = (props) => {
     const theme = useTheme();
