@@ -1,13 +1,16 @@
 import React, {useEffect, useState} from "react";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import Home from "./components/commons/Home"
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import MenuAppBar from "./components/commons/MenuAppBar";
 import PrivateRoute from "./components/commons/PrivateRoute";
 import AccountContract from "./components/Account/accountContract/AccountContract";
+import Transaction from "./components/Transfer/Transaction/Tx";
+import TxHistory from "./components/Transfer/Transaction/TxHistory";
+import UserAccounts from "components/Transfer/Transaction/userAccountList";
 import ContactList from "./components/Contact/ContactList";
 import Profile from "./pages/Profile";
-import Home from "./pages/Home";
 import User from "./pages/admin/User";
 import Account from "./pages/admin/Account";
 import UserAccount from "./pages/UserAccount";
@@ -45,6 +48,9 @@ const App = () => {
                             <Route path="/admin/users" exact element={<PrivateRoute auth={auth} children={<User/>}/>}/>
                             <Route path="/admin/accounts" element={<PrivateRoute auth={auth} children={<Account/>}/>}/>
                             <Route path="/login" element={<Login/>} />
+                            <Route path="/tx" element={<PrivateRoute auth={auth} children={<Transaction/>}/>}/>
+                            <Route path="/tx/:userAccountId" element={<PrivateRoute auth={auth} children={<TxHistory/>}/>}/>
+                            <Route path="/user/:userId/txs" element={<PrivateRoute auth={auth} children={<UserAccounts/>}/>}/>
                             <Route path="/signup" element={<SignUp/>}/>
                         </Routes>
                     </VBStyledCollection.Main>
