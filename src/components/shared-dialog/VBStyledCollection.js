@@ -27,8 +27,8 @@ const DrawerHeader = styled('div')(({theme}) => ({
     justifyContent: 'flex-end',
 }));
 
-const commonUI = {
+const vbStyledCollection = {
     Main,
     DrawerHeader
 }
-export default commonUI;
+export default vbStyledCollection;

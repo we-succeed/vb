@@ -54,7 +54,7 @@ export default function AccountContract(props) {
 
     useEffect(() => {
         getData()
-    }, [params.accountId])
+    })
 
     const getData = () => {
         fetch(getApiRoute(API_ACCOUNT_ITEM, {'accountId': params.accountId}), {

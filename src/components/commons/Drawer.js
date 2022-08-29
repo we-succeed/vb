@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {styled, useTheme} from "@mui/material/styles";
+import React, {useState} from "react";
+import {useTheme} from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import Drawer from "@mui/material/Drawer";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -11,28 +11,14 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import {Icon} from "@mui/material";
-import {USER_MENUS, ADMIN_MENUS, getRoute} from '../commons/module'
+import {USER_MENUS, getRoute} from './module'
 import {useNavigate} from "react-router-dom";
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-}));
+import VBStyledCollection from "../shared-dialog/VBStyledCollection";
 
 const DrawerMenu = (props) => {
     const theme = useTheme();
     const navigate = useNavigate();
-    const [menus, setMenus] = useState();
-
-    useEffect(()=>{
-        if (props['userType'] === 'user')
-            setMenus(USER_MENUS)
-        else
-            setMenus(ADMIN_MENUS);
-    })
+    const [menus, setMenus] = useState(USER_MENUS);
     return (
         <Drawer
             sx={{
@@ -47,11 +33,11 @@ const DrawerMenu = (props) => {
             anchor="left"
             open={props.open}
         >
-            <DrawerHeader>
+            <VBStyledCollection.DrawerHeader>
                 <IconButton onClick={props.drawerOpen}>
                     {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                 </IconButton>
-            </DrawerHeader>
+            </VBStyledCollection.DrawerHeader>
             <Divider />
             <List>
                 {menus && menus.map((elem, index) => {

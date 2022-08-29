@@ -20,7 +20,10 @@ export default function AccountItem(props) {
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
-                            {props.account.type} | {props.account.name} | {props.account.interest}
+                            {props.account.type.toUpperCase()}
+                        </Typography>
+                        <Typography gutterBottom variant="h6" component="div">
+                            {props.account.name} | {props.account.interest + '%'}
                         </Typography>
                         <Typography variant="body2" color="text.secondary" sx={{minHeight: '60px'}}>
                             {props.account.description}
@@ -29,7 +32,7 @@ export default function AccountItem(props) {
                 </CardActionArea>
                 <CardActions>
                     <Button size="small" color="primary" onClick={() => navigate(`/accounts/${props.account._id}/open`)}>
-                        Open
+                        Open Account
                     </Button>
                 </CardActions>
             </Card>

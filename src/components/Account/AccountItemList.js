@@ -10,6 +10,9 @@ import {API_ACCOUNTS_ALL, getApiRoute} from "../commons/module";
 export default function AccountItemList(props) {
     const [accounts, setAccounts] = useState([]);
     useEffect(()=> {
+        getData();
+    },[])
+    const getData = () => {
         axios
             .get(getApiRoute(API_ACCOUNTS_ALL))
             .then((res) => {
@@ -17,17 +20,22 @@ export default function AccountItemList(props) {
                     setAccounts(res.data);
             })
             .catch((err) => console.log(err));
-    },[])
+    }
     return (
         <>
-            <Typography variant="h5" gutterBottom component="div" mt={2}>
-                Recommended Accounts
-            </Typography>
-            <Box sx={{flexGrow: 1}}>
+            <Box sx={{flexGrow: 1,
+                margin: 0,
+                width:'80%',
+                bottom: '30px',
+                position: 'absolute'}}>
+
+                <Typography variant="h6" gutterBottom component="div" mt={2}>
+                    Recommended Accounts
+                </Typography>
                 <Grid container spacing={2}>
                     {accounts && accounts.map((account, idx) => (
                         <AccountItem key={idx} account={account} userId={props.userId}/>
-                    )).splice(0,4)}
+                    )).splice(0,5)}
                 </Grid>
             </Box>
         </>

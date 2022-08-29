@@ -78,9 +78,9 @@ const deleteAccount = async (req, res) => {
 const findAccountItemAll = async (req, res) => {
     try {
         const result = await Account.find({
-            status: "open",
+            status: true,
             remainder: {$gte: 0}
-        }, 'name type description _id remainder');
+        }, 'name type description interest _id');
         if (result)
             res.status(200).send(result);
         else

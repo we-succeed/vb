@@ -2,20 +2,16 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Typography from "@mui/material/Typography";
-import {AppBar, Button} from "@mui/material";
+import {Button} from "@mui/material";
 import {styled} from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import ProfileMenu from "./ProfileMenu";
 import DrawerMenu from "./Drawer";
 import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 const MenuAppBar = (props) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    useEffect (() => {
-        if (localStorage.getItem('vb'))
-            setIsLoggedIn(true)
-    })
+    const [isLoggedIn, setIsLoggedIn] = useState((localStorage.getItem('vb')));
     const AppBar = styled(MuiAppBar, {
         shouldForwardProp: (prop) => prop !== 'open',
     })(({theme, open}) => ({
@@ -37,7 +33,6 @@ const MenuAppBar = (props) => {
                 <AppBar position="fixed" open={props.open}>
                     <Toolbar>
                         <IconButton
-
                             color="inherit"
                             aria-label="open drawer"
                             onClick={props.drawerOpen}

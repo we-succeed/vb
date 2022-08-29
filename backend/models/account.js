@@ -27,7 +27,7 @@ const AccountSchema = new Schema({
         required: [true]
     },
     status: {
-        type: String,
+        type: Boolean,
         required: [true]
     }
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at'} })
