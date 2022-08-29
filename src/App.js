@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import Home from "./components/commons/Home"
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import MenuAppBar from "./components/commons/MenuAppBar";
@@ -17,6 +16,7 @@ import UserAccount from "./pages/UserAccount";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import VBStyledCollection from "./components/VBStyledCollection";
+import Home from "./pages/Home";
 
 const App = () => {
     const [open, setOpen] = React.useState(false);
