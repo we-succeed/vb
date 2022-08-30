@@ -8,7 +8,7 @@ import AccountContract from "./components/Account/accountContract/AccountContrac
 import Transaction from "./components/Transfer/Transaction/Tx";
 import TxHistory from "./components/Transfer/Transaction/TxHistory";
 import UserAccounts from "components/Transfer/Transaction/userAccountList";
-import ContactList from "./components/Contact/ContactList";
+import ContactList from "./pages/Contact";
 import Profile from "./pages/Profile";
 import User from "./pages/admin/User";
 import Account from "./pages/admin/Account";

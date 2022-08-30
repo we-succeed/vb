@@ -14,12 +14,11 @@ const contactCreate = (async (req, res) => {
     }
 });
 
-
 const findContactById = (async (req, res) => {
     try {
         const user = await (await User.findById({ _id: req.params.userId }, 'contacts')).populate('contacts');
-        if (user)
-            return res.status(200).send(user.contacts);
+        if (user){
+            return res.status(200).send(user.contacts);}
         else
             return res.status(400).send({ message: 'no data' });
     } catch (e) {

@@ -10,6 +10,8 @@ export const API_ACCOUNT_DELETE = `/admin/accounts/:accountId`;
 export const API_USERS_ALL = `/users`;
 export const API_USER_PUT = `/users/:dataId`;
 export const API_USER_DELETE = `/users/:userId`;
+export const API_CONTACTS_ALL = `/contacts/:userId`;
+export const API_CONTACT_DELETE = `/contacts/:contact_id`;
 export const API_CONTACT_PUT = `/contacts/:dataId`;
 
 
