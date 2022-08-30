@@ -74,8 +74,25 @@ const Transaction = (req, res) => {
     //Data that make up page
     const FormFields = {
         schema: [
+            {
+                id: 'from',
+                label: 'From',
+                name: 'from',
+                type: 'select',
+                select: {list: accounts, value: '_id', fields: ['name','number']}
+            },
+            {
+                id: 'to',
+                label: 'To',
+                name: 'to',
+                type: 'select',
+                select: {
+                    list: accounts
+                        .filter(row => (row._id !== tx.from)), value: '_id', fields: ['name','number']
+                }
+            },
             {id: 'amount', label: 'Amount', name: 'amount', type: 'default'},
-            {id: 'source', label: 'Source', name: 'source', type: 'default'}
+            {id: 'source', label: 'Source', name: 'source', type: 'default'},
         ]
     }
 
@@ -83,63 +100,21 @@ const Transaction = (req, res) => {
     const PageCallBack = {
         inputChange: ({currentTarget: input}) => {
             setTx({...tx, [input.name]: input.value});
-
+        },
+        selectChange: (e) => {
+            setTx({...tx, [e.target.name]: e.target.value});
         }
     }
 
     return (
 
-        <Container component="main" maxWidth="xs">
+        <Container component="main">
             <PageTitle title="Transaction"/>
-            <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">From</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="From"
-                    value={tx.from}
-                    onChange={handleChange}
-                    name='from'
-                >
-                    {accounts && accounts.map((row, idx) =>
-                        (
-                            <MenuItem
-                                key={idx}
-                                value={row._id}
-                            >
-                                {row.name} ({row.number})
-                            </MenuItem>
-                        ))}
-                </Select>
-            </FormControl>
-            <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">To</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={tx.to}
-                    label="To"
-                    name="to"
-                    onChange={handleChange}
-                >
-                    {accounts && accounts.filter(row=> (row._id !== tx.from))
-                        .map((row, idx) => (
-                        <MenuItem
-                            key={idx}
-                            value={row._id}
-                        >
-                            {row.name} ({row.number})
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-            <Grid container spacing={2}>
                 {FormFields.schema.map((form, idx) => (
                     <VBInputField key={`user-profile-grid-${idx}`} form={form} data={tx} cb={PageCallBack}/>
                 ))}
-            </Grid>
             <VBButton title="Done" onClick={handleSubmit} fullWidth/>
-            <SnackbarAlert alert={alert}/>
+            <SnackbarAlert alert={alert} />
             <Link href="/" variant="body2">
                 Cancel
             </Link>

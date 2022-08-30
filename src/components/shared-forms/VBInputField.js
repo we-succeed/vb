@@ -1,6 +1,15 @@
 import * as React from 'react';
 import TextField from "@mui/material/TextField";
-import {FormHelperText, IconButton, InputAdornment, InputLabel, OutlinedInput, Switch} from "@mui/material";
+import {
+    FormHelperText,
+    IconButton,
+    InputAdornment,
+    InputLabel,
+    MenuItem,
+    OutlinedInput,
+    Select,
+    Switch
+} from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import FormControl from "@mui/material/FormControl";
 import {useState} from "react";
@@ -62,6 +71,31 @@ const VBInputField = (props) => {
                                     labelPlacement="start"
                                     label="Status"
                                     sx={{marginLeft: '0'}}/>
+                            </>
+                        )
+                    case 'select':
+                        return (
+                            <>
+                                <FormControl fullWidth  sx={{mt: 1, mb: 1}}>
+                                    <InputLabel id="demo-simple-select-label">{props.form.label}</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        name={props.form.name}
+                                        label={props.form.name}
+                                        value={props.data[props.form.name]}
+                                        onChange={props.cb.selectChange}
+                                    >
+                                        {props.form.select.list && props.form.select.list
+                                            .map((row, idx) => (
+                                                <MenuItem
+                                                    key={idx}
+                                                    value={row[props.form.select.value]}>
+                                                    {row[props.form.select.fields[0]]} - ({row[props.form.select.fields[1]]})
+                                                </MenuItem>
+                                            ))}
+                                    </Select>
+                                </FormControl>
                             </>
                         )
                     default:
