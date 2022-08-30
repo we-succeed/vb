@@ -23,7 +23,9 @@ const TxHistory = (props) => {
   const [tx, setTx] = useState(initialTx);
 
   useEffect(() => {
-    getData();
+    if (props.data) {
+      getData();
+    }
   }, [props.data._id])
 
   //${props.data._id}
@@ -31,7 +33,6 @@ const TxHistory = (props) => {
   const getData = () => {
     axios.get(getApiRoute(API_USER_TX, { 'userAccountId': props.data._id }))
       .then((res) => {
-        console.log(res);
         setTxs(res.data.userAccount.transactions);
       }).catch(e => {
         console.log(e);
@@ -50,7 +51,6 @@ const TxHistory = (props) => {
 
   return (
     <Container component="main">
-      <PageTitle title="Transaction History" />
       {txs.length !== 0 ?
         <DynamicTable form={UserTxData} data={txs} />
         :

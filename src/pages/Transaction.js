@@ -5,6 +5,7 @@ import * as React from 'react';
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import TxHistory from '../components/Transfer/Transaction/TxHistory';
+import PageTitle from "../components/shared-forms/PageTitle";
 
 
 const UserAccounts = () => {
@@ -31,6 +32,7 @@ const UserAccounts = () => {
 
   return (
     <>
+      <PageTitle title="Transaction History" />
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">User Accounts</InputLabel>
         <Select
