@@ -1,36 +1,36 @@
-import * as React from 'react';
-import {useEffect, useState} from "react";
-import axios from "axios";
-import {useParams} from "react-router-dom";
-import { getApiRoute, API_USER_ACCOUNTS_ALL } from 'components/commons/module';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import TxHistory from './TxHistory';
+import axios from "axios";
+import { API_USER_ACCOUNTS_ALL, getApiRoute } from 'components/commons/module';
+import * as React from 'react';
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import TxHistory from '../components/Transfer/Transaction/TxHistory';
 
 
 const UserAccounts = () => {
-    const params = useParams();
-    const [accounts, setAccounts] = useState([]);
-    const [account, setAccount] = useState({name:'test'});
+  const params = useParams();
+  const [accounts, setAccounts] = useState([]);
+  const [account, setAccount] = useState({ name: 'test' });
 
-    useEffect(()=> {
-      getData();
-    },[])
+  useEffect(() => {
+    getData();
+  }, [])
 
-    const getData = () => {
-      axios
-      .get(getApiRoute(API_USER_ACCOUNTS_ALL, {'userId': params.userId}))
+  const getData = () => {
+    axios
+      .get(getApiRoute(API_USER_ACCOUNTS_ALL, { 'userId': params.userId }))
       .then((res) => {
         setAccounts(res.data.accounts);
       })
       .catch((err) => console.log(err));
-    }
+  }
 
-    const handleChange = (event) => {
-      setAccount(event.target.value);  
-    };
+  const handleChange = (event) => {
+    setAccount(event.target.value);
+  };
 
-    return ( 
-      <>
+  return (
+    <>
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">User Accounts</InputLabel>
         <Select
@@ -40,7 +40,7 @@ const UserAccounts = () => {
           label="Accounts"
           onChange={handleChange}
         >
-          {accounts && accounts.map((row,idx) => (
+          {accounts && accounts.map((row, idx) => (
             <MenuItem
               key={idx}
               value={row}
@@ -51,8 +51,8 @@ const UserAccounts = () => {
         </Select>
       </FormControl>
       <TxHistory data={account} />
-      </>
-    );
+    </>
+  );
 };
 
 export default UserAccounts;

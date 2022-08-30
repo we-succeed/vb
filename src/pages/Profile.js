@@ -42,7 +42,7 @@ const Profile = () => {
             .then((res) => {
                 setUser(res.data);
             }).catch(function (e) {
-            setAlert({...alert, open: true, message: e.data.message, severity: 'warning'});
+            setAlert({...alert, open: true, message: e.data.message, severity:'warning'});
         });
     }
     const updateUser = () => {

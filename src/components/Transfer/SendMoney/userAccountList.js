@@ -7,7 +7,7 @@ import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import TransferHistory from './transferHistory';
 
 
-const UserAccounts = () => {
+const UserAccountsTr = () => {
     const params = useParams();
     const [accounts, setAccounts] = useState([]);
     const [account, setAccount] = useState({name:'test'});
@@ -55,4 +55,4 @@ const UserAccounts = () => {
     );
 };
 
-export default UserAccounts;
+export default UserAccountsTr;

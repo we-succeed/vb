@@ -38,21 +38,18 @@ const Transaction = (req, res) => {
     severity: 'info'
   });
 
+  const createTX = () => {
+    axios.post(getApiRoute(API_TX_POST), data).then(res => {
+      setAlert({ ...alert, open: true, message: res.data.message, status: res.status });
+    }).catch(e => {
+      setAlert({ ...alert, open: true, message: 'Interval server error' });
+      console.log(error.toJSON());
+    })
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const result = await axios.post(getApiRoute(API_TX_POST), data);
-      console.log(result);
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status <= 500
-      ) {
-        setError(error.response.data.message)
-        setAlert({ ...alert, open: true, message: error.response.data.message, severity: 'warning' });
-      }
-    }
+    createTX();
   }
 
   //Data that make up page
