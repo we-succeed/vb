@@ -19,7 +19,6 @@ const findContactById = (async (req, res) => {
     try {
         const user = await (await User.findById({ _id: req.params.userId }, 'contacts')).populate('contacts');
         if (user){
-            console.log(user);
             return res.status(200).send(user.contacts);}
         else
             return res.status(400).send({ message: 'no data' });
