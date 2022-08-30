@@ -62,7 +62,7 @@ const AddEditDialog = (props) => {
                     {children}
                 </DialogContent>
                 <DialogActions>
-                    {props.form.title === 'Add Account' ? <Button
+                    {(props.form.title).includes('Add') ? <Button
                         type="submit"
                         variant="contained"
                         sx={{mt: 3, mb: 2}}

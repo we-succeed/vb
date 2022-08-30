@@ -144,7 +144,7 @@ const ContactList = () => {
     }
   }
   const AddEditFormData = {
-    title: contact._id === undefined ? 'Add Account' : 'Edit Account',
+    title: contact._id === undefined ? 'Add Contact' : 'Edit Contact',
     cb: {
       add: () => {
         addContact(contact)
