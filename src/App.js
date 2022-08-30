@@ -1,24 +1,22 @@
-import Box from "@mui/material/Box";
+import React, {useEffect, useState} from "react";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
-import TransferHistory from "components/Transfer/SendMoney/transferHistory";
-import UserAccounts from "pages/Transaction";
-import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import AccountContract from "./components/Account/accountContract/AccountContract";
+import Box from "@mui/material/Box";
 import MenuAppBar from "./components/commons/MenuAppBar";
 import PrivateRoute from "./components/commons/PrivateRoute";
-import ContactList from "./components/Contact/ContactList";
+import AccountContract from "./components/Account/accountContract/AccountContract";
 import Transaction from "./components/Transfer/Transaction/Tx";
 import TxHistory from "./components/Transfer/Transaction/TxHistory";
-import VBStyledCollection from "./components/VBStyledCollection";
-import Account from "./pages/admin/Account";
-import User from "./pages/admin/User";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
+import UserAccounts from "components/Transfer/Transaction/userAccountList";
+import ContactList from "./pages/Contact";
 import Profile from "./pages/Profile";
-import SignUp from "./pages/SignUp";
+import User from "./pages/admin/User";
+import Account from "./pages/admin/Account";
 import UserAccount from "./pages/UserAccount";
-
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
+import VBStyledCollection from "./components/VBStyledCollection";
+import Home from "./pages/Home";
 
 const App = () => {
     const [open, setOpen] = React.useState(false);
@@ -39,7 +37,7 @@ const App = () => {
                     <CssBaseline />
                     <MenuAppBar open={open} drawerOpen={handleDrawerOpen} auth={auth} />
                     <VBStyledCollection.Main open={open} auth={auth}>
-                        <VBStyledCollection.DrawerHeader />
+                        <VBStyledCollection.DrawerHeader/>
                         <Routes>
                             <Route path="/" element={<Home />} />
                             <Route path="/user/:userId" element={<PrivateRoute auth={auth} children={<Profile />} />} />
