@@ -7,14 +7,14 @@ import { useEffect, useState } from 'react';
 import { API_CONTACT_DELETE, API_CONTACT_PUT,
   API_CONTACTS_ALL,
   getApiRoute
-} from "../../components/commons/module";
+} from "../components/commons/module";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { useParams } from 'react-router-dom';
-import AddEditDialog from "../../components/shared-dialog/AddEditDialog";
-import AlertDialog from "../../components/shared-dialog/AlertDialog";
-import DynamicTable from "../../components/shared-forms/DynamicTable";
-import VBInputField from "../../components/shared-forms/VBInputField";
+import AddEditDialog from "../components/shared-dialog/AddEditDialog";
+import AlertDialog from "../components/shared-dialog/AlertDialog";
+import DynamicTable from "../components/shared-forms/DynamicTable";
+import VBInputField from "../components/shared-forms/VBInputField";
 import SnackbarAlert from "components/shared-dialog/SnackbarAlert";
 
 
@@ -129,6 +129,7 @@ const ContactList = () => {
       { head: 'Name', cols: 'name', format: 'default' },
       { head: 'Email', cols: 'email', format: 'default' },
       { head: 'Mobile', cols: 'mobile', format: 'default' },
+      { head: 'Update Date', cols: 'updated_at', format: 'date'},
       { head: 'Action', cols: 'action', format: 'btnGroup' },
 
     ],
