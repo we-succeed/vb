@@ -14,7 +14,6 @@ const contactCreate = (async (req, res) => {
     }
 });
 
-
 const findContactById = (async (req, res) => {
     try {
         const user = await (await User.findById({ _id: req.params.userId }, 'contacts')).populate('contacts');
