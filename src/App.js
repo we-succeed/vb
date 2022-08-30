@@ -51,7 +51,7 @@ const App = () => {
                             <Route path="/admin/users" exact element={<PrivateRoute auth={auth} children={<User/>}/>}/>
                             <Route path="/admin/accounts" element={<PrivateRoute auth={auth} children={<Account/>}/>}/>
                             <Route path="/login" element={<Login/>} />
-                            <Route path="/tx" exact element={<PrivateRoute auth={auth} children={<Transaction/>}/>}/>
+                            <Route path="/user/:userId/tx" exact element={<PrivateRoute auth={auth} children={<Transaction/>}/>}/>
                             <Route path="/tx/:userAccountId" element={<PrivateRoute auth={auth} children={<TxHistory/>}/>}/>
                             <Route path="/user/:userId/txs" element={<PrivateRoute auth={auth} children={<UserAccounts/>}/>}/>
                             <Route path="/signup" element={<SignUp/>}/>
