@@ -45,9 +45,9 @@ const ContactTemplate = (props) => {
 
   return (
     <Box component="form" noValidate>
-      <Grid container spacing={2}>
+      <Grid container spacing={1}>
         {FormFields.schema.map((form, idx) => (
-          <Grid key={`user-grid-${idx}`} item xs={12} sm={(['name', 'email'].includes(form.id)) ? 6 : 12}>
+          <Grid key={`user-grid-${idx}`} item xs={12} sm={(['name', 'email'].includes(form.id)) ? 12 : 12}>
             <VBInputField key={`user-profile-grid-${idx}`} form={form} data={contact} cb={props.cb} />
           </Grid>
         ))}
