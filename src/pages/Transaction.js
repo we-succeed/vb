@@ -1,17 +1,18 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { Container } from '@mui/material';
 import axios from "axios";
 import { API_USER_ACCOUNTS_ALL, getApiRoute } from 'components/commons/module';
+import VBInputField from 'components/shared-forms/VBInputField';
 import * as React from 'react';
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import TxHistory from '../components/Transfer/Transaction/TxHistory';
 import PageTitle from "../components/shared-forms/PageTitle";
+import TxHistory from '../components/Transfer/Transaction/TxHistory';
 
 
 const UserAccounts = () => {
   const params = useParams();
   const [accounts, setAccounts] = useState([]);
-  const [account, setAccount] = useState({ name: 'test' });
+  const [account, setAccount] = useState({});
 
   useEffect(() => {
     getData();
@@ -26,34 +27,37 @@ const UserAccounts = () => {
       .catch((err) => console.log(err));
   }
 
-  const handleChange = (event) => {
-    setAccount(event.target.value);
-  };
+  //Data that make up page
+  const FormFields = {
+    schema: [
+      {
+        id: 'UserAccount',
+        label: 'User Account',
+        name: 'UserAccount',
+        type: 'select',
+        select: { list: accounts, value: '_id', fields: ['name', 'number'] }
+      }
+    ]
+  }
+
+  const PageCallBack = {
+    inputChange: ({ currentTarget: input }) => {
+      setAccount({ ...account, [input.name]: input.value });
+    },
+    selectChange: (event) => {
+      setAccount({ ...account, ['_id']: event.target.value });
+
+    }
+  }
 
   return (
-    <>
+    <Container component="main">
       <PageTitle title="Transaction History" />
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">User Accounts</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={account}
-          label="Accounts"
-          onChange={handleChange}
-        >
-          {accounts && accounts.map((row, idx) => (
-            <MenuItem
-              key={idx}
-              value={row}
-            >
-              {row.name} ({row.number})
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      {FormFields.schema.map((form, idx) => (
+        <VBInputField key={`user-profile-grid-${idx}`} form={form} data={account} cb={PageCallBack} />
+      ))}
       <TxHistory data={account} />
-    </>
+    </Container>
   );
 };
 

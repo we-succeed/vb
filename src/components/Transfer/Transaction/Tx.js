@@ -1,15 +1,13 @@
-import {FormControl, InputLabel, MenuItem, Select} from '@mui/material';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import axios from 'axios';
-import {API_TX_POST, API_USER_ACCOUNTS_ALL, getApiRoute} from 'components/commons/module';
+import { API_TX_POST, API_USER_ACCOUNTS_ALL, getApiRoute } from 'components/commons/module';
 import SnackbarAlert from 'components/shared-dialog/SnackbarAlert';
 import PageTitle from 'components/shared-forms/PageTitle';
 import VBButton from 'components/shared-forms/VBButton';
 import VBInputField from 'components/shared-forms/VBInputField';
-import React, {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 
 const initialTx = {
@@ -67,10 +65,6 @@ const Transaction = (req, res) => {
         createTX();
     }
 
-    const handleChange = (e) => {
-        setTx({...tx, [e.target.name]: e.target.value});
-    };
-
     //Data that make up page
     const FormFields = {
         schema: [
@@ -107,7 +101,6 @@ const Transaction = (req, res) => {
     }
 
     return (
-
         <Container component="main">
             <PageTitle title="Transaction"/>
                 {FormFields.schema.map((form, idx) => (
@@ -118,7 +111,6 @@ const Transaction = (req, res) => {
             <Link href="/" variant="body2">
                 Cancel
             </Link>
-
         </Container>
 
     );
