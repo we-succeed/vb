@@ -4,10 +4,10 @@ import axios from "axios";
 import {useParams} from "react-router-dom";
 import { getApiRoute, API_USER_ACCOUNTS_ALL } from 'components/commons/module';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import TxHistory from './TxHistory';
+import TransferHistory from './transferHistory';
 
 
-const UserAccounts = () => {
+const UserAccountsTr = () => {
     const params = useParams();
     const [accounts, setAccounts] = useState([]);
     const [account, setAccount] = useState({name:'test'});
@@ -50,9 +50,9 @@ const UserAccounts = () => {
           ))}
         </Select>
       </FormControl>
-      <TxHistory data={account} />
+      <TransferHistory data={account} />
       </>
     );
 };
 
-export default UserAccounts;
+export default UserAccountsTr;

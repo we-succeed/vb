@@ -1,187 +1,119 @@
-import Alert from '@mui/material/Alert';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import CssBaseline from '@mui/material/CssBaseline';
-import FormControl from '@mui/material/FormControl';
-import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
-import Snackbar from '@mui/material/Snackbar';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
 import axios from 'axios';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { API_TX_POST, API_USER_ACCOUNTS_ALL, getApiRoute } from 'components/commons/module';
+import SnackbarAlert from 'components/shared-dialog/SnackbarAlert';
+import PageTitle from 'components/shared-forms/PageTitle';
+import VBButton from 'components/shared-forms/VBButton';
+import VBInputField from 'components/shared-forms/VBInputField';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-const theme = createTheme();
+
+const initialTx = {
+    from: '',
+    to: '',
+    amount: '',
+    source: '',
+    type: '',
+}
 
 const Transaction = (req, res) => {
-  const [data, setData] = useState({
-    userAccount: {
-      _id: ''
-    },
-    from: '',
-    to: '',
-    amount: '',
-    source: '',
-    type: '',
-  });
+    const params = useParams();
+    const [accounts, setAccounts] = useState([]);
+    const [tx, setTx] = useState(initialTx);
 
-  const [error, setError] = useState({
-    from: '',
-    to: '',
-    amount: '',
-    source: '',
-    type: '',
-  });
+    const [error, setError] = useState({
+        from: '',
+        to: '',
+        amount: '',
+        source: '',
+        type: '',
+    });
 
-  const [alert, setAlert] = useState({
-    open: false,
-    message: '',
-    severity: 'info'
-  });
+    const [alert, setAlert] = useState({
+        open: false,
+        message: '',
+        severity: 'info'
+    });
 
 
-  const handleClose = () => {
-    setAlert({ ...alert, open: false });
-  };
+    useEffect(() => {
+        getData();
+    }, [])
 
-  const navigate = useNavigate();
-
-  const handleChange = ({ currentTarget: input }) => {
-    setData({ ...data, [input.name]: input.value });
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const API = 'http://localhost:5003/api/tx'
-      const result = await axios.post(API, data);
-      console.log(result);
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status <= 500
-      ) {
-        setError(error.response.data.message)
-        setAlert({ ...alert, open: true, message: error.response.data.message, severity: 'warning' });
-      }
+    const createTX = () => {
+        axios.post(getApiRoute(API_TX_POST), tx).then(res => {
+            setAlert({...alert, open: true, message: res.data.message, status: res.status});
+        }).catch(e => {
+            setAlert({...alert, open: true, message: 'Interval server error'});
+            console.log(error.toJSON());
+        })
     }
-  }
 
+    const getData = () => {
+        axios
+            .get(getApiRoute(API_USER_ACCOUNTS_ALL, {'userId': params.userId}))
+            .then((res) => {
+                setAccounts(res.data.accounts);
+            })
+            .catch((err) => console.log(err));
+    }
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        createTX();
+    }
 
+    //Data that make up page
+    const FormFields = {
+        schema: [
+            {
+                id: 'from',
+                label: 'From',
+                name: 'from',
+                type: 'select',
+                select: {list: accounts, value: '_id', fields: ['name','number']}
+            },
+            {
+                id: 'to',
+                label: 'To',
+                name: 'to',
+                type: 'select',
+                select: {
+                    list: accounts
+                        .filter(row => (row._id !== tx.from)), value: '_id', fields: ['name','number']
+                }
+            },
+            {id: 'amount', label: 'Amount', name: 'amount', type: 'default'},
+            {id: 'source', label: 'Source', name: 'source', type: 'default'},
+        ]
+    }
 
-  return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Typography component="h1" variant="h5">
-            Transaction
-          </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <FormControl>
-            </FormControl>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <form autoComplete='off'>
-                  <TextField
-                    autoComplete="from"
-                    name="from"
-                    required
-                    fullWidth
-                    id="from"
-                    label="From"
-                    onChange={handleChange}
-                    value={data.from}
-                    autoFocus
-                  />
-                </form>
-              </Grid>
-              <Grid item xs={12}>
-                <form autoComplete='off'>
-                  <TextField
-                    required
-                    fullWidth
-                    id="to"
-                    label="To"
-                    name="to"
-                    onChange={handleChange}
-                    value={data.to}
-                    autoComplete="to"
-                  />
-                </form>
-              </Grid>
-              <Grid item xs={12}>
-                <form autoComplete='off'>
-                  <TextField
-                    required
-                    fullWidth
-                    id="amount"
-                    label="Amount"
-                    name="amount"
-                    onChange={handleChange}
-                    value={data.amount}
-                    autoComplete="amount"
-                  />
-                </form>
-              </Grid>
-              <Grid item xs={12}>
-                <form autoComplete='off'>
-                  <TextField
-                    required
-                    fullWidth
-                    id="source"
-                    label="Source"
-                    name="source"
-                    onChange={handleChange}
-                    value={data.source}
-                    autoComplete="source"
-                  />
-                </form>
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Done
-            </Button>
-            <Snackbar
-              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-              open={alert.open}
-              onClose={handleClose}
-              key={'123'}
-            >
-              <Alert onClose={handleClose} severity={alert.severity} sx={{ mt: '4rem', width: '100%' }}>
-                {alert.message}
-              </Alert>
-            </Snackbar>
+    //Callback functions that make up page
+    const PageCallBack = {
+        inputChange: ({currentTarget: input}) => {
+            setTx({...tx, [input.name]: input.value});
+        },
+        selectChange: (e) => {
+            setTx({...tx, [e.target.name]: e.target.value});
+        }
+    }
 
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/" variant="body2">
-                  Cancel
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-      </Container>
-    </ThemeProvider>
-  );
+    return (
+        <Container component="main">
+            <PageTitle title="Transaction"/>
+                {FormFields.schema.map((form, idx) => (
+                    <VBInputField key={`user-profile-grid-${idx}`} form={form} data={tx} cb={PageCallBack}/>
+                ))}
+            <VBButton title="Done" onClick={handleSubmit} fullWidth/>
+            <SnackbarAlert alert={alert} />
+            <Link href="/" variant="body2">
+                Cancel
+            </Link>
+        </Container>
+
+    );
 };
 
 export default Transaction;

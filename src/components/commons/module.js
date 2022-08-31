@@ -21,6 +21,9 @@ export const API_USERS = `http://localhost:${API_PORT}/api/users`
 export const API_OPEN_ACCOUNT = `/accounts/:accountId/open`;
 export const API_USER_ACCOUNT_INFO = `/tx/:accountId`;
 
+export const API_USER_TX = `/tx/:userAccountId`;
+export const API_TX_POST = `/tx`;
+
 export const USER_MENUS = [
     {
         name:'Accounts',
@@ -31,6 +34,11 @@ export const USER_MENUS = [
         name:'Transfer',
         path:'/user/:userId/txs',
         icon:'currency_exchange'
+    },
+    {
+        name:'Etransfer',
+        path:'/user/:userId/transfer',
+        icon:'monetization_on'
     },
     {
         name:'Bill Payment',
@@ -80,6 +88,7 @@ export const getApiRoute = (path, params) => {
         Object.entries(params).forEach(([key,value]) => {
             newPath = newPath.replace(':' + key, value)
         })
+        console.log(`${DEFAULT_URL}${newPath}`);
         return `${DEFAULT_URL}${newPath}`
     }
 }

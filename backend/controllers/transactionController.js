@@ -19,7 +19,7 @@ const userTransactionInfo = async (req, res) => {
 const createTransaction = async (req, res) => {
     try {
         const txResult = await new Tx({...req.body}).save()
-        console.log(txResult)
+
         const result  = await UserAccount.findOneAndUpdate({_id: req.body.from}, { $push: { transactions: {_id: txResult._id} } },{
             upsert: true,
             setDefaultsOnInsert: true

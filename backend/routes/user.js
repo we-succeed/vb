@@ -25,5 +25,6 @@ router.post('/accounts/:account_id', accountController.userAccountInfo);
 router.post('/accounts/:account_id/open', accountController.openUserAccount)
 
 router.get('/users/:user_id/txs', userController.getUserAccounts);
+router.get('/users/:user_id/transfer', userController.getUserAccounts);
 
 module.exports = router;
