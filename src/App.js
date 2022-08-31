@@ -16,6 +16,8 @@ import VBStyledCollection from "./components/VBStyledCollection";
 import Home from "./pages/Home";
 import Tx from "./components/Transfer/Transaction/Tx";
 import Transaction from "./pages/Transaction";
+import UserAccountsTr from "components/Transfer/SendMoney/userAccountList";
+import Transfer from "components/Transfer/SendMoney/transfer";
 
 const App = () => {
     const [open, setOpen] = React.useState(false);
@@ -50,7 +52,8 @@ const App = () => {
                             <Route path="/user/:userId/tx" exact element={<PrivateRoute auth={auth} children={<Tx />} />} />
                             <Route path="/user/:userId/txs" element={<PrivateRoute auth={auth} children={<Transaction />} />} />
                             <Route path="/signup" element={<SignUp />} />
-                            <Route path="/user/:userId/transfer" element={<PrivateRoute auth={auth} children={<UserAccount />} />} />
+                            <Route path="/user/:userId/transfers" element={<PrivateRoute auth={auth} children={<UserAccountsTr />} />} />
+                            <Route path="/user/:userId/transfer" element={<PrivateRoute auth={auth} children={<Transfer />} />} />
                         </Routes>
                     </VBStyledCollection.Main>
                 </Router>
