@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useParams} from "react-router-dom";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
@@ -7,29 +7,25 @@ import {Step, StepLabel, Stepper} from "@mui/material";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import AccountInfoForm from "./AccountInfoForm";
-import AdditionalInfoForm from "./AdditionalInfoForm";
+import UserAccountForm from "./UserAccountForm";
 import AccountReview from "./AccountReview";
-import {API_ACCOUNT_ITEM, API_OPEN_ACCOUNT, getApiRoute} from "../../commons/module";
+import {API_OPEN_ACCOUNT, getApiRoute} from "../../commons/module";
 import axios from "axios";
 
 const steps = ['Account Information', 'Additional Information', 'Review your account'];
 
-
 export default function AccountContract(props) {
     const params = useParams();
-    const [user, setUser] = useState({});
-    const [account, setAccount] = useState({});
+    const [account] = useState(props.state.account);
     const [activeStep, setActiveStep] = useState(0);
-    const [isLoading, setIsLoading] = useState(false)
-    const handleNext = () => {
-        setActiveStep(activeStep + 1);
-    };
     const [userAccount, setUserAccount] = useState({
         name: '',
         description: '',
         accountNumber: 0
     });
-
+    const handleNext = () => {
+        setActiveStep(activeStep + 1);
+    };
     const handleBack = () => {
         setActiveStep(activeStep - 1);
     };
@@ -39,49 +35,29 @@ export default function AccountContract(props) {
         setUserAccount(newdata)
     }
 
-    function getStepContent(step, data) {
+    function getStepContent(step) {
         switch (step) {
             case 0:
                 return <AccountInfoForm account={account}/>;
             case 1:
-                return <AdditionalInfoForm userAccount={userAccount} onHandleChange={handleChange}/>;
+                return <UserAccountForm userAccount={userAccount} onHandleChange={handleChange}/>;
             case 2:
-                return <AccountReview user={user} account={account} userAccount={userAccount} />;
+                return <AccountReview account={account} userAccount={userAccount}/>;
             default:
                 throw new Error('Unknown step');
         }
     }
 
-    useEffect(() => {
-        getData()
-    })
-
-    const getData = () => {
-        fetch(getApiRoute(API_ACCOUNT_ITEM, {'accountId': params.accountId}), {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({'user_id': props.auth.id}),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                setUser(data.user);
-                setAccount(data.account)
-                setIsLoading(true);
-            });
-    }
     const handleSubmit = async () => {
-        let data = {user, account, userAccount}
+        let data = {userAccount}
         const result = await axios.post(getApiRoute(API_OPEN_ACCOUNT, {'accountId': params.accountId}), data);
-        if (result.status === 200) {
+        if (result.status === 201) {
             setActiveStep(activeStep + 1);
             setUserAccount((prevState) => ({
                 ...prevState,
-                accountNumber: result.data.accountNumber,
+                accountNumber: result.data.number,
             }));
         }
-
     }
     return (
         <>
@@ -108,7 +84,7 @@ export default function AccountContract(props) {
                             </>
                         ) : (
                             <>
-                                {isLoading && getStepContent(activeStep, user)}
+                                {getStepContent(activeStep)}
                                 <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
                                     {activeStep !== 0 && (
                                         <Button onClick={handleBack} sx={{mt: 3, ml: 1}}>

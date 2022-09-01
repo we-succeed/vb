@@ -1,10 +1,9 @@
 const Account = require('../models/account');
-const {User, UserAccount} = require("../models/user");
 
 //get all accounts
 const findAccountAll = async (req, res) => {
     try {
-        const result = await Account.find({}, '');
+        const result = await Account.find({});
         if (result)
             res.status(200).send(result);
         else
@@ -16,7 +15,7 @@ const findAccountAll = async (req, res) => {
 //get one account
 const findAccountById = async (req, res) => {
     try {
-        const result = await Account.findById({_id: req.params.account_id}, '');
+        const result = await Account.findById({_id: req.params.account_id}, 'name type interest description');
         if (result)
             res.status(200).send(result);
         else
@@ -74,8 +73,8 @@ const deleteAccount = async (req, res) => {
     }
 }
 
-//AccountItem
-const findAccountItemAll = async (req, res) => {
+//Bank Account see
+const getAvailableAccounts = async (req, res) => {
     try {
         const result = await Account.find({
             status: true,
@@ -89,43 +88,26 @@ const findAccountItemAll = async (req, res) => {
         res.status(500).json({message: 'Internal Server Error', error: e})
     }
 }
-//AccountItem
-const userAccountInfo = async (req, res) => {
+const getAvailableAccountById = async (req, res) => {
     try {
-        let data = {}
-        const account = await Account.findById({_id: req.params.account_id}, '_id type interest name description');
-        const user = await User.findById({_id: req.body.user_id},'_id firstName lastName email');
-        if (account && user) {
-            data['account'] = account;
-            data['user'] = user;
-            res.status(200).send(data);
-        } else {
-            res.status(400).send({message: 'Not Fount Account'})
-        }
+        const account = await Account.findById({
+            _id: req.params.account_id,
+            status: true,
+            remainder: {$gte: 0}
+        });
+        if (!account)
+            res.status(400).send({message: "There is no available Account"});
+        return account
     } catch (e) {
-        res.status(500).json({message: 'Internal Server Error'})
+        console.log(e.toJSON());
     }
 }
-//Open User Account
-const openUserAccount = async(req, res) => {
+const updateRemainder = async(account) => {
     try {
-        const userAccount = await new UserAccount({
-            account: req.body.account._id,
-            name: req.body.userAccount.name,
-            description: req.body.userAccount.description,
-            number: accountNumber()
-        }).save();
-        const result  = await User.findOneAndUpdate({_id: req.body.user._id}, { $push: { accounts: {_id: userAccount._id} } },{
-            upsert: true,
-            setDefaultsOnInsert: true
-        })
+        return await Account.updateOne({_id: account._id}, {$inc: {remainder: -1}})
     } catch (e) {
-        res.status(500).json({message: 'Internal Server Error'})
+        return e
     }
-}
-//AddAccountItem
-const accountNumber = () => {
-    return (Math.floor(1000 + Math.random() * 90000));
 }
 module.exports = {
     findAccountAll,
@@ -133,7 +115,7 @@ module.exports = {
     createAccount,
     updateAccount,
     deleteAccount,
-    findAccountItemAll,
-    userAccountInfo,
-    openUserAccount
+    getAvailableAccounts,
+    getAvailableAccountById,
+    updateRemainder
 }

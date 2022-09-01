@@ -1,10 +1,20 @@
 import {API_PORT} from "../../env";
 
 export const DEFAULT_URL = `http://localhost:${API_PORT}/api`;
+
+//Login
+export const API_AUTH = `/auth`
+//USER API
+export const API_USER_INFO = `/users/:userId`;
+export const API_USER_ACCOUNTS = `/users/:userId/accounts`;
+
+//ACCOUNT API
+export const API_BANK_ACCOUNTS = `/accounts`;
+
+
+
+
 export const API_ADMIN_ACCOUNTS_ALL = `/admin/accounts`;
-export const API_ACCOUNTS_ALL = `/accounts`;
-export const API_USER_ACCOUNTS_ALL = `/users/:userId/accounts`;
-export const API_ACCOUNT_ITEM = `/accounts/:accountId`;
 export const API_ACCOUNT_PUT = `/admin/accounts/:dataId`;
 export const API_ACCOUNT_DELETE = `/admin/accounts/:accountId`;
 export const API_USERS_ALL = `/users`;
@@ -13,8 +23,7 @@ export const API_USER_DELETE = `/users/:userId`;
 export const API_CONTACT_PUT = `/contacts/:dataId`;
 
 
-export const API_USER_INFO = `/users/:userId`;
-export const API_AUTH = `http://localhost:${API_PORT}/auth`
+
 export const API_USERS = `http://localhost:${API_PORT}/api/users`
 export const API_OPEN_ACCOUNT = `/accounts/:accountId/open`;
 export const API_USER_ACCOUNT_INFO = `/tx/:accountId`;

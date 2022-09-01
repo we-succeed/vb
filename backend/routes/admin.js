@@ -1,17 +1,23 @@
 const express = require('express'); 
 const router = express.Router();
 const adminController = require('../controllers/adminController')
-const validateMiddleWare = require("../middleware/validate");
+const accountCoroller = require("../controllers/accountController");
+
+const validateMiddleWare = require("../utils/validate");
 const {validateUser} = require("../models/user");
-const hashingPassword = require("../middleware/hashingPassword");
+const hashingPassword = require("../utils/hashingPassword");
+
 const middlewares = [
     validateMiddleWare(validateUser),
     hashingPassword
 ]
-//restfullapi
-router.get('/admins', adminController.getAdmins)
-router.post('/admins', middlewares, adminController.createAdmin)
-router.put('/admins/:id', adminController.updateAdmin) 
-router.delete('/admins/:id', adminController.deleteAdmin)
+//AdminAPI
+router.get('/', adminController.getAdmins)
+router.post('/', middlewares, adminController.createAdmin)
+router.put('/:adminId', adminController.updateAdmin)
+router.delete('/:adminId', adminController.deleteAdmin)
+
+router.get('/accounts', accountCoroller.findAccountAll)
+
 
 module.exports = router;

@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 
 const UserSchema = new Schema({
-    role: {type: String, required: true},
     firstName: {type: String, required: true},
     lastName: {type: String, required: true},
     province: {type: String},
@@ -14,13 +13,15 @@ const UserSchema = new Schema({
     email: {type: String, required: true},
     password: {type: String, required: true},
     phoneNumber: {type: String},
-    accounts: [{
+    userAccounts: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'UserAccount'
+        ref: 'UserAccount',
+        default: []
     }],
     contacts: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Contact'
+        ref: 'Contact',
+        default: []
     }]
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at'} });
 
@@ -38,9 +39,7 @@ const validateUser = (data) => {
 		firstName: Joi.string().required().label("First Name"),
 		lastName: Joi.string().required().label("Last Name"),
 		email: Joi.string().email().required().label("Email"),
-		password: Joi.string().min(6).required().label("Password"),
-        confirmPassword: Joi.string().valid(Joi.ref('password')).required(),
-        role: Joi.string().valid('Admin', 'User').required()
+		password: Joi.string().min(6).required().label("Password")
 	}).options(
 		{
 			abortEarly: false, //include all errors
@@ -58,11 +57,13 @@ const UserAccountSchema = new Schema({
     balance: {type: Number, defaultValue: 0},
     transactions: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Tx'
+        ref: 'Tx',
+        default: []
     }],
     transfers: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Transfer'
+        ref: 'Transfer',
+        default: []
     }]
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at'} })
 

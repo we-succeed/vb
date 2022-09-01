@@ -1,8 +1,9 @@
-import { Navigate} from "react-router-dom";
+import {Navigate, useLocation} from "react-router-dom";
 
-const PrivateRoute = ({auth, children}) => {
+const PrivateRoute = ({component: Component, auth, ...rest}) => {
+    const { state } = useLocation();
     if (auth) {
-        return children
+        return  <Component {...{state}} {...{auth}}/>
     }
     return <Navigate to="/" />
 }

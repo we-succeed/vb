@@ -5,8 +5,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
 
-
-export default function AccountItem(props) {
+export default function BankAccount(props) {
     const navigate = useNavigate();
     return (
         <Grid item xs={6} md={3}>
@@ -15,9 +14,7 @@ export default function AccountItem(props) {
                     <CardMedia
                         component="img"
                         height="140"
-                        image="https://picsum.photos/id/1053/400/300"
-                        alt="green iguana"
-                    />
+                        image="https://picsum.photos/id/1053/400/300"/>
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
                             {props.account.type.toUpperCase()}
@@ -31,7 +28,8 @@ export default function AccountItem(props) {
                     </CardContent>
                 </CardActionArea>
                 <CardActions>
-                    <Button size="small" color="primary" onClick={() => navigate(`/accounts/${props.account._id}/open`)}>
+                    <Button size="small" color="primary"
+                            onClick={() => navigate(`/accounts/${props.account._id}/open`, { state : {account: props.account}})}>
                         Open Account
                     </Button>
                 </CardActions>

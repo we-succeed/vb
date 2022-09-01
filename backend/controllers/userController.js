@@ -5,33 +5,47 @@ const create = (async (req, res) => {
         const user = await User.findOne({email: req.body.email});
         if (user)
             return res.status(409).send({message: "User with given email already Exist!"});
-        await new User({...req.body}).save();
-        res.status(201).send({message: "User created successfully"});
+        const result = await new User({...req.body}).save();
+        if (result._id)
+            return res.status(201).send({message: "User created successfully"});
     } catch (error) {
-        res.status(500).send({message: "Internal Server Error"});
+        return res.status(500).send({message: "Internal Server Error"});
     }
 });
 
 const findAllUser = (async (req, res) => {
     try {
-        const users = await User.find({}, 'firstName lastName province city address postalCode email accounts phoneNumber role');
+        const users = await User.find({}, '-password');
         if (users)
-            return res
-                .status(200).send(users);
+            return res.status(200).send(users);
         else
-            return res.status(400).send({'message': 'no data'});
+            return res.status(400).send({'message': 'no user data'});
     } catch (error) {
-        res.status(500).send({message: "Internal Server Error"});
+        return res.status(500).send({message: "Internal Server Error"});
     }
 });
 
 const findUserById = (async (req, res) => {
     try {
-        const user = await User.findById({_id: req.params.user_id}, 'firstName lastName province city address postalCode email accounts phoneNumber role');
+        const user = await User.findById({_id: req.params.user_id}, '-password');
         if (user)
             return res.status(200).send(user);
     } catch (e) {
-        res.status(500).send({message: "Internal Server Error"});
+        return res.status(500).send({message: "Internal Server Error"});
+    }
+})
+const updateUserById = (async (req, res) => {
+    try {
+        const result = await User.updateOne({_id: req.params.user_id}, req.body, {
+            upsert: true,
+            setDefaultsOnInsert: true
+        })
+        if (result && result.modifiedCount > 0)
+            return res.status(201).send({message: 'Update completed'})
+        else
+            return res.status(400).send({message: 'Updated fails'})
+    } catch (e) {
+        return res.status(500).send({message: "Internal Server Error"});
     }
 })
 
@@ -47,33 +61,23 @@ const deleteUserById = (async (req, res) => {
     }
 })
 
-const updateUserById = (async (req, res) => {
+const getUserAccounts = (async (req, res) => {
     try {
-        const result = await User.updateOne({_id: req.params.user_id}, req.body, {
-            upsert: true,
-            setDefaultsOnInsert: true
-        })
-        if (result && result.modifiedCount > 0)
-            return res.status(200).send({message: 'update'})
+        const user = await User.findById({_id: req.params.user_id}, 'userAccounts')
+            .populate({
+                path: 'userAccounts',
+                select: 'number name description balance',
+                populate: {path: 'account', model: 'Account', select: 'type interest'}
+            })
+        if (user)
+            return res.status(200).send(user);
         else
-            return res.status(400).send({message: ''})
+            return res.status(400).send({message: 'Bad request'})
     } catch (e) {
-        res.status(500).send({message: "Internal Server Error"});
+        return res.status(500).send({message: "Internal Server Error"});
     }
 })
 
-const getUserAccounts = (async (req, res) => {
-    try {
-        const userAccounts = await User.findById({_id: req.params.user_id}, 'accounts')
-            .populate({ path : 'accounts', populate:{path: 'account', model: 'Account'}})
-        if (userAccounts) {
-            return res.status(200).send(userAccounts);
-        } else
-            return res.status(400).send({message: 'Bad request'})
-    } catch (e) {
-        res.status(500).send({message: "Internal Server Error"});
-    }
-})
 
 module.exports = {
     create,

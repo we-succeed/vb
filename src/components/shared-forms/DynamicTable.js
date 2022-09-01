@@ -76,7 +76,7 @@ const DynamicTable = (props) => {
             else if(key['format'] === 'nameField')
                 return (
                         <TableCell>
-                            {data[key['cols'][0]] +' '+  data[key['cols'][1]]}
+                            {data[key['cols'][0]] +' '+ data[key['cols'][1]]}
                         </TableCell>
                 )
             else if(key['format'] === 'toggle')
@@ -91,8 +91,18 @@ const DynamicTable = (props) => {
                 return <TableCell key={idx}>{data[key['cols']].length}</TableCell>
             else if(key['format'] === 'date')
                 return <TableCell key={idx}>{new Date(data[key['cols']]).toLocaleString()}</TableCell>
-            else
-                return <TableCell key={idx}>{data[key['cols']]}</TableCell>
+            else {
+                let field = ""
+                if (key['cols'].includes('.')){
+                    const colsArr = key['cols'].split('.');
+                    field = data[colsArr[0]];
+                    for ( let i = 1; i < colsArr.length; i++) {
+                        field = field[colsArr[i]];
+                    }
+                } else
+                    field = data[key['cols']];
+                return <TableCell key={idx}>{field}</TableCell>
+            }
         })
     }
     const getRowsData = () => {

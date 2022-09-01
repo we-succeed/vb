@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 
-export default function AdditionalInfoForm(props) {
+export default function UserAccountForm(props) {
     return (
         <>
             <Typography variant="h6" gutterBottom mb={3}>

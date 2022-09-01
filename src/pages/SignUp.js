@@ -60,7 +60,6 @@ const SignUp = () => {
         e.preventDefault();
         try {
             await axios.post(API_USERS, user);
-            navigate("/login");
         } catch (error) {
             if (
                 error.response &&
@@ -113,7 +112,7 @@ const SignUp = () => {
         schema: [
             {id: 'firstName', label: 'First Name', name: 'firstName', type: 'default', required: true},
             {id: 'lastName', label: 'Last Name', name: 'lastName', type: 'default', required: true},
-            {id: 'email', label: 'Email Address', name: 'email', type: 'default', required: true, disabled: true},
+            {id: 'email', label: 'Email Address', name: 'email', type: 'default', required: true},
             {id: 'password', label: 'Password', name: 'password', type: 'password', required: true},
             {id: 'confirmPassword', label: 'ConfirmPassword', name: 'confirmPassword', type: 'password', required: true}
         ]

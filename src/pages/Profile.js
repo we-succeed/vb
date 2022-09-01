@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {useParams} from 'react-router-dom';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import {API_USER_INFO,  getApiRoute} from 'components/commons/module';
+import {API_USER_INFO, getApiRoute} from 'components/commons/module';
 import SnackbarAlert from "../components/shared-dialog/SnackbarAlert";
 import PageTitle from "../components/shared-forms/PageTitle";
 import VBButton from "../components/shared-forms/VBButton";
@@ -29,12 +28,12 @@ const initialAlert = {
 const Profile = () => {
     const {userId} = useParams();
     const [user, setUser] = useState(initialUser);
-    const [error, setError] = useState("");
     const [alert, setAlert] = useState(initialAlert);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         getData();
-    });
+    },[]);
 
     //API
     const getData = () => {
@@ -42,7 +41,7 @@ const Profile = () => {
             .then((res) => {
                 setUser(res.data);
             }).catch(function (e) {
-            setAlert({...alert, open: true, message: e.data.message, severity: 'warning'});
+            setAlert({...alert, open: true, message: 'Interval server error', status: 500});
         });
     }
     const updateUser = () => {
@@ -50,8 +49,8 @@ const Profile = () => {
             .then(res => {
                 setAlert({...alert, open: true, message: res.data.message, status: res.status});
             }).catch(e => {
-                setAlert({...alert, open: true, message: 'Interval server error'});
-                console.log(error.toJSON());
+                setAlert({...alert, open: true, message: 'Interval server error', status: 500});
+                console.log(e.toJSON());
         })
     }
 
@@ -91,9 +90,6 @@ const Profile = () => {
                 ))}
             </Grid>
             <VBButton title="Edit" onClick={handleSubmit} fullWidth/>
-            <Link href="/src/pages" variant="body2">
-                Cancel
-            </Link>
             <SnackbarAlert alert={alert}/>
         </Container>
     );

@@ -6,11 +6,12 @@ const authRoutes = require('./auth');
 const txRoutes = require('./transaction');
 const contactRoutes = require('./contact');
 
-router.use('/api', adminRoutes);
-router.use('/api', userRoutes);
-router.use('/api/admin', accountRoutes);
+router.use('/accounts', accountRoutes);
+router.use('/users', userRoutes);
 router.use('/auth',authRoutes);
-router.use('/api', txRoutes)
-router.use('/api', contactRoutes);
+router.use('/tx', txRoutes)
+router.use('/contacts', contactRoutes);
+router.use('/admin', adminRoutes);
+
 
 module.exports = router; 

@@ -1,12 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const accountController = require('../controllers/accountController')
+const userAccountController = require("../controllers/userAccountController");
 
-//restfullAPI
-router.get('/accounts', accountController.findAccountAll)
-router.get('/accounts/:account_id', accountController.findAccountById)
-router.post('/accounts', accountController.createAccount)
-router.put('/accounts/:account_id', accountController.updateAccount)
-router.delete('/accounts/:account_id', accountController.deleteAccount)
+//selling backing account
+router.get('/', accountController.findAccountAll)
+router.get('/:account_id', accountController.findAccountById)
+router.post('/', accountController.createAccount)
+router.put('/:account_id', accountController.updateAccount)
+router.delete('/:account_id', accountController.deleteAccount)
+
+//open user account
+router.post('/:account_id/open',userAccountController.saveUserAccount)
 
 module.exports = router;

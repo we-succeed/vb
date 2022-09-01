@@ -11,7 +11,7 @@ const cors = require('cors')
 app.use(cors()) //prevent for cors error
 
 app.use(bodyParser.json());  //express.json + express.urlencoded()
-app.use(routes);
+app.use('/api', routes);
 
 
 app.use((req, res, next) => {
@@ -21,7 +21,7 @@ app.use((req, res, next) => {
 })
 
 app.use((err, req, res, next) => {
-    console.error(" handle middleware error >> " , err);
+    console.error(" handle utils error >> " , err);
     res.status(500).json({err: 'error'});
 })
 

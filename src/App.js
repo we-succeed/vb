@@ -15,8 +15,8 @@ import Account from "./pages/admin/Account";
 import UserAccount from "./pages/UserAccount";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
-import VBStyledCollection from "./components/VBStyledCollection";
 import Home from "./pages/Home";
+import VBStyledCollection from "./components/VBStyledCollection";
 
 const App = () => {
     const [open, setOpen] = React.useState(false);
@@ -40,18 +40,18 @@ const App = () => {
                         <VBStyledCollection.DrawerHeader/>
                         <Routes>
                             <Route path="/" element={<Home/>}/>
-                            <Route path="/user/:userId" element={<PrivateRoute auth={auth} children={<Profile/>}/>}/>
-                            <Route path="/user/:userId/accounts" element={<PrivateRoute auth={auth} children={<UserAccount/>}/>}/>
-                            <Route path="/user/:userId/accounts/:accountId" exact element={<PrivateRoute auth={auth} children={<Home/>}/>}/>
-                            <Route path="/user/:userId/contacts" element={<PrivateRoute auth={auth} children={<ContactList/>}/>}/>
-                            <Route path="/accounts/:accountId/open" exact element={<PrivateRoute auth={auth} children={<AccountContract auth={auth}/>}/>}/>
-                            <Route path="/admin/users" exact element={<PrivateRoute auth={auth} children={<User/>}/>}/>
-                            <Route path="/admin/accounts" element={<PrivateRoute auth={auth} children={<Account/>}/>}/>
-                            <Route path="/login" element={<Login/>} />
-                            <Route path="/tx" element={<PrivateRoute auth={auth} children={<Transaction/>}/>}/>
-                            <Route path="/tx/:userAccountId" element={<PrivateRoute auth={auth} children={<TxHistory/>}/>}/>
-                            <Route path="/user/:userId/txs" element={<PrivateRoute auth={auth} children={<UserAccounts/>}/>}/>
-                            <Route path="/signup" element={<SignUp/>}/>
+                            <Route path="/user/:userId" element={<PrivateRoute auth={auth} component={Profile}/>}/>
+                            <Route path="/user/:userId/accounts" element={<PrivateRoute auth={auth} component={UserAccount}/>}/>
+                            <Route path="/user/:userId/accounts/:accountId" exact element={<PrivateRoute auth={auth} component={Home}/>}/>
+                            <Route path="/user/:userId/contacts" element={<PrivateRoute auth={auth} component={ContactList}/>}/>
+                            <Route path="/user/:userId/tx" element={<PrivateRoute auth={auth} component={Transaction}/>}/>
+                            <Route path="/user/:userId/tx/:userAccountId" element={<PrivateRoute auth={auth} component={TxHistory}/>}/>
+                            <Route path="/user/:userId/txs" element={<PrivateRoute auth={auth} component={UserAccounts}/>}/>
+                            <Route path="/accounts/:accountId/open" element={<PrivateRoute auth={auth} component={AccountContract}/>}/>
+                            <Route path="/login" element={Login} />
+                            <Route path="/signup" element={SignUp}/>
+                            <Route path="/admin/users" exact element={<PrivateRoute auth={auth} component={User}/>}/>
+                            <Route path="/admin/accounts" exact element={<PrivateRoute auth={auth} component={Account}/>}/>
                         </Routes>
                     </VBStyledCollection.Main>
                 </Router>
