@@ -1,74 +1,63 @@
-import * as React from 'react';
-import {useEffect, useState} from 'react';
 import Container from '@mui/material/Container';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import Typography from "@mui/material/Typography";
 import axios from "axios";
+import { API_USER_TX, getApiRoute } from 'components/commons/module';
+import DynamicTable from 'components/shared-forms/DynamicTable';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 
-const initialTx = {
-    from: '',
-    to: '',
-    amount: '',
-    source: '',
-    type: '',
+const initialTr = {
+  from: '',
+  to: '',
+  amount: '',
+  source: '',
+  type: '',
 }
 
 const TransferHistory = (props) => {
-  const [transfers, setTransfers] = useState([]);
-  const [transfer, setTransfer] = useState(initialTx);
-
+  const params = useParams();
+  const [trs, setTrs] = useState([]);
+  const [tr, setTr] = useState(initialTr);
+  console.log('tx' + props.data);
   useEffect(() => {
-    getData();
-  }, [props.data])
+
+    if (props.data) {
+      getData();
+    }
+  }, [props.data._id])
+
 
   const getData = () => {
-    axios.get(`http://localhost:5003/api/transfer/${props.data._id}`)
-        .then((res) => {
-          setTransfers(res.data.userAccount.transfers);     
-        });
-      }
+    axios.get(getApiRoute(API_USER_TX, { 'userAccountId': props.data._id }))
+      .then((res) => {
+        setTrs(res.data.userAccount.transfers);
+      }).catch(e => {
+        console.log(e);
+      });
+  }
+
+  const UserTrData = {
+    schema: [
+      { head: 'Id', cols: '_id', format: 'default' },
+      { head: 'From', cols: 'from', format: 'default' },
+      { head: 'To', cols: '_id', format: 'default' },
+      { head: 'Amount', cols: 'amount', format: 'default' },
+      { head: 'Source', cols: 'source', format: 'default' },
+    ]
+  }
 
   return (
     <Container component="main">
-            <Typography variant="h5" gutterBottom component="div" mt={2}>
-                Transfer History
-            </Typography>
-            <TableContainer>
-                <Table aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>id</TableCell>
-                            <TableCell>from</TableCell>
-                            <TableCell>to</TableCell>
-                            <TableCell>amount</TableCell>
-                            <TableCell>source</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {transfers && transfers.map((row, idx) => (
-                            <TableRow
-                                key={row.id}
-                                sx={{'&:last-child td, &:last-child th': {border: 0}, 'cursor':'pointer'}}                                
-                            >
-                                <TableCell component="th" scope="row">
-                                    {idx + 1}
-                                </TableCell>
-                                <TableCell>{row.from}</TableCell>
-                                <TableCell>{row.to.name}</TableCell>
-                                <TableCell>{row.amount}</TableCell>
-                                <TableCell>{row.source}</TableCell>                                
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </Container>
+      {trs.length !== 0 ?
+        <DynamicTable form={UserTrData} data={trs} />
+        :
+        <Typography variant="h5" gutterBottom component="div" mt={2}>
+          No data
+        </Typography>
+      }
+    </Container>
   );
 };
 

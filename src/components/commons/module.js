@@ -24,6 +24,9 @@ export const API_USER_ACCOUNT_INFO = `/tx/:accountId`;
 export const API_USER_TX = `/tx/:userAccountId`;
 export const API_TX_POST = `/tx`;
 
+export const API_USER_TR = `/transfer/:userAccountId`;
+export const API_TR_POST = `/transfer`;
+
 export const USER_MENUS = [
     {
         name:'Accounts',
