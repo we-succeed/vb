@@ -14,10 +14,7 @@ import PageTitle from "../components/shared-forms/PageTitle";
 import VBButton from "../components/shared-forms/VBButton";
 import SnackbarAlert from "../components/shared-dialog/SnackbarAlert";
 
-
-const SignUp = () => {
-
-    const [user, setUser] = useState({
+const initialUser = {
         role: "User",
         firstName: "",
         lastName: "",
@@ -29,7 +26,11 @@ const SignUp = () => {
         address: "",
         postalCode: "",
         phoneNumber: "",
-    });
+}
+
+const SignUp = () => {
+
+    const [user, setUser] = useState(initialUser);
 
     const [error, setError] = useState({
         role: "User",

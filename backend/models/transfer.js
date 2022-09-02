@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const TransferSchema = new Schema({
-    from: {type: mongoose.Schema.Types.ObjectId, ref: 'Account'},
+    from: {type: mongoose.Schema.Types.ObjectId, ref: 'UserAccount'},
     to: {type: mongoose.Schema.Types.ObjectId, ref: 'Contract'},
     amount: {type: Number},
     description: {type: String},

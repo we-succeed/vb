@@ -20,6 +20,8 @@ export const API_ACCOUNT_DELETE = `/admin/accounts/:accountId`;
 export const API_USERS_ALL = `/users`;
 export const API_USER_PUT = `/users/:dataId`;
 export const API_USER_DELETE = `/users/:userId`;
+export const API_CONTACTS_ALL = `/contacts/:userId`;
+export const API_CONTACT_DELETE = `/contacts/:contact_id`;
 export const API_CONTACT_PUT = `/contacts/:dataId`;
 
 
@@ -27,6 +29,9 @@ export const API_CONTACT_PUT = `/contacts/:dataId`;
 export const API_USERS = `http://localhost:${API_PORT}/api/users`
 export const API_OPEN_ACCOUNT = `/accounts/:accountId/open`;
 export const API_USER_ACCOUNT_INFO = `/tx/:accountId`;
+
+export const API_USER_TX = `/tx/:userAccountId`;
+export const API_TX_POST = `/tx`;
 
 export const USER_MENUS = [
     {
@@ -38,6 +43,11 @@ export const USER_MENUS = [
         name:'Transfer',
         path:'/user/:userId/txs',
         icon:'currency_exchange'
+    },
+    {
+        name:'Etransfer',
+        path:'/user/:userId/transfer',
+        icon:'monetization_on'
     },
     {
         name:'Bill Payment',
@@ -87,6 +97,7 @@ export const getApiRoute = (path, params) => {
         Object.entries(params).forEach(([key,value]) => {
             newPath = newPath.replace(':' + key, value)
         })
+        console.log(`${DEFAULT_URL}${newPath}`);
         return `${DEFAULT_URL}${newPath}`
     }
 }

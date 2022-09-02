@@ -5,18 +5,15 @@ import Box from "@mui/material/Box";
 import MenuAppBar from "./components/commons/MenuAppBar";
 import PrivateRoute from "./components/commons/PrivateRoute";
 import AccountContract from "./components/Account/accountContract/AccountContract";
-import Transaction from "./components/Transfer/Transaction/Tx";
-import TxHistory from "./components/Transfer/Transaction/TxHistory";
-import UserAccounts from "components/Transfer/Transaction/userAccountList";
-import ContactList from "./components/Contact/ContactList";
+import ContactList from "./pages/Contact";
 import Profile from "./pages/Profile";
 import User from "./pages/admin/User";
 import Account from "./pages/admin/Account";
 import UserAccount from "./pages/UserAccount";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
-import Home from "./pages/Home";
 import VBStyledCollection from "./components/VBStyledCollection";
+import Home from "./pages/Home";
 
 const App = () => {
     const [open, setOpen] = React.useState(false);

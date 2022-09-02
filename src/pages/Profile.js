@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {useParams} from 'react-router-dom';
+import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import {API_USER_INFO, getApiRoute} from 'components/commons/module';
+import {API_USER_INFO,  getApiRoute} from 'components/commons/module';
 import SnackbarAlert from "../components/shared-dialog/SnackbarAlert";
 import PageTitle from "../components/shared-forms/PageTitle";
 import VBButton from "../components/shared-forms/VBButton";
@@ -28,8 +29,8 @@ const initialAlert = {
 const Profile = () => {
     const {userId} = useParams();
     const [user, setUser] = useState(initialUser);
-    const [alert, setAlert] = useState(initialAlert);
     const [error, setError] = useState("");
+    const [alert, setAlert] = useState(initialAlert);
 
     useEffect(() => {
         getData();
@@ -90,6 +91,9 @@ const Profile = () => {
                 ))}
             </Grid>
             <VBButton title="Edit" onClick={handleSubmit} fullWidth/>
+            <Link href="/src/pages" variant="body2">
+                Cancel
+            </Link>
             <SnackbarAlert alert={alert}/>
         </Container>
     );
