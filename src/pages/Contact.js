@@ -1,6 +1,5 @@
 import { Button } from "@mui/material";
 import Container from '@mui/material/Container';
-import Typography from "@mui/material/Typography";
 import axios from "axios";
 import * as React from 'react';
 import { useEffect, useState } from 'react';
@@ -16,6 +15,7 @@ import AlertDialog from "../components/shared-dialog/AlertDialog";
 import DynamicTable from "../components/shared-forms/DynamicTable";
 import VBInputField from "../components/shared-forms/VBInputField";
 import SnackbarAlert from "components/shared-dialog/SnackbarAlert";
+import PageTitle from "../components/shared-forms/PageTitle";
 
 
 const initialContact = {
@@ -164,23 +164,14 @@ const ContactList = () => {
 
   return (
     <Container component="main">
-      <Typography variant="h5" gutterBottom component="div" mt={2}>
-        Contact Management
-      </Typography>
+      <PageTitle title="Contact Management"/>
       <Button variant="contained" onClick={handleModalOpen}> Add Contact </Button>
-      {contacts.length !== 0 ?
-        <DynamicTable form={ContactTBData} data={contacts} />
-        :
-        <Typography variant="h5" gutterBottom component="div" mt={2}>
-          No data
-        </Typography>
-      }
+      <DynamicTable form={ContactTBData} data={contacts} />
       <AlertDialog open={openAlertModal} close={handleAlertModalClose} data={contact} form={AlertFormData} />
       <AddEditDialog open={openModal} close={handleModalClose} form={AddEditFormData}>
         <ContactTemplate data={contact} cb={PageCallBack} />
       </AddEditDialog>
       <SnackbarAlert alert={alert} />
-
     </Container>
   );
 };

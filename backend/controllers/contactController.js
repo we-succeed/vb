@@ -8,8 +8,9 @@ const contactCreate = (async (req, res) => {
             upsert: true,
             setDefaultsOnInsert: true
         })
-        res.status(201).send({ message: "Contact created successfully" });
-    } catch (error) {
+        if (result)
+            res.status(201).send({ message: "Contact created successfully" });
+    } catch (e) {
         res.status(500).send({ message: "Internal Server Error" });
     }
 });
@@ -63,6 +64,8 @@ const addContact = async (req, res) => {
             upsert: true,
             setDefaultsOnInsert: true
         })
+        if (result)
+            return res.status(200).send({ message: 'Add new contact.' })
     } catch (e) {
         res.status(500).json({ message: 'Internal Server Error' })
     }

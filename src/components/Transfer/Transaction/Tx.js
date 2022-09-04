@@ -1,7 +1,7 @@
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import axios from 'axios';
-import { API_TX_POST, API_USER_ACCOUNTS_ALL, getApiRoute } from 'components/commons/module';
+import { API_TX_POST, API_USER_ACCOUNTS, getApiRoute } from 'components/commons/module';
 import SnackbarAlert from 'components/shared-dialog/SnackbarAlert';
 import PageTitle from 'components/shared-forms/PageTitle';
 import VBButton from 'components/shared-forms/VBButton';
@@ -18,7 +18,7 @@ const initialTx = {
     type: '',
 }
 
-const Transaction = (req, res) => {
+const Tx = () => {
     const params = useParams();
     const [accounts, setAccounts] = useState([]);
     const [tx, setTx] = useState(initialTx);
@@ -47,15 +47,15 @@ const Transaction = (req, res) => {
             setAlert({...alert, open: true, message: res.data.message, status: res.status});
         }).catch(e => {
             setAlert({...alert, open: true, message: 'Interval server error'});
-            console.log(error.toJSON());
+            console.log(e.toJSON());
         })
     }
 
     const getData = () => {
         axios
-            .get(getApiRoute(API_USER_ACCOUNTS_ALL, {'userId': params.userId}))
+            .get(getApiRoute(API_USER_ACCOUNTS, {'userId': params.userId}))
             .then((res) => {
-                setAccounts(res.data.accounts);
+                setAccounts(res.data.userAccounts);
             })
             .catch((err) => console.log(err));
     }
@@ -81,7 +81,7 @@ const Transaction = (req, res) => {
                 name: 'to',
                 type: 'select',
                 select: {
-                    list: accounts
+                    list: accounts && accounts
                         .filter(row => (row._id !== tx.from)), value: '_id', fields: ['name','number']
                 }
             },
@@ -116,4 +116,4 @@ const Transaction = (req, res) => {
     );
 };
 
-export default Transaction;
+export default Tx;

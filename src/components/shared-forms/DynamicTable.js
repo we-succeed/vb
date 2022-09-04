@@ -9,6 +9,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import TableContainer from "@mui/material/TableContainer";
 import {useEffect, useState} from "react";
+import Typography from "@mui/material/Typography";
 
 
 const DynamicTable = (props) => {
@@ -123,23 +124,29 @@ const DynamicTable = (props) => {
     }
     return (
         <>
-            <TableContainer>
-                <Table aria-label="simple table">
-                    {getHeader()}
-                    <TableBody>
-                        {getRowsData()}
-                    </TableBody>
-                </Table>
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    component="div"
-                    count={data.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-            </TableContainer>
+            {data && data.length ===0?
+                <Typography variant="h5" gutterBottom component="div" mt={2}>
+                No data
+                </Typography>
+                :
+                <TableContainer>
+                    <Table aria-label="simple table">
+                        {getHeader()}
+                        <TableBody>
+                            {getRowsData()}
+                        </TableBody>
+                    </Table>
+                    <TablePagination
+                        rowsPerPageOptions={[5, 10, 25]}
+                        component="div"
+                        count={data.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                </TableContainer>
+            }
         </>
 
     )

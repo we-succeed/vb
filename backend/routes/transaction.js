@@ -3,9 +3,8 @@ const router = express.Router();
 const transactionController = require('../controllers/transactionController')
 
 //restfullAPI
-
-router.get('/tx/:userAccountId', transactionController.userTransactionInfo)
-router.post('/tx', transactionController.createTransaction)
+router.get('/:userAccountId', transactionController.userTransactionInfo)
+router.post('/', transactionController.createTransaction)
 
 
 

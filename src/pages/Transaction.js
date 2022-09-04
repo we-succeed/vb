@@ -1,6 +1,6 @@
 import { Container } from '@mui/material';
 import axios from "axios";
-import { API_USER_ACCOUNTS_ALL, getApiRoute } from 'components/commons/module';
+import { API_USER_ACCOUNTS, getApiRoute } from 'components/commons/module';
 import VBInputField from 'components/shared-forms/VBInputField';
 import * as React from 'react';
 import { useEffect, useState } from "react";
@@ -9,7 +9,7 @@ import PageTitle from "../components/shared-forms/PageTitle";
 import TxHistory from '../components/Transfer/Transaction/TxHistory';
 
 
-const UserAccounts = () => {
+const Transaction = () => {
   const params = useParams();
   const [accounts, setAccounts] = useState([]);
   const [account, setAccount] = useState({});
@@ -20,7 +20,7 @@ const UserAccounts = () => {
 
   const getData = () => {
     axios
-      .get(getApiRoute(API_USER_ACCOUNTS_ALL, { 'userId': params.userId }))
+      .get(getApiRoute(API_USER_ACCOUNTS, { 'userId': params.userId }))
       .then((res) => {
         setAccounts(res.data.accounts);
       })
@@ -45,7 +45,7 @@ const UserAccounts = () => {
       setAccount({ ...account, [input.name]: input.value });
     },
     selectChange: (event) => {
-      setAccount({ ...account, ['_id']: event.target.value });
+      setAccount({ ...account, '_id': event.target.value });
 
     }
   }
@@ -61,4 +61,4 @@ const UserAccounts = () => {
   );
 };
 
-export default UserAccounts;
+export default Transaction;

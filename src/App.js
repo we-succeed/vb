@@ -14,6 +14,8 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import VBStyledCollection from "./components/VBStyledCollection";
 import Home from "./pages/Home";
+import Transaction from "./pages/Transaction";
+import Tx from "./components/Transfer/Transaction/Tx"
 
 const App = () => {
     const [open, setOpen] = React.useState(false);
@@ -42,8 +44,7 @@ const App = () => {
                             <Route path="/user/:userId/accounts/:accountId" exact element={<PrivateRoute auth={auth} component={Home}/>}/>
                             <Route path="/user/:userId/contacts" element={<PrivateRoute auth={auth} component={ContactList}/>}/>
                             <Route path="/user/:userId/tx" element={<PrivateRoute auth={auth} component={Transaction}/>}/>
-                            <Route path="/user/:userId/tx/:userAccountId" element={<PrivateRoute auth={auth} component={TxHistory}/>}/>
-                            <Route path="/user/:userId/txs" element={<PrivateRoute auth={auth} component={UserAccounts}/>}/>
+                            <Route path="/user/:userId/txs" element={<PrivateRoute auth={auth} component={Tx}/>}/>
                             <Route path="/accounts/:accountId/open" element={<PrivateRoute auth={auth} component={AccountContract}/>}/>
                             <Route path="/login" element={Login} />
                             <Route path="/signup" element={SignUp}/>
