@@ -1,200 +1,120 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
-import FormControl from '@mui/material/FormControl';
-import { getApiRoute } from 'components/commons/module';
+import Link from '@mui/material/Link';
+import axios from 'axios';
+import { API_TR_POST, API_USER_ACCOUNTS_ALL, getApiRoute } from 'components/commons/module';
+import SnackbarAlert from 'components/shared-dialog/SnackbarAlert';
+import PageTitle from 'components/shared-forms/PageTitle';
+import VBButton from 'components/shared-forms/VBButton';
+import VBInputField from 'components/shared-forms/VBInputField';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-const theme = createTheme();
+
+
+const initialTr = {
+    from: '',
+    to: '',
+    amount: '',
+    desc: '',
+    type: '',
+}
 
 const Transfer = (req, res) => {
-  const [data, setData] = useState({
-    userAccount: {
-      _id: ''
-    },
-    from: '',
-    to: '',
-    amount: '',
-    source: '',
-    type: '',
-  });
-  
-  const [error, setError] = useState({
-    from: '',
-    to: '',
-    amount: '',
-    source: '',
-    type: '',
-  });
+    const params = useParams();
+    const [transfers, setTransfers] = useState([]);
+    const [tr, setTr] = useState(initialTr);
 
-  const [alert, setAlert] = useState({
-    open: false,
-    message: '',
-    severity:'info'
-  });
+    const [error, setError] = useState({
+        from: '',
+        to: '',
+        amount: '',
+        source: '',
+        type: '',
+    });
 
-//   useEffect(() => {
-//     (async () => {
-//         try {
-            
-//             const url = getApiRoute('/tx/:accountId', {userAccountId});
-//             const userAccount = await axios.get(url);
-//             setData(userAccount.data);
-//         } catch (error) {
-//             console.log(error);
-//         }
-//     })();
-// }, []);
+    const [alert, setAlert] = useState({
+        open: false,
+        message: '',
+        severity: 'info'
+    });
 
-  const handleClose = () => {
-    setAlert({ ...alert, open: false });
-  };
 
-  const navigate = useNavigate();
+    useEffect(() => {
+        getData();
+    }, [])
 
-  const handleChange = ({ currentTarget: input }) => {
-    setData({ ...data, [input.name]: input.value});
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const API = 'http://localhost:5003/api/transfer'
-      const result = await axios.post(API, data);
-      console.log(result);
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status <= 500
-      ) {
-        setError(error.response.data.message)
-        setAlert({ ...alert, open: true, message: error.response.data.message, severity:'warning' });
-      }
+    const createTR = () => {
+        axios.post(getApiRoute(API_TR_POST), tr).then(res => {
+            setAlert({...alert, open: true, message: res.data.message, status: res.status});
+        }).catch(e => {
+            setAlert({...alert, open: true, message: 'Interval server error'});
+            console.log(error.toJSON());
+        })
     }
-  }
 
-  
+    const getData = () => {
+        axios
+            .get(getApiRoute(API_USER_ACCOUNTS_ALL, {'userId': params.userId}))
+            .then((res) => {
+                setTransfers(res.data.accounts);
+            })
+            .catch((err) => console.log(err));
+    }
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        createTR();
+    }
 
-  return (
-    <ThemeProvider theme={theme}>
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Typography component="h1" variant="h5">
-          Transfer
-        </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-          <FormControl>
-    </FormControl>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-            <form autoComplete='off'>
-              <TextField
-                autoComplete="from"
-                name="from"
-                required
-                fullWidth
-                id="from"
-                label="From"
-                onChange={handleChange}
-                value={data.from}
-                autoFocus
-              />
-            </form>
-            </Grid>
-            <Grid item xs={12}>
-              <form autoComplete='off'>
-              <TextField
-                required
-                fullWidth
-                id="to"
-                label="To"
-                name="to"
-                onChange={handleChange}
-                value={data.to}
-                autoComplete="to"
-              />
-              </form>
-            </Grid>
-            <Grid item xs={12}>
-              <form autoComplete='off'>
-              <TextField
-                required
-                fullWidth
-                id="amount"
-                label="Amount"
-                name="amount"
-                onChange={handleChange}
-                value={data.amount}
-                autoComplete="amount"
-              />
-              </form>
-            </Grid>
-            <Grid item xs={12}>
-              <form autoComplete='off'>
-              <TextField
-                required
-                fullWidth
-                id="source"
-                label="Source"
-                name="source"
-                onChange={handleChange}
-                value={data.source}
-                autoComplete="source"
-              />
-              </form>
-            </Grid>            
-            </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Done
-          </Button>
-          <Snackbar
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={alert.open}
-            onClose={handleClose}
-            key={'123'}
-          >
-            <Alert onClose={handleClose} severity={alert.severity} sx={{ mt: '4rem', width: '100%' }}>
-              {alert.message}
-            </Alert>
-          </Snackbar>
+    //Data that make up page
+    const FormFields = {
+        schema: [
+            {
+                id: 'from',
+                label: 'From',
+                name: 'from',
+                type: 'select',
+                select: {list: transfers, value: '_id', fields: ['name','number']}
+            },
+            {
+                id: 'to',
+                label: 'To',
+                name: 'to',
+                type: 'select',
+                select: {
+                    list: transfers
+                        .filter(row => (row._id === tr.from)), value: '_id', fields: ['name','number']
+                }
+            },
+            {id: 'amount', label: 'Amount', name: 'amount', type: 'default'},
+            {id: 'description', label: 'Description', name: 'description', type: 'default'},
+        ]
+    }
 
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link href="/" variant="body2">
+    //Callback functions that make up page
+    const PageCallBack = {
+        inputChange: ({currentTarget: input}) => {
+            setTr({...tr, [input.name]: input.value});
+        },
+        selectChange: (e) => {
+            setTr({...tr, [e.target.name]: e.target.value});
+        }
+    }
+
+    return (
+        <Container component="main">
+            <PageTitle title="Transfer"/>
+                {FormFields.schema.map((form, idx) => (
+                    <VBInputField key={`user-profile-grid-${idx}`} form={form} data={tr} cb={PageCallBack}/>
+                ))}
+            <VBButton title="Done" onClick={handleSubmit} fullWidth/>
+            <SnackbarAlert alert={alert} />
+            <Link href="/" variant="body2">
                 Cancel
-              </Link>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
-    </Container>
-  </ThemeProvider>
-  );
+            </Link>
+        </Container>
+
+    );
 };
 
 export default Transfer;

@@ -11,17 +11,17 @@ import Typography from "@mui/material/Typography";
 import axios from "axios";
 
 
-const initialTx = {
+const initialTr = {
     from: '',
     to: '',
     amount: '',
-    source: '',
+    desc: '',
     type: '',
 }
 
 const TransferHistory = (props) => {
   const [transfers, setTransfers] = useState([]);
-  const [transfer, setTransfer] = useState(initialTx);
+  const [transfer, setTransfer] = useState(initialTr);
 
   useEffect(() => {
     getData();
@@ -47,7 +47,7 @@ const TransferHistory = (props) => {
                             <TableCell>from</TableCell>
                             <TableCell>to</TableCell>
                             <TableCell>amount</TableCell>
-                            <TableCell>source</TableCell>
+                            <TableCell>desc</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -60,9 +60,9 @@ const TransferHistory = (props) => {
                                     {idx + 1}
                                 </TableCell>
                                 <TableCell>{row.from}</TableCell>
-                                <TableCell>{row.to.name}</TableCell>
+                                <TableCell>{row.to.email}</TableCell>
                                 <TableCell>{row.amount}</TableCell>
-                                <TableCell>{row.source}</TableCell>                                
+                                <TableCell>{row.desc}</TableCell>                                
                             </TableRow>
                         ))}
                     </TableBody>
