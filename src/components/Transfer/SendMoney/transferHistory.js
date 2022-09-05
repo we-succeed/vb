@@ -1,7 +1,7 @@
 import Container from '@mui/material/Container';
 import Typography from "@mui/material/Typography";
 import axios from "axios";
-import { API_USER_TX, getApiRoute } from 'components/commons/module';
+import { API_USER_TR, getApiRoute } from 'components/commons/module';
 import DynamicTable from 'components/shared-forms/DynamicTable';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
@@ -12,7 +12,7 @@ const initialTr = {
   from: '',
   to: '',
   amount: '',
-  source: '',
+  description: '',
   type: '',
 }
 
@@ -20,9 +20,8 @@ const TransferHistory = (props) => {
   const params = useParams();
   const [trs, setTrs] = useState([]);
   const [tr, setTr] = useState(initialTr);
-  console.log('tx' + props.data);
-  useEffect(() => {
 
+  useEffect(() => {
     if (props.data) {
       getData();
     }
@@ -30,7 +29,7 @@ const TransferHistory = (props) => {
 
 
   const getData = () => {
-    axios.get(getApiRoute(API_USER_TX, { 'userAccountId': props.data._id }))
+    axios.get(getApiRoute(API_USER_TR, { 'userAccountId': props.data._id }))
       .then((res) => {
         setTrs(res.data.userAccount.transfers);
       }).catch(e => {
@@ -42,9 +41,9 @@ const TransferHistory = (props) => {
     schema: [
       { head: 'Id', cols: '_id', format: 'default' },
       { head: 'From', cols: 'from', format: 'default' },
-      { head: 'To', cols: '_id', format: 'default' },
+      { head: 'To', cols: 'to', format: 'default' },
       { head: 'Amount', cols: 'amount', format: 'default' },
-      { head: 'Source', cols: 'source', format: 'default' },
+      { head: 'Description', cols: 'description', format: 'default' },
     ]
   }
 
