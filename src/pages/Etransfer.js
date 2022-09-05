@@ -53,7 +53,7 @@ const Etransfer = () => {
     <Container component="main">
       <PageTitle title="Etransfer History" />
       {FormFields.schema.map((form, idx) => (
-        <VBInputField key={`user-profile-grid-${idx}`} form={form} data={account} cb={PageCallBack} />
+        <VBInputField key={`user-profile-grid-${idx}`} form={form} data={account} cb={PageCallBack}/>
       ))}
       <TransferHistory data={account} />
     </Container>
