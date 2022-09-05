@@ -14,7 +14,7 @@ const initialTr = {
     from: '',
     to: '',
     amount: '',
-    source: '',
+    description: '',
     type: '',
 }
 
@@ -28,7 +28,7 @@ const Transfer = (req, res) => {
         from: '',
         to: '',
         amount: '',
-        source: '',
+        description: '',
         type: '',
     });
 
@@ -46,27 +46,28 @@ const Transfer = (req, res) => {
 
     const createTr = () => {
         axios.post(getApiRoute(API_TR_POST), tr).then(res => {
-            setAlert({...alert, open: true, message: res.data.message, status: res.status});
+            setAlert({ ...alert, open: true, message: res.data.message, status: res.status });
         }).catch(e => {
-            setAlert({...alert, open: true, message: 'Interval server error'});
+            setAlert({ ...alert, open: true, message: 'Interval server error' });
             console.log(error.toJSON());
         })
     }
 
     const getData = () => {
         axios
-            .get(getApiRoute(API_USER_ACCOUNTS_ALL, {'userId': params.userId}))
+            .get(getApiRoute(API_USER_ACCOUNTS_ALL, { 'userId': params.userId }))
             .then((res) => {
-                setAccounts(res.data.accounts);
+                setAccounts(res.data.userAccounts);
             })
             .catch((err) => console.log(err));
     }
 
+
     const getContacts = () => {
-      axios.get(getApiRoute(API_CONTACTS_ALL,{'userId':params.userId}))
-        .then((res) => {
-          setContacts(res.data);
-        });
+        axios.get(getApiRoute(API_CONTACTS_ALL, { 'userId': params.userId }))
+            .then((res) => {
+                setContacts(res.data);
+            });
     }
 
     const handleSubmit = async (e) => {
@@ -82,38 +83,39 @@ const Transfer = (req, res) => {
                 label: 'From',
                 name: 'from',
                 type: 'select',
-                select: {list: accounts, value: '_id', fields: ['name','number']}
+                select: { list: accounts, value: '_id', fields: ['name', 'number'] }
             },
             {
                 id: 'to',
                 label: 'To',
                 name: 'to',
                 type: 'select',
-                select: {list: contacts, value: '_id', fields: ['name','email']
+                select: {
+                    list: contacts, value: '_id', fields: ['name', 'email']
                 }
             },
-            {id: 'amount', label: 'Amount', name: 'amount', type: 'default'},
-            {id: 'source', label: 'Source', name: 'source', type: 'default'},
+            { id: 'amount', label: 'Amount', name: 'amount', type: 'default' },
+            { id: 'description', label: 'Description', name: 'description', type: 'default' },
         ]
     }
 
     //Callback functions that make up page
     const PageCallBack = {
-        inputChange: ({currentTarget: input}) => {
-            setTr({...tr, [input.name]: input.value});
+        inputChange: ({ currentTarget: input }) => {
+            setTr({ ...tr, [input.name]: input.value });
         },
         selectChange: (e) => {
-            setTr({...tr, [e.target.name]: e.target.value});
+            setTr({ ...tr, [e.target.name]: e.target.value });
         }
     }
 
     return (
         <Container component="main">
-            <PageTitle title="Transaction"/>
-                {FormFields.schema.map((form, idx) => (
-                    <VBInputField key={`user-profile-grid-${idx}`} form={form} data={tr} cb={PageCallBack}/>
-                ))}
-            <VBButton title="Done" onClick={handleSubmit} fullWidth/>
+            <PageTitle title="E-Transfer" />
+            {FormFields.schema.map((form, idx) => (
+                <VBInputField key={`user-profile-grid-${idx}`} form={form} data={tr} cb={PageCallBack} />
+            ))}
+            <VBButton title="Done" onClick={handleSubmit} fullWidth />
             <SnackbarAlert alert={alert} />
             <Link href="/" variant="body2">
                 Cancel
