@@ -10,24 +10,24 @@ import TransferHistory from '../components/Transfer/SendMoney/transferHistory';
 
 
 const Etransfer = () => {
-    const params = useParams();
-    const [accounts, setAccounts] = useState([]);
-    const [account, setAccount] = useState({});
+  const params = useParams();
+  const [accounts, setAccounts] = useState([]);
+  const [account, setAccount] = useState({});
 
-    useEffect(()=> {
-      getData();
-    },[])
+  useEffect(() => {
+    getData();
+  }, [])
 
-    const getData = () => {
-      axios
-      .get(getApiRoute(API_USER_ACCOUNTS_ALL, {'userId': params.userId}))
+  const getData = () => {
+    axios
+      .get(getApiRoute(API_USER_ACCOUNTS_ALL, { 'userId': params.userId }))
       .then((res) => {
-        setAccounts(res.data.accounts);
+        setAccounts(res.data.userAccounts);
       })
       .catch((err) => console.log(err));
-    }
+  }
 
-     //Data that make up page
+  //Data that make up page
   const FormFields = {
     schema: [
       {
@@ -49,15 +49,15 @@ const Etransfer = () => {
 
     }
   }
-    return ( 
-      <Container component="main">
+  return (
+    <Container component="main">
       <PageTitle title="Etransfer History" />
       {FormFields.schema.map((form, idx) => (
         <VBInputField key={`user-profile-grid-${idx}`} form={form} data={account} cb={PageCallBack} />
       ))}
       <TransferHistory data={account} />
     </Container>
-    );
+  );
 };
 
 export default Etransfer;
