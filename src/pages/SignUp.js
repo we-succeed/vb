@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import {API_USERS} from 'components/commons/module';
+import {API_USER_INFO} from 'components/commons/module';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -60,7 +60,7 @@ const SignUp = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(API_USERS, user);
+            await axios.post(API_USER_INFO, user);
         } catch (error) {
             if (
                 error.response &&

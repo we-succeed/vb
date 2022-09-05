@@ -6,6 +6,7 @@ const accountCoroller = require("../controllers/accountController");
 const validateMiddleWare = require("../utils/validate");
 const {validateUser} = require("../models/user");
 const hashingPassword = require("../utils/hashingPassword");
+const userController = require("../controllers/userController");
 
 const middlewares = [
     validateMiddleWare(validateUser),
@@ -18,6 +19,7 @@ router.put('/:adminId', adminController.updateAdmin)
 router.delete('/:adminId', adminController.deleteAdmin)
 
 router.get('/accounts', accountCoroller.findAccountAll)
+router.get('/users', userController.findAllUser)
 
 
 module.exports = router;
