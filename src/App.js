@@ -14,8 +14,10 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import VBStyledCollection from "./components/VBStyledCollection";
 import Home from "./pages/Home";
+import Tx from "./components/Transfer/Transaction/Tx";
 import Transaction from "./pages/Transaction";
-import Tx from "./components/Transfer/Transaction/Tx"
+import Transfer from "components/Transfer/SendMoney/transfer";
+import Etransfer from "pages/Etransfer";
 
 const App = () => {
     const [open, setOpen] = React.useState(false);
@@ -31,9 +33,9 @@ const App = () => {
     }
     return (
         <>
-            <Box sx={{display: 'flex'}}>
+            <Box sx={{ display: 'flex' }}>
                 <Router>
-                    <CssBaseline/>
+                    <CssBaseline />
                     <MenuAppBar open={open} drawerOpen={handleDrawerOpen} auth={auth} />
                     <VBStyledCollection.Main open={open} auth={auth}>
                         <VBStyledCollection.DrawerHeader/>
