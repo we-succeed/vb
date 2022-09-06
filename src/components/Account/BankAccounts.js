@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import BankAccount from "./BankAccount";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {API_BANK_ACCOUNTS, getApiRoute} from "../commons/module";
+import {API_BANK_ACCOUNTS, getApiRoute} from "../../utils/APIs";
 import PageTitle from "../shared-forms/PageTitle";
 
 export default function BankAccounts() {

@@ -124,7 +124,7 @@ const DynamicTable = (props) => {
     }
     return (
         <>
-            {data && data.length ===0?
+            {data && data.length === 0?
                 <Typography variant="h5" gutterBottom component="div" mt={2}>
                 No data
                 </Typography>

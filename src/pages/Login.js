@@ -2,13 +2,13 @@ import * as React from 'react';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import axios from "axios";
-import {API_AUTH} from 'components/commons/module';
 import {useEffect, useState} from "react";
 import {useNavigate} from 'react-router-dom';
 import SnackbarAlert from "../components/shared-dialog/SnackbarAlert";
 import VBInputField from "../components/shared-forms/VBInputField";
 import PageTitle from "../components/shared-forms/PageTitle";
 import VBButton from "../components/shared-forms/VBButton";
+import {API_AUTH} from 'utils/APIs';
 
 const initialAlert = {
     open: false,
@@ -25,7 +25,7 @@ const Login = () => {
     })
     //API
     const login = () => {
-        axios.post(API_AUTH, data)
+        axios.post(API_AUTH, data,{withCredentials: true, credentials: 'include'})
             .then(res => {
                 localStorage.setItem("vb", JSON.stringify(res.data.user));
                 window.location.assign("../");

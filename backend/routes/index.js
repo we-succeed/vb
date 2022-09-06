@@ -7,7 +7,7 @@ const txRoutes = require('./transaction');
 const contactRoutes = require('./contact');
 
 router.use('/accounts', accountRoutes);
-router.use('/users', userRoutes);
+router.use('/users',userRoutes);
 router.use('/auth',authRoutes);
 router.use('/tx', txRoutes)
 router.use('/contacts', contactRoutes);

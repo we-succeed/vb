@@ -1,7 +1,7 @@
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import axios from 'axios';
-import { API_TX_POST, API_USER_ACCOUNTS, getApiRoute } from 'components/commons/module';
+import { API_TX_POST, API_USER_ACCOUNTS, getApiRoute } from 'utils/APIs';
 import SnackbarAlert from 'components/shared-dialog/SnackbarAlert';
 import PageTitle from 'components/shared-forms/PageTitle';
 import VBButton from 'components/shared-forms/VBButton';

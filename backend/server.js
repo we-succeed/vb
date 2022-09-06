@@ -8,7 +8,7 @@ const port = process.env.PORT || 5000;
 const cors = require('cors')
 
 
-app.use(cors()) //prevent for cors error
+app.use(cors({ origin: true, credentials: true }));//prevent for cors error
 
 app.use(bodyParser.json());  //express.json + express.urlencoded()
 app.use('/api', routes);
@@ -19,7 +19,6 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 })
-
 app.use((err, req, res, next) => {
     console.error(" handle utils error >> " , err);
     res.status(500).json({err: 'error'});

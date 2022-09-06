@@ -3,7 +3,7 @@ import Container from '@mui/material/Container';
 import Typography from "@mui/material/Typography";
 import { useEffect, useState} from "react";
 import axios from "axios";
-import {API_ACCOUNT_DELETE, API_ACCOUNT_PUT, API_ACCOUNTS_ALL, getApiRoute} from "../../components/commons/module";
+import {API_ACCOUNT_DELETE, API_ACCOUNT_PUT, API_ACCOUNTS_ALL, getApiRoute} from "../../utils/APIs";
 import AlertDialog from "../../components/shared-dialog/AlertDialog";
 import DynamicTable from "../../components/shared-forms/DynamicTable";
 import Box from "@mui/material/Box";

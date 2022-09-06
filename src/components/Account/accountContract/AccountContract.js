@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import AccountInfoForm from "./AccountInfoForm";
 import UserAccountForm from "./UserAccountForm";
 import AccountReview from "./AccountReview";
-import {API_OPEN_ACCOUNT, getApiRoute} from "../../commons/module";
+import {API_OPEN_ACCOUNT, getApiRoute} from "../../../utils/APIs";
 import axios from "axios";
 
 const steps = ['Account Information', 'Additional Information', 'Review your account'];

@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import {API_USER_INFO} from 'components/commons/module';
+import {API_USER_INFO} from 'utils/APIs';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';

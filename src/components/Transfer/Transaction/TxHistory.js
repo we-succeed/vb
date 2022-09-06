@@ -1,7 +1,7 @@
 import Container from '@mui/material/Container';
 import Typography from "@mui/material/Typography";
 import axios from "axios";
-import { API_USER_TX, getApiRoute } from 'components/commons/module';
+import { API_USER_TX, getApiRoute } from 'utils/APIs';
 import DynamicTable from 'components/shared-forms/DynamicTable';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
@@ -17,7 +17,6 @@ const initialTx = {
 }
 
 const TxHistory = (props) => {
-  const params = useParams();
   const [txs, setTxs] = useState([]);
   const [tx, setTx] = useState(initialTx);
   console.log('tx' + props.data);
@@ -27,8 +26,6 @@ const TxHistory = (props) => {
       getData();
     }
   }, [props.data._id])
-
-
   const getData = () => {
     axios.get(getApiRoute(API_USER_TX, { 'userAccountId': props.data._id }))
       .then((res) => {
@@ -40,9 +37,8 @@ const TxHistory = (props) => {
 
   const UserTxData = {
     schema: [
-      { head: 'Id', cols: '_id', format: 'default' },
-      { head: 'From', cols: 'from', format: 'default' },
-      { head: 'To', cols: '_id', format: 'default' },
+      { head: 'To (Number)', cols: 'to.number', format: 'default' },
+      { head: 'To (Name)', cols: 'to.name', format: 'default' },
       { head: 'Amount', cols: 'amount', format: 'default' },
       { head: 'Source', cols: 'source', format: 'default' },
     ]
@@ -50,13 +46,7 @@ const TxHistory = (props) => {
 
   return (
     <Container component="main">
-      {txs.length !== 0 ?
-        <DynamicTable form={UserTxData} data={txs} />
-        :
-        <Typography variant="h5" gutterBottom component="div" mt={2}>
-          No data
-        </Typography>
-      }
+      <DynamicTable form={UserTxData} data={txs} />
     </Container>
   );
 };

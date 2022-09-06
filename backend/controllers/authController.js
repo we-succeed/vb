@@ -16,8 +16,16 @@ const login = (async (req, res) => {
         );
         if (!validPassword)
             return res.status(401).send({message: "Invalid Password"});
-        const token = user.generateAuthToken();    
-        res.status(200).send({user: {token: token}, message: " User logged in successfully"});
+
+        const sendData = {
+            _id: user._id,
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            token: user.generateAuthToken()
+        }
+        res.cookie('vb', sendData.token, { expires: new Date(Date.now() + 900000), httpOnly: true })
+        res.status(200).send({user: sendData, message: " User logged in successfully"});
     } catch (error) {
         res.status(500).send({message: "Internal Server Error"});
     }

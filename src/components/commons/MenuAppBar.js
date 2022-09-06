@@ -1,3 +1,4 @@
+import {useState} from "react";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -8,10 +9,10 @@ import MuiAppBar from "@mui/material/AppBar";
 import ProfileMenu from "./ProfileMenu";
 import DrawerMenu from "./Drawer";
 import {useNavigate} from "react-router-dom";
-import {useState} from "react";
 
 const MenuAppBar = (props) => {
-    const [isLoggedIn, setIsLoggedIn] = useState((localStorage.getItem('vb')));
+    const navigate = useNavigate();
+    const [isLoggedIn] = useState((localStorage.getItem('vb')));
     const AppBar = styled(MuiAppBar, {
         shouldForwardProp: (prop) => prop !== 'open',
     })(({theme, open}) => ({
@@ -28,56 +29,32 @@ const MenuAppBar = (props) => {
             }),
         }),
     }));
-    const LoggedMenu = () => {
-        return (<>
-                <AppBar position="fixed" open={props.open}>
-                    <Toolbar>
-                        <IconButton
-                            color="inherit"
-                            aria-label="open drawer"
-                            onClick={props.drawerOpen}
-                            edge="start"
-                        >
-                            <MenuIcon/>
-                        </IconButton>
-                        <Typography variant="h6" noWrap component="div" sx={{flexGrow: 1}}>
-                            Vancouver Bank
-                        </Typography>
-                        <ProfileMenu user={props.auth}/>
-                    </Toolbar>
-                </AppBar>
-                <DrawerMenu open={props.open} drawerOpen={props.drawerOpen} userType={'user'} user={props.auth}/>
-            </>
-        )
-    }
-    const CommonMenu = () => {
-        const navigate = useNavigate();
-        return (
-            <>
-                <AppBar position="fixed" open={props.open}>
-                    <Toolbar>
-                        <Typography variant="h6"
-                                    noWrap
-                                    component="a"
-                                    href="/"
-                                    sx={{
-                                        mr: 2,
-                                        display: {xs: 'none', md: 'flex'},
-                                        color: 'inherit',
-                                        textDecoration: 'none',
-                                        flexGrow: 1
-                                    }}>
-                            Vancouver Bank
-                        </Typography>
-                        <Button color="inherit" onClick={() => navigate(`/login`)}>Login</Button>
-                    </Toolbar>
-                </AppBar>
-            </>
-        )
-    }
     return (
         <>
-            {isLoggedIn ? <LoggedMenu/> : <CommonMenu/>}
+            <AppBar position="fixed" open={props.open}>
+                <Toolbar>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={props.drawerOpen}
+                        edge="start"
+                        sx={{
+                            display: isLoggedIn ? 'block' : 'none',
+                        }}
+                    >
+                        <MenuIcon/>
+                    </IconButton>
+                    <Typography variant="h6" noWrap component="div" sx={{flexGrow: 1}}>
+                        Vancouver Bank
+                    </Typography>
+                    {isLoggedIn ? <ProfileMenu/>
+                        :
+                        <Button color="inherit" onClick={() => navigate(`/login`)}>Login</Button>
+                    }
+
+                </Toolbar>
+            </AppBar>
+            {isLoggedIn ? <DrawerMenu open={props.open} drawerOpen={props.drawerOpen}/> : ''}
         </>
     )
 }

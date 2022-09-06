@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {useParams} from "react-router-dom";
-import { getApiRoute, API_USER_ACCOUNTS } from 'components/commons/module';
+import { getApiRoute, API_USER_ACCOUNTS } from 'utils/APIs';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import TransferHistory from './transferHistory';
 

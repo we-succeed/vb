@@ -7,7 +7,7 @@ import axios from "axios";
 import { API_USER_DELETE, API_USER_PUT,
     API_USERS_ALL,
     getApiRoute
-} from "../../components/commons/module";
+} from "../../utils/APIs";
 import AlertDialog from "../../components/shared-dialog/AlertDialog";
 import DynamicTable from "../../components/shared-forms/DynamicTable";
 import Box from "@mui/material/Box";

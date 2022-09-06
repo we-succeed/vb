@@ -9,5 +9,4 @@ module.exports = async (req, res, next) => {
         res.status(500).json({status: "failed", message: "Interval server error"})
         res.end();
     }
-
 }

@@ -3,8 +3,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {useParams} from "react-router-dom";
 import BankAccounts from "../components/Account/BankAccounts";
-import Typography from "@mui/material/Typography";
-import {API_USER_ACCOUNTS, getApiRoute} from "../components/commons/module";
+import {API_USER_ACCOUNTS, getApiRoute} from "../utils/APIs";
 import DynamicTable from "../components/shared-forms/DynamicTable";
 import PageTitle from "../components/shared-forms/PageTitle";
 
@@ -35,13 +34,7 @@ const UserAccount = () => {
     return (
         <>
             <PageTitle title="User Accounts"/>
-            {userAccounts && userAccounts.length !== 0 ?
-                <DynamicTable form={UserAccountFormData} data={userAccounts}/>
-                :
-                <Typography variant="h5" gutterBottom component="div" mt={2}>
-                    No account has been opened
-                </Typography>
-            }
+            <DynamicTable form={UserAccountFormData} data={userAccounts}/>
             <BankAccounts/>
         </>
     );

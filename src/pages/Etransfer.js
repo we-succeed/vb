@@ -1,6 +1,6 @@
 import { Container } from '@mui/material';
 import axios from "axios";
-import { API_USER_ACCOUNTS_ALL, getApiRoute } from 'components/commons/module';
+import { API_USER_ACCOUNTS_ALL, getApiRoute } from 'utils/APIs';
 import PageTitle from 'components/shared-forms/PageTitle';
 import VBInputField from 'components/shared-forms/VBInputField';
 import * as React from 'react';

@@ -1,7 +1,7 @@
 import Container from '@mui/material/Container';
 import Typography from "@mui/material/Typography";
 import axios from "axios";
-import { API_USER_TR, getApiRoute } from 'components/commons/module';
+import { API_USER_TR, getApiRoute } from 'utils/APIs';
 import DynamicTable from 'components/shared-forms/DynamicTable';
 import * as React from 'react';
 import { useEffect, useState } from 'react';

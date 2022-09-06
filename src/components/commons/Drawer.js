@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {useTheme} from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import Drawer from "@mui/material/Drawer";
@@ -11,14 +11,16 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import {Icon} from "@mui/material";
-import {USER_MENUS, getRoute} from './module'
+import {USER_MENUS, getRoute} from '../../utils/APIs'
 import {useNavigate} from "react-router-dom";
 import VBStyledCollection from "../VBStyledCollection";
+import {UserContext} from "../../App";
 
 const DrawerMenu = (props) => {
     const theme = useTheme();
     const navigate = useNavigate();
     const [menus, setMenus] = useState(USER_MENUS);
+    const user = useContext(UserContext);
     return (
         <Drawer
             sx={{
@@ -41,7 +43,7 @@ const DrawerMenu = (props) => {
             <Divider />
             <List>
                 {menus && menus.map((elem, index) => {
-                    const path = getRoute(elem.path, {'userId':props.user.id})
+                    const path = getRoute(elem.path, {'userId':user._id})
                     return(
                     <ListItem key={index} disablePadding>
                         <ListItemButton onClick={() => navigate(path)}>

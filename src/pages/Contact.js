@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { API_CONTACT_DELETE, API_CONTACT_PUT,
   API_CONTACTS_ALL,
   getApiRoute
-} from "../components/commons/module";
+} from "../utils/APIs";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { useParams } from 'react-router-dom';

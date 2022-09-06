@@ -1,6 +1,6 @@
 import { Container } from '@mui/material';
 import axios from "axios";
-import { API_USER_ACCOUNTS, getApiRoute } from 'components/commons/module';
+import { API_USER_ACCOUNTS, getApiRoute } from 'utils/APIs';
 import VBInputField from 'components/shared-forms/VBInputField';
 import * as React from 'react';
 import { useEffect, useState } from "react";
@@ -22,7 +22,7 @@ const Transaction = () => {
     axios
       .get(getApiRoute(API_USER_ACCOUNTS, { 'userId': params.userId }))
       .then((res) => {
-        setAccounts(res.data.accounts);
+        setAccounts(res.data.userAccounts);
       })
       .catch((err) => console.log(err));
   }

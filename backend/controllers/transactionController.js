@@ -4,7 +4,6 @@ const {UserAccount} = require("../models/user");
 //AccountItem
 const userTransactionInfo = async (req, res) => {
     try {
-
         const account = await (await UserAccount.findById({_id: req.params.userAccountId})).populate({path: 'transactions', 
         populate:{path: 'to', model:'UserAccount'}});
         if (account) {
