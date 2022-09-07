@@ -5,12 +5,12 @@ const userAccountController = require("../controllers/userAccountController");
 
 //selling backing account
 router.get('/', accountController.findAccountAll)
-router.get('/:account_id', accountController.findAccountById)
+router.get('/:accountId', accountController.findAccountById)
 router.post('/', accountController.createAccount)
-router.put('/:account_id', accountController.updateAccount)
-router.delete('/:account_id', accountController.deleteAccount)
+router.put('/:accountId', accountController.updateAccount)
+router.delete('/:accountId', accountController.deleteAccount)
 
 //open user account
-router.post('/:account_id/open',userAccountController.saveUserAccount)
+router.post('/:accountId/open',userAccountController.saveUserAccount)
 
 module.exports = router;

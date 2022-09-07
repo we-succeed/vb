@@ -17,7 +17,7 @@ const findAllUser = (async (req, res) => {
     try {
         const users = await User.find({}, '-password');
         if (users)
-            return res.status(200).send(users);
+            return res.status(200).send({users: users});
         else
             return res.status(400).send({'message': 'no user data'});
     } catch (error) {

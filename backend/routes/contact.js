@@ -1,11 +1,11 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 const contactController = require('../controllers/contactController')
 
 //restfullAPI
-router.get('/:userId', contactController.findContactById)
-router.post('/:userId', contactController.contactCreate)
-router.put('/:contact_id', contactController.updateContactById)
-router.delete('/:contact_id', contactController.deleteContractById)
+router.get('/', contactController.findContactByUserId)
+router.post('/', contactController.addContact)
+router.put('/:contactId', contactController.updateContactById)
+router.delete('/:contactId', contactController.deleteContractById)
 
 module.exports = router;

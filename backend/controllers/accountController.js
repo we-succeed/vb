@@ -1,4 +1,5 @@
 const Account = require('../models/account');
+const {UserAccount} = require("../models/user");
 
 //get all accounts
 const findAccountAll = async (req, res) => {
@@ -15,7 +16,7 @@ const findAccountAll = async (req, res) => {
 //get one account
 const findAccountById = async (req, res) => {
     try {
-        const result = await Account.findById({_id: req.params.account_id}, 'name type interest description');
+        const result = await Account.findById({_id: req.params.accountId}, 'name type interest description');
         if (result)
             res.status(200).send(result);
         else
@@ -48,7 +49,7 @@ const createAccount = async (req, res) => {
 //update Account
 const updateAccount = async (req, res) => {
     try {
-        const result = await Account.updateOne({_id: req.params.account_id}, req.body, {
+        const result = await Account.updateOne({_id: req.params.accountId}, req.body, {
             upsert: true
         })
         if (result && result.modifiedCount > 0)
@@ -63,11 +64,16 @@ const updateAccount = async (req, res) => {
 //delete Account
 const deleteAccount = async (req, res) => {
     try {
-        const result = await Account.deleteOne({_id: req.params.account_id});
-        if (result && result.deletedCount > 0)
-            res.status(200).json({message: 'Deleted account succeed.'})
-        else
-            res.status(400).json({message: 'Not deleted.'})
+        const usedAccount = await UserAccount.find({account: req.params.accountId});
+        if (usedAccount)
+            return res.status(400).send({message: 'User is currently using an account'})
+        else {
+            const result = await Account.deleteOne({_id: req.params.accountId});
+            if (result && result.deletedCount > 0)
+                res.status(200).json({message: 'Deleted account succeed.'})
+            else
+                res.status(400).json({message: 'Not deleted.'})
+        }
     } catch (e) {
         res.status(500).json({message: 'Internal Server Error', error: e})
     }
@@ -91,7 +97,7 @@ const getAvailableAccounts = async (req, res) => {
 const getAvailableAccountById = async (req, res) => {
     try {
         const account = await Account.findById({
-            _id: req.params.account_id,
+            _id: req.params.accountId,
             status: true,
             remainder: {$gte: 0}
         });

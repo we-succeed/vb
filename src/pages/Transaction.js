@@ -46,7 +46,6 @@ const Transaction = () => {
     },
     selectChange: (event) => {
       setAccount({ ...account, '_id': event.target.value });
-
     }
   }
 

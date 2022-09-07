@@ -1,6 +1,6 @@
 import { Container } from '@mui/material';
 import axios from "axios";
-import { API_USER_ACCOUNTS_ALL, getApiRoute } from 'utils/APIs';
+import {API_USER_ACCOUNTS, getApiRoute} from 'utils/APIs';
 import PageTitle from 'components/shared-forms/PageTitle';
 import VBInputField from 'components/shared-forms/VBInputField';
 import * as React from 'react';
@@ -20,7 +20,7 @@ const Etransfer = () => {
 
   const getData = () => {
     axios
-      .get(getApiRoute(API_USER_ACCOUNTS_ALL, { 'userId': params.userId }))
+      .get(getApiRoute(API_USER_ACCOUNTS, { 'userId': params.userId }))
       .then((res) => {
         setAccounts(res.data.userAccounts);
       })
@@ -45,8 +45,7 @@ const Etransfer = () => {
       setAccount({ ...account, [input.name]: input.value });
     },
     selectChange: (event) => {
-      setAccount({ ...account, ['_id']: event.target.value });
-
+      setAccount({ ...account, '_id': event.target.value });
     }
   }
   return (

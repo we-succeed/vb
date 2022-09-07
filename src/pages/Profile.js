@@ -32,14 +32,12 @@ const Profile = () => {
     const [user, setUser] = useState(InitialUser);
     const [error, setError] = useState("");
     const [alert, setAlert] = useState(InitialAlert);
-    const auth = useContext(UserContext);
     useEffect(() => {
         getData();
     }, []);
     //API
     const getData = () => {
-        axios.get(getApiRoute(API_USER_INFO, {userId}),
-            {headers: {"Authorization": `${auth.token}`}})
+        axios.get(getApiRoute(API_USER_INFO, {userId}))
             .then((res) => {
                 setUser(res.data);
             }).catch(function (e) {
@@ -48,8 +46,7 @@ const Profile = () => {
         });
     }
     const updateUser = () => {
-        axios.put(getApiRoute(API_USER_INFO, {userId}), user,
-            {headers: {"Authorization": `${auth.token}`}})
+        axios.put(getApiRoute(API_USER_INFO, {userId}), user)
             .then(res => {
                 setAlert({...alert, open: true, message: res.data.message, status: res.status});
             }).catch(e => {

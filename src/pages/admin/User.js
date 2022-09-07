@@ -1,11 +1,10 @@
 import * as React from 'react';
 import Container from '@mui/material/Container';
-import Typography from "@mui/material/Typography";
 import { useEffect, useState} from "react";
 import {Button} from "@mui/material";
 import axios from "axios";
-import { API_USER_DELETE, API_USER_PUT,
-    API_USERS_ALL,
+import {
+    API_USER_INFO, API_USERS_ALL,
     getApiRoute
 } from "../../utils/APIs";
 import AlertDialog from "../../components/shared-dialog/AlertDialog";
@@ -14,6 +13,7 @@ import Box from "@mui/material/Box";
 import AddEditDialog from "../../components/shared-dialog/AddEditDialog";
 import Grid from "@mui/material/Grid";
 import VBInputField from "../../components/shared-forms/VBInputField";
+import PageTitle from "../../components/shared-forms/PageTitle";
 
 const initialUser = {
     firstName: "",
@@ -75,24 +75,24 @@ const User = () => {
     const getData = () => {
         axios.get(getApiRoute(API_USERS_ALL))
             .then((res) => {
-                setUsers(res.data);
+                setUsers(res.data.users);
             });
     }
     const addUser= () => {
         axios.post(getApiRoute(API_USERS_ALL), user)
-            .then(res => {
+            .then(() => {
                 handleModalClose();
             })
     }
     const updateUser = () => {
-        axios.put(getApiRoute(API_USER_PUT,{'dataId': user._id}) ,user)
-            .then(res => {
+        axios.put(getApiRoute(API_USER_INFO,{'userId': user._id}) ,user)
+            .then(() => {
                 handleModalClose();
             })
     }
     const deleteUser = (userId = 1) => {
-        axios.delete(getApiRoute(API_USER_DELETE,{'userId': userId}))
-            .then(res => {
+        axios.delete(getApiRoute(API_USER_INFO,{'userId': userId}))
+            .then(() => {
                 handleAlertModalClose();
             })
     }
@@ -122,7 +122,7 @@ const User = () => {
             {head: 'Name', cols: ['firstName','lastName'], format: 'nameField'},
             {head: 'Email', cols: 'email', format: 'default'},
             {head: 'PhoneNumber', cols: 'phoneNumber', format: 'default'},
-            {head: 'Accounts', cols: 'accounts', format: 'count'},
+            {head: 'User Account', cols: 'userAccounts', format: 'count'},
             {head: 'Action', cols: 'action', format: 'btnGroup'},
         ],
         cb: {
@@ -155,17 +155,9 @@ const User = () => {
     }
     return (
         <Container component="main">
-            <Typography variant="h5" gutterBottom component="div" mt={2}>
-                User Management
-            </Typography>
+            <PageTitle title="User Management"/>
             <Button variant="contained" onClick={()=>setOpenModal(true)}> Add User </Button>
-            {users.length !== 0 ?
-                <DynamicTable form={UserTBData} data={users}/>
-                :
-                <Typography variant="h5" gutterBottom component="div" mt={2}>
-                    No data
-                </Typography>
-            }
+            <DynamicTable form={UserTBData} data={users}/>
             <AlertDialog open={openAlertModal} close={handleAlertModalClose} data={user} form={AlertFormData}/>
             <AddEditDialog open={openModal} close={handleModalClose} form={AddEditFormData}>
                 <UserTemplate data={user} cb={PageCallBack}/>

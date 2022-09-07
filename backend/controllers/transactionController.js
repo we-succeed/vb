@@ -7,7 +7,7 @@ const userTransactionInfo = async (req, res) => {
         const account = await (await UserAccount.findById({_id: req.params.userAccountId})).populate({path: 'transactions', 
         populate:{path: 'to', model:'UserAccount'}});
         if (account) {
-            res.status(200).json({message: '12345', userAccount: account})
+            res.status(200).json({userAccounts: account})
         } else {
             res.status(400).send({message: 'Not Fount Transaction'})
         }

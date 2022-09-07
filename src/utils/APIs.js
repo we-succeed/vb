@@ -5,36 +5,30 @@ export const DEFAULT_URL = `http://localhost:${API_PORT}/api`;
 
 //Login
 export const API_AUTH = `${DEFAULT_URL}/auth`
-//USER API
+
+//Related with USER API
 export const API_USER_INFO = `/users/:userId`;
 export const API_USER_ACCOUNTS = `/users/:userId/accounts`;
+export const API_USER_CONTACTS = `/users/:userId/contacts`;
+export const API_CONTACT_INFO = `/users/:userId/contacts/:contactId`;
+
+//transfer API
+export const API_USER_ACCOUNT_INFO = `/tx/:accountId`;
+export const API_USER_TRANSACTION = `/userAccounts/:userAccountId/tx`;
+export const API_USER_TRANSFER = `/userAccounts/:userAccountId/transfer`;
+
 
 //ACCOUNT API
 export const API_BANK_ACCOUNTS = `/accounts`;
 export const API_OPEN_ACCOUNT = `/accounts/:accountId/open`;
 
 
-//ADMIN CAN CONTROLLER API
+//ADMIN CAN CONTROL API
 export const API_USERS_ALL = `/admin/users`
 export const API_ACCOUNTS_ALL = `/admin/accounts`;
-export const API_ACCOUNT_PUT = `/admin/accounts/:dataId`;
+export const API_ACCOUNT_PUT = `/admin/accounts/:accountId`;
 export const API_ACCOUNT_DELETE = `/admin/accounts/:accountId`;
 
-
-export const API_USER_PUT = `/users/:dataId`;
-export const API_USER_DELETE = `/users/:userId`;
-export const API_CONTACTS_ALL = `/contacts/:userId`;
-export const API_CONTACT_DELETE = `/contacts/:contact_id`;
-export const API_CONTACT_PUT = `/contacts/:dataId`;
-
-
-export const API_USER_ACCOUNT_INFO = `/tx/:accountId`;
-
-export const API_USER_TX = `/tx/:userAccountId`;
-export const API_TX_POST = `/tx`;
-
-export const API_USER_TR = `/transfer/:userAccountId`;
-export const API_TR_POST = `/transfer`;
 
 export const USER_MENUS = [
     {
@@ -44,11 +38,11 @@ export const USER_MENUS = [
     },
     {
         name: 'Transfer',
-        path: '/user/:userId/txs',
+        path: '/user/:userId/tx',
         icon: 'currency_exchange'
     },
     {
-        name: 'Etransfer',
+        name: 'Send Money',
         path: '/user/:userId/transfer',
         icon: 'monetization_on'
     },

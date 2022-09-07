@@ -1,7 +1,7 @@
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import axios from 'axios';
-import { API_TX_POST, API_USER_ACCOUNTS, getApiRoute } from 'utils/APIs';
+import {API_USER_ACCOUNTS, API_USER_TRANSACTION, getApiRoute} from 'utils/APIs';
 import SnackbarAlert from 'components/shared-dialog/SnackbarAlert';
 import PageTitle from 'components/shared-forms/PageTitle';
 import VBButton from 'components/shared-forms/VBButton';
@@ -43,7 +43,7 @@ const Tx = () => {
     }, [])
 
     const createTX = () => {
-        axios.post(getApiRoute(API_TX_POST), tx).then(res => {
+        axios.post(getApiRoute(API_USER_TRANSACTION, { 'userAccountId': tx.from }), tx).then(res => {
             setAlert({...alert, open: true, message: res.data.message, status: res.status});
         }).catch(e => {
             setAlert({...alert, open: true, message: 'Interval server error'});

@@ -1,7 +1,12 @@
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import axios from 'axios';
-import { API_CONTACTS_ALL, API_TR_POST, API_USER_ACCOUNTS_ALL, getApiRoute } from 'utils/APIs';
+import {
+    API_USER_ACCOUNTS,
+    API_USER_CONTACTS,
+    API_USER_TRANSFER,
+    getApiRoute
+} from 'utils/APIs';
 import SnackbarAlert from 'components/shared-dialog/SnackbarAlert';
 import PageTitle from 'components/shared-forms/PageTitle';
 import VBButton from 'components/shared-forms/VBButton';
@@ -18,13 +23,13 @@ const initialTr = {
     type: '',
 }
 
-const Transfer = (req, res) => {
+const Transfer = () => {
     const params = useParams();
     const [accounts, setAccounts] = useState([]);
     const [contacts, setContacts] = useState([]);
     const [tr, setTr] = useState(initialTr);
 
-    const [error, setError] = useState({
+    const [error] = useState({
         from: '',
         to: '',
         amount: '',
@@ -45,17 +50,17 @@ const Transfer = (req, res) => {
     }, [])
 
     const createTr = () => {
-        axios.post(getApiRoute(API_TR_POST), tr).then(res => {
+        axios.post(getApiRoute(API_USER_TRANSFER, { 'userAccountId': tr.from }), tr).then(res => {
             setAlert({ ...alert, open: true, message: res.data.message, status: res.status });
-        }).catch(e => {
+        }).catch(err => {
             setAlert({ ...alert, open: true, message: 'Interval server error' });
-            console.log(error.toJSON());
+            console.log(err.toJSON());
         })
     }
 
     const getData = () => {
         axios
-            .get(getApiRoute(API_USER_ACCOUNTS_ALL, { 'userId': params.userId }))
+            .get(getApiRoute(API_USER_ACCOUNTS, { 'userId': params.userId }))
             .then((res) => {
                 setAccounts(res.data.userAccounts);
             })
@@ -64,9 +69,9 @@ const Transfer = (req, res) => {
 
 
     const getContacts = () => {
-        axios.get(getApiRoute(API_CONTACTS_ALL, { 'userId': params.userId }))
+        axios.get(getApiRoute(API_USER_CONTACTS, { 'userId': params.userId }))
             .then((res) => {
-                setContacts(res.data);
+                setContacts(res.data.contacts);
             });
     }
 

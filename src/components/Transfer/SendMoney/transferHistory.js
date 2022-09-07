@@ -1,37 +1,24 @@
 import Container from '@mui/material/Container';
-import Typography from "@mui/material/Typography";
 import axios from "axios";
-import { API_USER_TR, getApiRoute } from 'utils/APIs';
+import {API_USER_TRANSFER, getApiRoute} from 'utils/APIs';
 import DynamicTable from 'components/shared-forms/DynamicTable';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-
-
-const initialTr = {
-  from: '',
-  to: '',
-  amount: '',
-  description: '',
-  type: '',
-}
+import {useEffect, useState} from 'react';
 
 const TransferHistory = (props) => {
-  const params = useParams();
   const [trs, setTrs] = useState([]);
-  const [tr, setTr] = useState(initialTr);
 
   useEffect(() => {
     if (props.data) {
       getData();
     }
-  }, [props.data._id])
+  }, [props.data])
 
 
   const getData = () => {
-    axios.get(getApiRoute(API_USER_TR, { 'userAccountId': props.data._id }))
+    axios.get(getApiRoute(API_USER_TRANSFER, { 'userAccountId': props.data._id }))
       .then((res) => {
-        setTrs(res.data.userAccount.transfers);
+        setTrs(res.data.userAccounts.transfers);
       }).catch(e => {
         console.log(e);
       });
@@ -39,23 +26,15 @@ const TransferHistory = (props) => {
 
   const UserTrData = {
     schema: [
-      { head: 'Id', cols: '_id', format: 'default' },
-      { head: 'From', cols: 'from', format: 'default' },
-      { head: 'To', cols: 'to', format: 'default' },
+      { head: 'To (name)', cols: 'to.name', format: 'default' },
+      { head: 'To (e-mail)', cols: 'to.email', format: 'default' },
       { head: 'Amount', cols: 'amount', format: 'default' },
       { head: 'Description', cols: 'description', format: 'default' },
     ]
   }
-
   return (
     <Container component="main">
-      {trs.length !== 0 ?
-        <DynamicTable form={UserTrData} data={trs} />
-        :
-        <Typography variant="h5" gutterBottom component="div" mt={2}>
-          No data
-        </Typography>
-      }
+      <DynamicTable form={UserTrData} data={trs} />
     </Container>
   );
 };

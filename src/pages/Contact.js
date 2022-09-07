@@ -3,10 +3,7 @@ import Container from '@mui/material/Container';
 import axios from "axios";
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { API_CONTACT_DELETE, API_CONTACT_PUT,
-  API_CONTACTS_ALL,
-  getApiRoute
-} from "../utils/APIs";
+import {API_CONTACT_INFO, API_USER_CONTACTS,getApiRoute} from "../utils/APIs";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { useParams } from 'react-router-dom';
@@ -69,20 +66,20 @@ const ContactList = () => {
   }, [])
 
   const getData = () => {
-    axios.get(getApiRoute(API_CONTACTS_ALL,{'userId':params.userId}))
+    axios.get(getApiRoute(API_USER_CONTACTS,{'userId':params.userId}))
       .then((res) => {
-        setContacts(res.data);
+        setContacts(res.data.contacts);
       });
   }
   const addContact = () => {
-    axios.post(getApiRoute(API_CONTACTS_ALL,{'userId':params.userId}), contact)
+    axios.post(getApiRoute(API_USER_CONTACTS,{'userId':params.userId}), contact)
       .then(res => {
         setAlert({ ...alert, open: true, message: res.data.message, status: res.status });
         handleModalClose();
       })
   }
   const updateContact = (id) => {
-    axios.put(getApiRoute(API_CONTACT_PUT,{'dataId': id}), contact)
+    axios.put(getApiRoute(API_CONTACT_INFO,{'userId': params.userId, 'contactId': id}), contact)
       .then(res => {
         setAlert({ ...alert, open: true, message: res.data.message, status: res.status });
         handleModalClose();
@@ -90,7 +87,7 @@ const ContactList = () => {
 
   }
   const deleteContact = (id) => {
-    axios.delete(getApiRoute(API_CONTACT_DELETE,{'contact_id': id}))
+    axios.delete(getApiRoute(API_CONTACT_INFO,{'userId': params.userId, 'contactId': id}))
       .then(res => {
         setAlert({ ...alert, open: true, message: res.data.message, status: res.status });
         handleAlertModalClose();

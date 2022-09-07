@@ -17,6 +17,8 @@ import Home from "./pages/Home";
 import Transaction from "./pages/Transaction";
 import Tx from "./components/Transfer/Transaction/Tx"
 import {createContext} from "react";
+import Etransfer from "./pages/Etransfer";
+import Transfer from "./components/Transfer/SendMoney/transfer";
 
 
 export const UserContext = createContext(null);
@@ -46,6 +48,8 @@ const App = () => {
                                 <Route path="/user/:userId/contacts" element={<PrivateRoute auth={auth} component={ContactList}/>}/>
                                 <Route path="/user/:userId/tx" element={<PrivateRoute auth={auth} component={Transaction}/>}/>
                                 <Route path="/user/:userId/txs" element={<PrivateRoute auth={auth} component={Tx}/>}/>
+                                <Route path="/user/:userId/transfer" element={<PrivateRoute auth={auth} component={Etransfer}/>}/>
+                                <Route path="/user/:userId/transfers" element={<PrivateRoute auth={auth} component={Transfer}/>}/>
                                 <Route path="/accounts/:accountId/open" element={<PrivateRoute auth={auth} component={AccountContract}/>}/>
                                 <Route path="/login" element={<Login/>} />
                                 <Route path="/signup" element={<SignUp/>} />

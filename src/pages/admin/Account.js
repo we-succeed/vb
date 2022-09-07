@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Container from '@mui/material/Container';
-import Typography from "@mui/material/Typography";
 import { useEffect, useState} from "react";
 import axios from "axios";
 import {API_ACCOUNT_DELETE, API_ACCOUNT_PUT, API_ACCOUNTS_ALL, getApiRoute} from "../../utils/APIs";
@@ -80,19 +79,19 @@ const Account = () => {
     }
     const addAccount = () => {
         axios.post(getApiRoute(API_ACCOUNTS_ALL), account)
-            .then(res => {
+            .then(() => {
                 handleModalClose();
             })
     }
     const updateAccount = () => {
-        axios.put(getApiRoute(API_ACCOUNT_PUT, {'dataId': account._id}), account)
-            .then(res => {
+        axios.put(getApiRoute(API_ACCOUNT_PUT, {'accountId': account._id}), account)
+            .then(() => {
                 handleModalClose();
             })
     }
     const deleteAccount = (accountId = 1) => {
         axios.delete(getApiRoute(API_ACCOUNT_DELETE, {'accountId': accountId}))
-            .then(res => {
+            .then(() => {
                 handleAlertModalClose();
             })
     }
@@ -166,13 +165,7 @@ const Account = () => {
         <Container component="main">
             <PageTitle title="Account Management"/>
             <VBButton title="Add Account" onClick={()=>setOpenModal(true)}/>
-            {accounts.length !== 0 ?
-                <DynamicTable form={AccountTBData} data={accounts}/>
-                :
-                <Typography variant="h5" gutterBottom component="div" mt={2}>
-                    No data
-                </Typography>
-            }
+            <DynamicTable form={AccountTBData} data={accounts}/>
             <AlertDialog open={openAlertModal} close={handleAlertModalClose} data={account} form={AlertFormData}/>
             <AddEditDialog open={openModal} close={handleModalClose} form={AddEditFormData}>
                     <AccountTemplate data={account} cb={PageCallBack}/>
