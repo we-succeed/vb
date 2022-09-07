@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {useParams} from 'react-router-dom';
 import Link from '@mui/material/Link';
@@ -9,7 +9,6 @@ import SnackbarAlert from "../components/shared-dialog/SnackbarAlert";
 import PageTitle from "../components/shared-forms/PageTitle";
 import VBButton from "../components/shared-forms/VBButton";
 import VBInputField from "../components/shared-forms/VBInputField";
-import {UserContext} from "../App";
 
 const InitialUser = {
     firstName: "",
