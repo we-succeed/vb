@@ -11,7 +11,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import {Icon} from "@mui/material";
-import {USER_MENUS, getRoute} from '../../utils/APIs'
+import {USER_MENUS} from '../../utils/Menus'
+import {getRoute} from '../../utils/APIs'
 import {useNavigate} from "react-router-dom";
 import VBStyledCollection from "../VBStyledCollection";
 import {UserContext} from "../../App";
@@ -19,7 +20,7 @@ import {UserContext} from "../../App";
 const DrawerMenu = (props) => {
     const theme = useTheme();
     const navigate = useNavigate();
-    const [menus, setMenus] = useState(USER_MENUS);
+    const [menus] = useState(USER_MENUS);
     const user = useContext(UserContext);
     return (
         <Drawer

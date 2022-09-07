@@ -22,6 +22,13 @@ import Transfer from "./components/Transfer/SendMoney/transfer";
 
 
 export const UserContext = createContext(null);
+export const NotFound = () => {
+    return(
+        <>
+            Page Not Found.
+        </>
+    )
+}
 const App = () => {
     const [open, setOpen] = React.useState(false);
     const [auth, setAuth] = useState({});
@@ -42,19 +49,19 @@ const App = () => {
                             <VBStyledCollection.DrawerHeader/>
                             <Routes>
                                 <Route path="/" element={<Home/>}/>
-                                <Route path="/user/:userId" element={<PrivateRoute auth={auth} component={Profile}/>}/>
-                                <Route path="/user/:userId/accounts" element={<PrivateRoute auth={auth} component={UserAccount}/>}/>
-                                <Route path="/user/:userId/accounts/:accountId" exact element={<PrivateRoute auth={auth} component={Home}/>}/>
-                                <Route path="/user/:userId/contacts" element={<PrivateRoute auth={auth} component={ContactList}/>}/>
-                                <Route path="/user/:userId/tx" element={<PrivateRoute auth={auth} component={Transaction}/>}/>
-                                <Route path="/user/:userId/txs" element={<PrivateRoute auth={auth} component={Tx}/>}/>
-                                <Route path="/user/:userId/transfer" element={<PrivateRoute auth={auth} component={Etransfer}/>}/>
-                                <Route path="/user/:userId/transfers" element={<PrivateRoute auth={auth} component={Transfer}/>}/>
-                                <Route path="/accounts/:accountId/open" element={<PrivateRoute auth={auth} component={AccountContract}/>}/>
-                                <Route path="/login" element={<Login/>} />
-                                <Route path="/signup" element={<SignUp/>} />
-                                <Route path="/admin/users" exact element={<PrivateRoute auth={auth} component={User}/>}/>
-                                <Route path="/admin/accounts" exact element={<PrivateRoute auth={auth} component={Account}/>}/>
+                                <Route exact path="/user/:userId" element={<PrivateRoute auth={auth} component={Profile}/>}/>
+                                <Route exact path="/user/:userId/accounts" element={<PrivateRoute auth={auth} component={UserAccount}/>}/>
+                                <Route exact path="/user/:userId/contacts" element={<PrivateRoute auth={auth} component={ContactList}/>}/>
+                                <Route exact path="/user/:userId/transfer" element={<PrivateRoute auth={auth} component={Transaction}/>}/>
+                                <Route exact path="/user/:userId/transfer/tx" element={<PrivateRoute auth={auth} component={Tx}/>}/>
+                                <Route exact path="/user/:userId/e-transfer" element={<PrivateRoute auth={auth} component={Etransfer}/>}/>
+                                <Route exact path="/user/:userId/e-transfer/tx" element={<PrivateRoute auth={auth} component={Transfer}/>}/>
+                                <Route exact path="/accounts/:accountId/open" element={<PrivateRoute auth={auth} component={AccountContract}/>}/>
+                                <Route exact path="/login" element={<Login/>} />
+                                <Route exact path="/signup" element={<SignUp/>} />
+                                <Route exact path="/admin/users" element={<PrivateRoute auth={auth} component={User}/>}/>
+                                <Route exact path="/admin/accounts" element={<PrivateRoute auth={auth} component={Account}/>}/>
+                                <Route path="*" element={<NotFound/>}/>
                             </Routes>
                         </VBStyledCollection.Main>
                     </Router>

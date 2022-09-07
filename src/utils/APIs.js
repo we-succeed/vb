@@ -1,7 +1,7 @@
 import {API_PORT} from "../env";
 
-export const DEFAULT_URL = `http://localhost:${API_PORT}/api`;
-//export const DEFAULT_URL = `https://powerful-crag-89387.herokuapp.com/api`;
+//export const DEFAULT_URL = `http://localhost:${API_PORT}/api`;
+export const DEFAULT_URL = `https://powerful-crag-89387.herokuapp.com/api`;
 
 //Login
 export const API_AUTH = `${DEFAULT_URL}/auth`
@@ -28,48 +28,6 @@ export const API_USERS_ALL = `/admin/users`
 export const API_ACCOUNTS_ALL = `/admin/accounts`;
 export const API_ACCOUNT_PUT = `/admin/accounts/:accountId`;
 export const API_ACCOUNT_DELETE = `/admin/accounts/:accountId`;
-
-
-export const USER_MENUS = [
-    {
-        name: 'Accounts',
-        path: '/user/:userId/accounts',
-        icon: 'balance'
-    },
-    {
-        name: 'Transfer',
-        path: '/user/:userId/tx',
-        icon: 'currency_exchange'
-    },
-    {
-        name: 'Send Money',
-        path: '/user/:userId/transfer',
-        icon: 'monetization_on'
-    },
-    {
-        name: 'Bill Payment',
-        path: '/user/:userId/bills',
-        icon: 'monetization_on'
-    },
-    {
-        name: 'Contact',
-        path: '/user/:userId/contacts',
-        icon: 'perm_phone_msg'
-    }
-]
-
-export const ADMIN_MENUS = [
-    {
-        name: 'User Management',
-        path: '/admin/users',
-        icon: 'manage_accounts'
-    },
-    {
-        name: 'Account Management',
-        path: '/admin/accounts',
-        icon: 'account_balance'
-    },
-]
 
 export const getRoute = (path, params) => {
     if (params === undefined)
