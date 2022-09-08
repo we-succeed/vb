@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router({mergeParams: true});
-const transferController = require('../controllers/transferController')
+const transactionController = require('../controllers/transferController')
+const verifyToken = require("../utils/verifyToken");
 
 //restfullAPI
-
-router.get('/', transferController.userTransferInfo)
-router.post('/', transferController.createTransfer)
+router.get('/', transactionController.getUserTransfers)
+router.post('/', verifyToken, transactionController.addTransfer)
 
 
 

@@ -24,7 +24,7 @@ const login = (async (req, res) => {
             lastName: user.lastName,
             token: user.generateAuthToken()
         }
-        res.cookie('vb', sendData.token, { expires: new Date(Date.now() + 900000), httpOnly: true })
+        res.cookie('vb', sendData.token, { expires: new Date(Date.now() + 900000),httpOnly: true, secure: false})
         res.status(200).send({user: sendData, message: " User logged in successfully"});
     } catch (error) {
         res.status(500).send({message: "Internal Server Error"});

@@ -11,7 +11,8 @@ const saveUserAccount = (async (req, res) => {
             description: req.body.userAccount.description,
             number: newNumber
         }).save();
-        const resultUser = await User.findOneAndUpdate({_id: '630bba9a8a17f745b3d1b7e1'}, {$push: {userAccounts: {_id: userAccount._id}}}, {
+
+        const resultUser = await User.findOneAndUpdate({_id: req.body.auth._id}, {$push: {userAccounts: {_id: userAccount._id}}}, {
             upsert: true,
             setDefaultsOnInsert: true
         })

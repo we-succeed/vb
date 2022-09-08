@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import {API_USER_INFO} from 'utils/APIs';
+import {API_ADD_USER, API_USER_INFO} from 'utils/APIs';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -51,7 +51,6 @@ const SignUp = () => {
         message: '',
         severity: 'info'
     });
-    const navigate = useNavigate();
 
     const handleChange = ({currentTarget: input}) => {
         setUser({...user, [input.name]: input.value});
@@ -60,7 +59,7 @@ const SignUp = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(API_USER_INFO, user);
+            await axios.post(API_ADD_USER, user);
         } catch (error) {
             if (
                 error.response &&

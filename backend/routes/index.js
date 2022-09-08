@@ -8,7 +8,7 @@ const userAccountRoutes = require('./userAccount');
 router.use('/auth',authRoutes);
 router.use('/accounts', accountRoutes);
 router.use('/users',userRoutes);
-router.use('/userAccounts', userAccountRoutes)
+router.use('/userAccounts',  userAccountRoutes)
 router.use('/admin', adminRoutes);
 
 

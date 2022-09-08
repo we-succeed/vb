@@ -32,6 +32,11 @@ UserSchema.methods.generateAuthToken = function () {
     });
     return token;
 };
+UserSchema.methods.generateDecodeToken = function (token) {
+    const decode = jwt.verify(token, process.env.JWTPRIVATEKEY);
+    return decode;
+};
+
 
 //validation
 const validateUser = (data) => {
@@ -57,12 +62,12 @@ const UserAccountSchema = new Schema({
     balance: {type: Number, defaultValue: 0},
     transactions: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Tx',
+        ref: 'Transfer',
         default: []
     }],
-    transfers: [{
+    eTransfers: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Transfer',
+        ref: 'ETransfer',
         default: []
     }]
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at'} })

@@ -1,10 +1,12 @@
 import {API_PORT} from "../env";
 
-//export const DEFAULT_URL = `http://localhost:${API_PORT}/api`;
-export const DEFAULT_URL = `https://powerful-crag-89387.herokuapp.com/api`;
+export const DEFAULT_URL = `http://localhost:${API_PORT}/api`;
+//export const DEFAULT_URL = `https://powerful-crag-89387.herokuapp.com/api`;
 
 //Login
 export const API_AUTH = `${DEFAULT_URL}/auth`
+//SignUp
+export const API_ADD_USER = `${DEFAULT_URL}/users`;
 
 //Related with USER API
 export const API_USER_INFO = `/users/:userId`;

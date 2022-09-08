@@ -2,15 +2,18 @@ require("./database");
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const app = express();
+const cookieParser = require('cookie-parser');
 const routes = require('./routes');
 const port = process.env.PORT || 5000;
 const cors = require('cors')
 
+const app = express();
 
-app.use(cors({ origin: true, credentials: true }));//prevent for cors error
+app.use(cookieParser());  //
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));//prevent for cors error
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json());  //express.json + express.urlencoded()bodyParser
 
-app.use(bodyParser.json());  //express.json + express.urlencoded()
 app.use('/api', routes);
 
 

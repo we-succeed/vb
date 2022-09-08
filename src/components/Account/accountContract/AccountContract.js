@@ -49,8 +49,10 @@ export default function AccountContract(props) {
     }
 
     const handleSubmit = async () => {
-        let data = {userAccount}
-        const result = await axios.post(getApiRoute(API_OPEN_ACCOUNT, {'accountId': params.accountId}), data);
+        let data = {userAccount, auth: props.auth}
+        const result = await axios.post(getApiRoute(API_OPEN_ACCOUNT, {'accountId': params.accountId}), data,{
+            withCredentials: true
+        });
         if (result.status === 201) {
             setActiveStep(activeStep + 1);
             setUserAccount((prevState) => ({
