@@ -13,12 +13,8 @@ const TxHistory = (props) => {
       getData();
     }
   }, [props.data._id])
-  const getData = () => {
-    console.log(props.type)
-    console.log(props.data)
-    console.log(props)
 
-    // const url = props.type === 'transfer'? API_USER_TRANSFER : API_USER_TRANSACTION;
+  const getData = () => {
     const url = props.type === 'transaction' ? API_USER_TRANSACTION : API_USER_TRANSFER;
     axios.get(getApiRoute(url, { 'userAccountId': props.data._id }))
       .then((res) => {
