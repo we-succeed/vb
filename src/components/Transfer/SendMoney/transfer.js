@@ -1,18 +1,18 @@
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import axios from 'axios';
-import {
-    API_USER_ACCOUNTS,
-    API_USER_CONTACTS,
-    API_USER_TRANSFER,
-    getApiRoute
-} from 'utils/APIs';
 import SnackbarAlert from 'components/shared-dialog/SnackbarAlert';
 import PageTitle from 'components/shared-forms/PageTitle';
 import VBButton from 'components/shared-forms/VBButton';
 import VBInputField from 'components/shared-forms/VBInputField';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import {
+    API_USER_ACCOUNTS,
+    API_USER_CONTACTS,
+    API_USER_TRANSFER,
+    getApiRoute
+} from 'utils/APIs';
 
 
 const initialTr = {
@@ -23,7 +23,7 @@ const initialTr = {
     type: '',
 }
 
-const Transfer = () => {
+const Transfer = (props) => {
     const params = useParams();
     const [accounts, setAccounts] = useState([]);
     const [contacts, setContacts] = useState([]);
@@ -47,11 +47,12 @@ const Transfer = () => {
     useEffect(() => {
         getData();
         getContacts();
+        setTr({ ...tr, 'from': props.state.account._id });
     }, [])
 
     const createTr = () => {
         axios.post(getApiRoute(API_USER_TRANSFER, { 'userAccountId': tr.from }), tr).then(res => {
-            setAlert({ ...alert, open: true, message: res.data.message, status: res.status });
+            setAlert({ ...alert, open: true, message: res.data.message, status: res?.status });
         }).catch(err => {
             setAlert({ ...alert, open: true, message: 'Interval server error' });
             console.log(err.toJSON());
@@ -66,7 +67,6 @@ const Transfer = () => {
             })
             .catch((err) => console.log(err));
     }
-
 
     const getContacts = () => {
         axios.get(getApiRoute(API_USER_CONTACTS, { 'userId': params.userId }))
