@@ -1,6 +1,6 @@
 import {API_PORT} from "../env";
 
-//export const DEFAULT_URL = `http://localhost:${API_PORT}/api`;
+// export const DEFAULT_URL = `http://localhost:${API_PORT}/api`;
 export const DEFAULT_URL = `https://powerful-crag-89387.herokuapp.com/api`;
 
 //Login
@@ -13,9 +13,8 @@ export const API_USER_CONTACTS = `/users/:userId/contacts`;
 export const API_CONTACT_INFO = `/users/:userId/contacts/:contactId`;
 
 //transfer API
-export const API_USER_ACCOUNT_INFO = `/tx/:accountId`;
-export const API_USER_TRANSACTION = `/userAccounts/:userAccountId/tx`;
-export const API_USER_TRANSFER = `/userAccounts/:userAccountId/transfer`;
+export const API_USER_TRANSFER= `/userAccounts/:userAccountId/transfer`;
+export const API_USER_ETRANSFER = `/userAccounts/:userAccountId/etransfer`;
 
 
 //ACCOUNT API

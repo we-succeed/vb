@@ -6,10 +6,10 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { API_USER_ACCOUNTS, getApiRoute } from 'utils/APIs';
 import PageTitle from "../components/shared-forms/PageTitle";
-import TxHistory from '../components/Transfer/Transaction/TxHistory';
+import TransferHistory from '../components/Transfer/TransferHistory';
 
 
-const Transaction = () => {
+const Transfer = () => {
   const params = useParams();
   const [accounts, setAccounts] = useState([]);
   const [account, setAccount] = useState({});
@@ -29,7 +29,7 @@ const Transaction = () => {
 
   const navigate = useNavigate();
   const handleChange = () => {
-    navigate(`./tx`, { state: { account } })
+    navigate(`./tx`, { state: { account, type: 'transfer' } })
   }
 
   //Data that make up page
@@ -56,14 +56,14 @@ const Transaction = () => {
 
   return (
     <Container component="main">
-      <PageTitle title="Transaction History" />
+      <PageTitle title="Transfer History" />
       {FormFields.schema.map((form, idx) => (
         <VBInputField key={`user-profile-grid-${idx}`} form={form} data={account} cb={PageCallBack} />
       ))}
-      <TxHistory data={account} type='transaction' />
       <Button variant="contained" onClick={handleChange}> Transfer </Button>
+      <TransferHistory data={account} type='transfers' />
     </Container>
   );
 };
 
-export default Transaction;
+export default Transfer;

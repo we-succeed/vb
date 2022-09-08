@@ -10,18 +10,8 @@ export const USER_MENUS = [
         icon: 'currency_exchange'
     },
     {
-        name: 'Transfer Tx',
-        path: '/user/:userId/transfer/tx',
-        icon: 'currency_exchange'
-    },
-    {
         name: 'Send Money History',
         path: '/user/:userId/e-transfer',
-        icon: 'monetization_on'
-    },
-    {
-        name: 'Send Money Tx',
-        path: '/user/:userId/e-transfer/tx',
         icon: 'monetization_on'
     },
     {

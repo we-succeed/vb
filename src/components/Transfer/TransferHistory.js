@@ -3,10 +3,10 @@ import axios from "axios";
 import DynamicTable from 'components/shared-forms/DynamicTable';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { API_USER_TRANSACTION, API_USER_TRANSFER, getApiRoute } from 'utils/APIs';
+import {  API_USER_ETRANSFER, API_USER_TRANSFER, getApiRoute } from 'utils/APIs';
 
 
-const TxHistory = (props) => {
+const TransferHistory = (props) => {
   const [txs, setTxs] = useState([]);
   useEffect(() => {
     if (props.data) {
@@ -15,21 +15,17 @@ const TxHistory = (props) => {
   }, [props.data._id])
 
   const getData = () => {
-    const url = props.type === 'transaction' ? API_USER_TRANSACTION : API_USER_TRANSFER;
+    const url = props.type !== 'transfers' ? API_USER_ETRANSFER : API_USER_TRANSFER;
     axios.get(getApiRoute(url, { 'userAccountId': props.data._id }))
       .then((res) => {
-        if (url === API_USER_TRANSACTION) {
-          setTxs(res.data.userAccounts.transactions);
-        } else {
-          setTxs(res.data.userAccounts.transfers);
-        }
+        setTxs(res.data.userAccounts[props.type]);
       }).catch(e => {
         console.log(e);
       });
   }
 
   const UserTxData = {
-    transaction: {
+    transfers: {
       schema: [
         { head: 'To (Number)', cols: 'to.number', format: 'default' },
         { head: 'To (Name)', cols: 'to.name', format: 'default' },
@@ -37,7 +33,7 @@ const TxHistory = (props) => {
         { head: 'Source', cols: 'source', format: 'default' },
       ]
     },
-    transfer: {
+    eTransfers: {
       schema: [
         { head: 'To (Name)', cols: 'to.name', format: 'default' },
         { head: 'To (e-mail)', cols: 'to.email', format: 'default' },
@@ -55,4 +51,4 @@ const TxHistory = (props) => {
 };
 
 
-export default TxHistory;
+export default TransferHistory;
