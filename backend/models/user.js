@@ -27,14 +27,12 @@ const UserSchema = new Schema({
 
 
 UserSchema.methods.generateAuthToken = function () {
-    const token = jwt.sign({_id: this._id}, process.env.JWTPRIVATEKEY, {
+    return jwt.sign({_id: this._id}, process.env.JWTPRIVATEKEY, {
         expiresIn: "7d",
     });
-    return token;
 };
 UserSchema.methods.generateDecodeToken = function (token) {
-    const decode = jwt.verify(token, process.env.JWTPRIVATEKEY);
-    return decode;
+    return jwt.verify(token, process.env.JWTPRIVATEKEY);
 };
 
 
@@ -60,7 +58,7 @@ const UserAccountSchema = new Schema({
     name: {type: String},
     description: {type: String},
     balance: {type: Number, defaultValue: 0},
-    transactions: [{
+    transfers: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Transfer',
         default: []

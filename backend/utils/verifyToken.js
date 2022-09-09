@@ -5,8 +5,8 @@ module.exports = async (req, res, next) => {
     try {
         if ( typeof bearerHeader !== 'undefined') {
             const bearer = bearerHeader.split(' ');
-            const decode = await jwt.verify(bearer[1], process.env.JWTPRIVATEKEY);
-            console.log(decode);
+            await jwt.verify(bearer[1], process.env.JWTPRIVATEKEY);
+            next();
         } else if (req.cookies['vb']) {
             const decode = User().generateDecodeToken(req.cookies['vb']);
             const user = await User.findOne({email: req.body.auth.email});

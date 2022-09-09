@@ -25,7 +25,7 @@ const Login = () => {
     })
     //API
     const login = () => {
-        axios.post(API_AUTH, data,{withCredentials: true, credentials: 'include'})
+        axios.post(API_AUTH, data,{withCredentials: true,  credentials: 'same-origin'})
             .then(res => {
                 localStorage.setItem("vb", JSON.stringify(res.data.user));
                 window.location.assign("../");

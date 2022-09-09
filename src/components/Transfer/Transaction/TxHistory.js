@@ -16,7 +16,7 @@ const TxHistory = (props) => {
   const getData = () => {
     axios.get(getApiRoute(API_USER_TRANSFER, { 'userAccountId': props.data._id }))
       .then((res) => {
-        setTxs(res.data.userAccounts.transactions);
+        setTxs(res.data.userAccounts.transfers);
       }).catch(e => {
         console.log(e);
       });

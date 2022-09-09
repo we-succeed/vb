@@ -22,9 +22,9 @@ const login = (async (req, res) => {
             email: user.email,
             firstName: user.firstName,
             lastName: user.lastName,
-            token: user.generateAuthToken()
+            token: User().generateAuthToken()
         }
-        res.cookie('vb', sendData.token, { expires: new Date(Date.now() + 900000),httpOnly: true, secure: false})
+        res.cookie('vb', sendData.token, { expires: new Date(Date.now() + 900000), httpOnly: true, secure: false})
         res.status(200).send({user: sendData, message: " User logged in successfully"});
     } catch (error) {
         res.status(500).send({message: "Internal Server Error"});
