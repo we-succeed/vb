@@ -1,15 +1,15 @@
-import { Container } from '@mui/material';
+import { Button, Container } from '@mui/material';
 import axios from "axios";
-import { API_USER_ACCOUNTS, getApiRoute } from 'utils/APIs';
 import VBInputField from 'components/shared-forms/VBInputField';
 import * as React from 'react';
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { API_USER_ACCOUNTS, getApiRoute } from 'utils/APIs';
 import PageTitle from "../components/shared-forms/PageTitle";
-import TxHistory from '../components/Transfer/Transaction/TxHistory';
+import TransferHistory from '../components/Transfer/TransferHistory';
 
 
-const Transaction = () => {
+const Transfer = () => {
   const params = useParams();
   const [accounts, setAccounts] = useState([]);
   const [account, setAccount] = useState({});
@@ -25,6 +25,11 @@ const Transaction = () => {
         setAccounts(res.data.userAccounts);
       })
       .catch((err) => console.log(err));
+  }
+
+  const navigate = useNavigate();
+  const handleChange = () => {
+    navigate(`./tx`, { state: { account, type: 'transfer' } })
   }
 
   //Data that make up page
@@ -51,13 +56,14 @@ const Transaction = () => {
 
   return (
     <Container component="main">
-      <PageTitle title="Transaction History" />
+      <PageTitle title="Transfer History" />
       {FormFields.schema.map((form, idx) => (
         <VBInputField key={`user-profile-grid-${idx}`} form={form} data={account} cb={PageCallBack} />
       ))}
-      <TxHistory data={account} />
+      <Button variant="contained" onClick={handleChange}> Transfer </Button>
+      <TransferHistory data={account} type='transfers' />
     </Container>
   );
 };
 
-export default Transaction;
+export default Transfer;

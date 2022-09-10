@@ -1,12 +1,12 @@
-import { Container } from '@mui/material';
+import { Button, Container } from '@mui/material';
 import axios from "axios";
-import {API_USER_ACCOUNTS, getApiRoute} from 'utils/APIs';
 import PageTitle from 'components/shared-forms/PageTitle';
 import VBInputField from 'components/shared-forms/VBInputField';
 import * as React from 'react';
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import TransferHistory from '../components/Transfer/SendMoney/transferHistory';
+import { useNavigate, useParams } from "react-router-dom";
+import { API_USER_ACCOUNTS, getApiRoute } from 'utils/APIs';
+import TransferHistory from '../components/Transfer/TransferHistory';
 
 
 const Etransfer = () => {
@@ -25,6 +25,11 @@ const Etransfer = () => {
         setAccounts(res.data.userAccounts);
       })
       .catch((err) => console.log(err));
+  }
+
+  const navigate = useNavigate();
+  const handleChange = () => {
+    navigate(`./tx`, { state: { account, type: 'eTransfer' } })
   }
 
   //Data that make up page
@@ -52,9 +57,10 @@ const Etransfer = () => {
     <Container component="main">
       <PageTitle title="Etransfer History" />
       {FormFields.schema.map((form, idx) => (
-        <VBInputField key={`user-profile-grid-${idx}`} form={form} data={account} cb={PageCallBack}/>
+        <VBInputField key={`user-profile-grid-${idx}`} form={form} data={account} cb={PageCallBack} />
       ))}
-      <TransferHistory data={account} />
+      <Button variant="contained" onClick={handleChange}> Etransfer </Button>
+      <TransferHistory data={account} type='eTransfers' />
     </Container>
   );
 };

@@ -14,11 +14,11 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import VBStyledCollection from "./components/VBStyledCollection";
 import Home from "./pages/Home";
-import Transaction from "./pages/Transaction";
-import Tx from "./components/Transfer/Transaction/Tx"
+import Transfer from "./pages/Transfer";
+import TransferTxForm from "./components/Transfer/TransferTxForm"
 import {createContext} from "react";
 import Etransfer from "./pages/Etransfer";
-import Transfer from "./components/Transfer/SendMoney/transfer";
+// import Transfer from "./components/Transfer/SendMoney/transfer";
 
 
 export const UserContext = createContext(null);
@@ -52,10 +52,10 @@ const App = () => {
                                 <Route exact path="/user/:userId" element={<PrivateRoute auth={auth} component={Profile}/>}/>
                                 <Route exact path="/user/:userId/accounts" element={<PrivateRoute auth={auth} component={UserAccount}/>}/>
                                 <Route exact path="/user/:userId/contacts" element={<PrivateRoute auth={auth} component={ContactList}/>}/>
-                                <Route exact path="/user/:userId/transfer" element={<PrivateRoute auth={auth} component={Transaction}/>}/>
-                                <Route exact path="/user/:userId/transfer/tx" element={<PrivateRoute auth={auth} component={Tx}/>}/>
+                                <Route exact path="/user/:userId/transfer" element={<PrivateRoute auth={auth} component={Transfer}/>}/>
+                                <Route exact path="/user/:userId/transfer/tx" element={<PrivateRoute auth={auth} component={TransferTxForm}/>}/>
                                 <Route exact path="/user/:userId/e-transfer" element={<PrivateRoute auth={auth} component={Etransfer}/>}/>
-                                <Route exact path="/user/:userId/e-transfer/tx" element={<PrivateRoute auth={auth} component={Transfer}/>}/>
+                                <Route exact path="/user/:userId/e-transfer/tx" element={<PrivateRoute auth={auth} component={TransferTxForm}/>}/>
                                 <Route exact path="/accounts/:accountId/open" element={<PrivateRoute auth={auth} component={AccountContract}/>}/>
                                 <Route exact path="/login" element={<Login/>} />
                                 <Route exact path="/signup" element={<SignUp/>} />

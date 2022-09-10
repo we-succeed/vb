@@ -15,9 +15,8 @@ export const API_USER_CONTACTS = `/users/:userId/contacts`;
 export const API_CONTACT_INFO = `/users/:userId/contacts/:contactId`;
 
 //transfer API
-export const API_USER_ACCOUNT_INFO = `/tx/:accountId`;
-export const API_USER_TRANSACTION = `/userAccounts/:userAccountId/tx`;
-export const API_USER_TRANSFER = `/userAccounts/:userAccountId/transfer`;
+export const API_USER_TRANSFER= `/userAccounts/:userAccountId/transfer`;
+export const API_USER_ETRANSFER = `/userAccounts/:userAccountId/etransfer`;
 
 
 //ACCOUNT API
