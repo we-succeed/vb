@@ -21,7 +21,7 @@ const Login = () => {
     const [alert, setAlert] = useState(initialAlert);
     useEffect(() => {
         if (localStorage.getItem('vb'))
-            navigate("../")
+            navigate(`../user/${JSON.parse(localStorage.getItem('vb'))['_id']}/accounts`)
     })
     //API
     const login = () => {

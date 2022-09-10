@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes, Navigate} from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import MenuAppBar from "./components/commons/MenuAppBar";
@@ -13,12 +13,10 @@ import UserAccount from "./pages/UserAccount";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import VBStyledCollection from "./components/VBStyledCollection";
-import Home from "./pages/Home";
+import Etransfer from "./pages/Etransfer";
 import Transfer from "./pages/Transfer";
 import TransferTxForm from "./components/Transfer/TransferTxForm"
 import {createContext} from "react";
-import Etransfer from "./pages/Etransfer";
-// import Transfer from "./components/Transfer/SendMoney/transfer";
 
 
 export const UserContext = createContext(null);
@@ -48,7 +46,7 @@ const App = () => {
                         <VBStyledCollection.Main open={open} auth={auth}>
                             <VBStyledCollection.DrawerHeader/>
                             <Routes>
-                                <Route path="/" element={<Home/>}/>
+                                <Route path="/" element={<Navigate to="/login" replace />}/>
                                 <Route exact path="/user/:userId" element={<PrivateRoute auth={auth} component={Profile}/>}/>
                                 <Route exact path="/user/:userId/accounts" element={<PrivateRoute auth={auth} component={UserAccount}/>}/>
                                 <Route exact path="/user/:userId/contacts" element={<PrivateRoute auth={auth} component={ContactList}/>}/>
