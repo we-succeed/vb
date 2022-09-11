@@ -9,6 +9,7 @@ import SnackbarAlert from "../components/shared-dialog/SnackbarAlert";
 import PageTitle from "../components/shared-forms/PageTitle";
 import VBButton from "../components/shared-forms/VBButton";
 import VBInputField from "../components/shared-forms/VBInputField";
+import {Forms} from "../utils/Forms";
 
 const InitialUser = {
     firstName: "",
@@ -53,25 +54,10 @@ const Profile = () => {
             console.log(e.toJSON());
         })
     }
-
     //Page features
     const handleSubmit = (e) => {
         e.preventDefault();
         updateUser();
-    }
-
-    //Data that make up page
-    const FormFields = {
-        schema: [
-            {id: 'firstName', label: 'First Name', name: 'firstName', type: 'default', required: true},
-            {id: 'lastName', label: 'Last Name', name: 'lastName', type: 'default', required: true},
-            {id: 'email', label: 'Email Address', name: 'email', type: 'default', required: true, disabled: true},
-            {id: 'address', label: 'Address', name: 'address', type: 'default'},
-            {id: 'city', label: 'City', name: 'city', type: 'default'},
-            {id: 'province', label: 'Province', name: 'province', type: 'default'},
-            {id: 'postalCode', label: 'Postal Code', name: 'postalCode', type: 'default'},
-            {id: 'phoneNumber', label: 'Phone Number', name: 'phoneNumber', type: 'default'}
-        ]
     }
     //Callback functions that make up page
     const PageCallBack = {
@@ -83,7 +69,7 @@ const Profile = () => {
         <Container component="main" maxWidth="xs">
             <PageTitle title="Edit Profile"/>
             <Grid container spacing={2}>
-                {FormFields.schema.map((form, idx) => (
+                {Forms.Profile.schema.map((form, idx) => (
                     <Grid key={`user-grid-${idx}`} item xs={12}
                           sm={(['firstName', 'lastName'].includes(form.id)) ? 6 : 12}>
                         <VBInputField key={`user-profile-grid-${idx}`} form={form} data={user} cb={PageCallBack}/>

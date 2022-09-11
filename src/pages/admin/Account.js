@@ -14,6 +14,7 @@ import Radio from "@mui/material/Radio";
 import PageTitle from "../../components/shared-forms/PageTitle";
 import VBButton from "../../components/shared-forms/VBButton";
 import VBInputField from "../../components/shared-forms/VBInputField";
+import {Forms} from "../../utils/Forms";
 const initialAccount = {
     description: "",
     interest: 0,
@@ -28,16 +29,6 @@ const AccountTemplate = (props) => {
     useEffect(()=>{
         setData(props.data);
     },[props.data])
-    const FormFields = {
-        schema: [
-            {id: 'name', label: 'Account Name', name: 'name', type:'default', required:true},
-            {id: 'description', label: 'Account Description', name: 'description', type:'multiline', required:true},
-            {id: 'quantity', label: 'Quantity', name: 'quantity', type:'number', required:true},
-            {id: 'remainder', label: 'Remainder', name: 'remainder', type:'number', required:true},
-            {id: 'interest', label: 'Interest', name: 'interest', type: 'number', required:true},
-            {id: 'status', label: 'Status', name: 'status', type: 'toggle', required:true},
-        ]
-    }
     return (
         <Box component="form" noValidate>
             <RadioGroup
@@ -51,7 +42,7 @@ const AccountTemplate = (props) => {
                 <FormControlLabel value="chequing" control={<Radio/>} label="Chequing"/>
             </RadioGroup>
             <Grid container spacing={2}>
-                {FormFields.schema.map((form, idx) => (
+                {Forms.AdminAccount.schema.map((form, idx) => (
                     <Grid key={`account-template-${idx}`} item xs={12} sm={(['quantity', 'remainder','interest'].includes(form.id)) ? 4 : 12}>
                         <VBInputField key={`account-template-input-${idx}`} form={form} data={data} cb={props.cb}/>
                     </Grid>

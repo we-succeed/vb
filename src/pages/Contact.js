@@ -13,6 +13,7 @@ import DynamicTable from "../components/shared-forms/DynamicTable";
 import VBInputField from "../components/shared-forms/VBInputField";
 import SnackbarAlert from "components/shared-dialog/SnackbarAlert";
 import PageTitle from "../components/shared-forms/PageTitle";
+import {Forms} from "../utils/Forms";
 
 
 const initialContact = {
@@ -27,23 +28,15 @@ const initialAlert = {
 }
 const ContactTemplate = (props) => {
   const [contact, setContact] = useState(props.data);
-  console.log(contact);
   useEffect(() => {
     setContact(props.data);
   }, [props.data])
-  //Data that make up page
-  const FormFields = {
-    schema: [
-      { id: 'name', label: 'Name', name: 'name', type: 'default', required: true },
-      { id: 'email', label: 'Email', name: 'email', type: 'default', required: true },
-      { id: 'mobile', label: 'Mobile', name: 'mobile', type: 'default', required: true },
-    ]
-  }
+
 
   return (
     <Box component="form" noValidate>
       <Grid container spacing={1}>
-        {FormFields.schema.map((form, idx) => (
+        {Forms.Contact.schema.map((form, idx) => (
           <Grid key={`user-grid-${idx}`} item xs={12} sm={(['name', 'email'].includes(form.id)) ? 12 : 12}>
             <VBInputField key={`user-profile-grid-${idx}`} form={form} data={contact} cb={props.cb} />
           </Grid>

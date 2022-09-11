@@ -5,12 +5,12 @@ export const USER_MENUS = [
         icon: 'balance'
     },
     {
-        name: 'Transfer History',
+        name: 'Transfer',
         path: '/user/:userId/transfer',
         icon: 'currency_exchange'
     },
     {
-        name: 'Send Money History',
+        name: 'Send Money',
         path: '/user/:userId/e-transfer',
         icon: 'monetization_on'
     },

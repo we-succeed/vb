@@ -9,6 +9,7 @@ import VBInputField from "../components/shared-forms/VBInputField";
 import PageTitle from "../components/shared-forms/PageTitle";
 import VBButton from "../components/shared-forms/VBButton";
 import {API_AUTH} from 'utils/APIs';
+import {Forms} from "../utils/Forms";
 
 const initialAlert = {
     open: false,
@@ -37,13 +38,6 @@ const Login = () => {
         e.preventDefault();
         login();
     };
-
-    const FormFields = {
-        schema: [
-            {id: 'email', label: 'Email Address', name: 'email', type: 'default', required: true},
-            {id: 'password', label: 'Password', name: 'password', type: 'password', required: true}
-        ]
-    }
     const PageCallBack = {
         inputChange: (e) => {
             setData({...data, [e.target.name]: e.target.value});
@@ -55,7 +49,7 @@ const Login = () => {
     return (
         <Container component="main" maxWidth="xs">
             <PageTitle title="Sign in"/>
-            {FormFields.schema.map((form, idx) => (
+            {Forms.Login.schema.map((form, idx) => (
                 <VBInputField key={idx} form={form} data={data} cb={PageCallBack}/>
             ))}
             <VBButton title="Sign In" onClick={handleSubmit}/>

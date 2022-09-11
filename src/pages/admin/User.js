@@ -14,6 +14,7 @@ import AddEditDialog from "../../components/shared-dialog/AddEditDialog";
 import Grid from "@mui/material/Grid";
 import VBInputField from "../../components/shared-forms/VBInputField";
 import PageTitle from "../../components/shared-forms/PageTitle";
+import {Forms} from "../../utils/Forms";
 
 const initialUser = {
     firstName: "",
@@ -35,24 +36,11 @@ const UserTemplate = (props) => {
     useEffect(()=>{
         setUser(props.data);
     },[props.data])
-    //Data that make up page
-    const FormFields = {
-        schema: [
-            {id: 'firstName', label: 'First Name', name: 'firstName', type: 'default', required:true},
-            {id: 'lastName', label: 'Last Name', name: 'lastName', type: 'default', required:true},
-            {id: 'email', label: 'Email Address', name: 'email', type: 'default', required:true, disabled: true},
-            {id: 'address', label: 'Address', name: 'address', type: 'default'},
-            {id: 'city', label: 'City', name: 'city', type: 'default'},
-            {id: 'province', label: 'Province', name: 'province', type: 'default'},
-            {id: 'postalCode', label: 'Postal Code', name: 'postalCode', type: 'default'},
-            {id: 'phoneNumber', label: 'Phone Number', name: 'phoneNumber', type: 'default'}
-        ]
-    }
 
     return (
         <Box component="form" noValidate>
             <Grid container spacing={2}>
-                {FormFields.schema.map((form, idx) => (
+                {Forms.AdminUser.schema.map((form, idx) => (
                     <Grid key={`user-grid-${idx}`} item xs={12} sm={(['firstName', 'lastName'].includes(form.id)) ? 6 : 12}>
                         <VBInputField key={`user-profile-grid-${idx}`} form={form} data={user} cb={props.cb}/>
                     </Grid>

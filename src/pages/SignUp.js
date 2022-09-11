@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import {useNavigate} from 'react-router-dom';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import {API_ADD_USER, API_USER_INFO} from 'utils/APIs';
+import {API_ADD_USER} from 'utils/APIs';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -13,6 +12,7 @@ import VBInputField from "../components/shared-forms/VBInputField";
 import PageTitle from "../components/shared-forms/PageTitle";
 import VBButton from "../components/shared-forms/VBButton";
 import SnackbarAlert from "../components/shared-dialog/SnackbarAlert";
+import {Forms} from "../utils/Forms";
 
 const initialUser = {
         role: "User",
@@ -108,15 +108,6 @@ const SignUp = () => {
             return stateObj;
         });
     }
-    const FormFields = {
-        schema: [
-            {id: 'firstName', label: 'First Name', name: 'firstName', type: 'default', required: true},
-            {id: 'lastName', label: 'Last Name', name: 'lastName', type: 'default', required: true},
-            {id: 'email', label: 'Email Address', name: 'email', type: 'default', required: true},
-            {id: 'password', label: 'Password', name: 'password', type: 'password', required: true},
-            {id: 'confirmPassword', label: 'ConfirmPassword', name: 'confirmPassword', type: 'password', required: true}
-        ]
-    }
     //Callback functions that make up page
     const PageCallBack = {
         inputChange: (e) => {
@@ -141,7 +132,7 @@ const SignUp = () => {
                 </RadioGroup>
             </FormControl>
             <Grid container spacing={2}>
-                {FormFields.schema.map((form, idx) => (
+                {Forms.SignUp.schema.map((form, idx) => (
                     <Grid key={`user-grid-${idx}`} item xs={12}
                           sm={(['firstName', 'lastName'].includes(form.id)) ? 6 : 12}>
                         <VBInputField key={`user-profile-grid-${idx}`} form={form} data={user}
