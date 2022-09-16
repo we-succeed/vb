@@ -17,7 +17,14 @@ app.options('*', cors())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json());  //express.json + express.urlencoded()bodyParser
 
-app.use('/', routes);
+app.use('/api', routes);
+// Step 1:
+app.use(express.static(path.resolve(__dirname, "./client/build")));
+// Step 2:
+app.get("*", function (request, response) {
+    response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+});
+
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
