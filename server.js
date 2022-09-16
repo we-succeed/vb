@@ -7,7 +7,7 @@ const routes = require('./routes');
 const port = process.env.PORT || 5000;
 const cors = require('cors')
 const corsOptions ={
-    origin: '*',
+    origin: 'http://localhost:3000',
     credentials:true,            //access-control-allow-credentials:true
     optionSuccessStatus:200,
 }
@@ -19,13 +19,13 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json());  //express.json + express.urlencoded()bodyParser
 
 app.use('/', routes);
-
-
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 })
+
+
 app.use((err, req, res) => {
     console.error(" handle utils error >> " , err);
 })
