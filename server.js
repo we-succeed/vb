@@ -18,7 +18,7 @@ app.use(cors(corsOptions))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json());  //express.json + express.urlencoded()bodyParser
 
-app.use('/api', routes);
+app.use('/', routes);
 
 
 app.use((req, res, next) => {
