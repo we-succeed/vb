@@ -45,12 +45,13 @@
     "url": "https://github.com/we-succeed/VB/issues"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "client": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "cd backend && nodemon server.js",
-    "dev": "concurrently \"npm run server\" \"npm run start\""
+    "start": "cd backend && nodemon server.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "eslintConfig": {
     "extends": [
@@ -73,5 +74,6 @@
   "devDependencies": {
     "concurrently": "^7.2.2",
     "nodemon": "^2.0.19"
-  }
+  },
+  "proxy": "http://localhost:5000"
 }
