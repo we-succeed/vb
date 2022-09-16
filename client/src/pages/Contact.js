@@ -11,7 +11,7 @@ import AddEditDialog from "../components/shared-dialog/AddEditDialog";
 import AlertDialog from "../components/shared-dialog/AlertDialog";
 import DynamicTable from "../components/shared-forms/DynamicTable";
 import VBInputField from "../components/shared-forms/VBInputField";
-import SnackbarAlert from "components/shared-dialog/SnackbarAlert";
+import SnackbarAlert from "../components/shared-dialog/SnackbarAlert";
 import PageTitle from "../components/shared-forms/PageTitle";
 import {Forms} from "../utils/Forms";
 

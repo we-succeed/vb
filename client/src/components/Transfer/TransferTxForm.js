@@ -1,13 +1,13 @@
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import axios from 'axios';
-import SnackbarAlert from 'components/shared-dialog/SnackbarAlert';
-import PageTitle from 'components/shared-forms/PageTitle';
-import VBButton from 'components/shared-forms/VBButton';
-import VBInputField from 'components/shared-forms/VBInputField';
+import SnackbarAlert from '../../components/shared-dialog/SnackbarAlert';
+import PageTitle from '../../components/shared-forms/PageTitle';
+import VBButton from '../../components/shared-forms/VBButton';
+import VBInputField from '../../components/shared-forms/VBInputField';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { API_USER_ACCOUNTS, API_USER_CONTACTS, API_USER_ETRANSFER, API_USER_TRANSFER, getApiRoute } from 'utils/APIs';
+import { API_USER_ACCOUNTS, API_USER_CONTACTS, API_USER_ETRANSFER, API_USER_TRANSFER, getApiRoute } from '../../utils/APIs';
 
 
 const initialTx = {
@@ -146,7 +146,7 @@ const TransferTxForm = (props) => {
             ))}
             <VBButton title="Done" onClick={handleSubmit} fullWidth />
             <SnackbarAlert alert={alert} />
-            <Link href="/" variant="body2">
+            <Link href="/client/src/pages" variant="body2">
                 Cancel
             </Link>
         </Container>

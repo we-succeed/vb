@@ -3,7 +3,7 @@ import axios from 'axios';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import {API_ADD_USER} from 'utils/APIs';
+import {API_ADD_USER}  from '../utils/APIs';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -141,7 +141,7 @@ const SignUp = () => {
                 ))}
             </Grid>
             <VBButton title="Sign Up" onClick={handleSubmit} fullWidth/>
-            <Link href="/src/pages/Login" variant="body2">
+            <Link href="/client/src/pages/Login" variant="body2">
                 Sign in
             </Link>
             <SnackbarAlert alert={alert}/>

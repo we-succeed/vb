@@ -1,9 +1,9 @@
 import Container from '@mui/material/Container';
 import axios from "axios";
-import DynamicTable from 'components/shared-forms/DynamicTable';
+import DynamicTable from '../../components/shared-forms/DynamicTable';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import {  API_USER_ETRANSFER, API_USER_TRANSFER, getApiRoute } from 'utils/APIs';
+import {  API_USER_ETRANSFER, API_USER_TRANSFER, getApiRoute } from '../../utils/APIs';
 
 
 const TransferHistory = (props) => {
