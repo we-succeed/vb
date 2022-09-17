@@ -1,5 +1,5 @@
 require("./database");
-import path from 'path';
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
