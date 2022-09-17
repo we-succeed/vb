@@ -1,5 +1,5 @@
 require("./database");
-
+import path from 'path';
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -17,25 +17,15 @@ app.options('*', cors())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json());  //express.json + express.urlencoded()bodyParser
 
-app.use('/api', routes);
-// Step 1:
-app.use(express.static(path.resolve(__dirname, "./client/build")));
+app.use(routes);
+//// Step 1: Serve up static assets (usually on heroku)
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.resolve(__dirname, "./client/build")));
+}
 // Step 2:
 app.get("*", function (request, response) {
     response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
-
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    next();
-})
-
-
-app.use((err, req, res) => {
-    console.error(" handle utils error >> " , err);
-})
-
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 })
