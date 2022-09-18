@@ -16,6 +16,7 @@ const MenuAppBar = (props) => {
     const AppBar = styled(MuiAppBar, {
         shouldForwardProp: (prop) => prop !== 'open',
     })(({theme, open}) => ({
+        background: '#2E3B55',
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -51,7 +52,6 @@ const MenuAppBar = (props) => {
                         :
                         <Button color="inherit" onClick={() => navigate(`/login`)}>Login</Button>
                     }
-
                 </Toolbar>
             </AppBar>
             {isLoggedIn ? <DrawerMenu open={props.open} drawerOpen={props.drawerOpen}/> : ''}
