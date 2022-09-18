@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+/client/node_modules
+
 /.pnp
 .pnp.js
 
@@ -39,6 +41,6 @@ yarn-error.log*
 
 .idea/*
 
-/backend/.env
+/.env
 
-/src/env.js
+/client/src/env.js

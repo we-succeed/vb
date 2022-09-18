@@ -4,7 +4,7 @@ import {useParams} from 'react-router-dom';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import {API_USER_INFO, getApiRoute} from 'utils/APIs';
+import {API_USER_INFO, getApiRoute} from '../utils/APIs';
 import SnackbarAlert from "../components/shared-dialog/SnackbarAlert";
 import PageTitle from "../components/shared-forms/PageTitle";
 import VBButton from "../components/shared-forms/VBButton";
@@ -77,7 +77,7 @@ const Profile = () => {
                 ))}
             </Grid>
             <VBButton title="Edit" onClick={handleSubmit} fullWidth/>
-            <Link href="/" variant="body2">
+            <Link href="/client/src/pages" variant="body2">
                 Reset
             </Link>
             <SnackbarAlert alert={alert}/>

@@ -8,7 +8,7 @@ import SnackbarAlert from "../components/shared-dialog/SnackbarAlert";
 import VBInputField from "../components/shared-forms/VBInputField";
 import PageTitle from "../components/shared-forms/PageTitle";
 import VBButton from "../components/shared-forms/VBButton";
-import {API_AUTH} from 'utils/APIs';
+import {API_AUTH} from '../utils/APIs';
 import {Forms} from "../utils/Forms";
 
 const initialAlert = {
@@ -54,7 +54,7 @@ const Login = () => {
             ))}
             <VBButton title="Sign In" onClick={handleSubmit}/>
             Don't have an account?
-            <Link href="/SignUp" variant="body2">
+            <Link href="/client/src/pages/SignUp" variant="body2">
                 Sign Up
             </Link>
             <SnackbarAlert alert={alert}/>

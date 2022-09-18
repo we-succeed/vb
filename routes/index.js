@@ -5,11 +5,11 @@ const accountRoutes = require('./account')
 const authRoutes = require('./auth');
 const userAccountRoutes = require('./userAccount');
 
-router.use('/auth',authRoutes);
-router.use('/accounts', accountRoutes);
-router.use('/users',userRoutes);
-router.use('/userAccounts',  userAccountRoutes)
-router.use('/admin', adminRoutes);
+router.use('/api/auth',authRoutes);
+router.use('/api/accounts', accountRoutes);
+router.use('/api/users',userRoutes);
+router.use('/api/userAccounts',  userAccountRoutes)
+router.use('/api/admin', adminRoutes);
 
 
 

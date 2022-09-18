@@ -1,10 +1,10 @@
 import { Button, Container } from '@mui/material';
 import axios from "axios";
-import VBInputField from 'components/shared-forms/VBInputField';
+import VBInputField from '../components/shared-forms/VBInputField';
 import * as React from 'react';
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { API_USER_ACCOUNTS, getApiRoute } from 'utils/APIs';
+import { API_USER_ACCOUNTS, getApiRoute } from '../utils/APIs';
 import PageTitle from "../components/shared-forms/PageTitle";
 import TransferHistory from '../components/Transfer/TransferHistory';
 
