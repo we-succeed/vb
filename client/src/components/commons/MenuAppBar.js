@@ -30,6 +30,7 @@ const MenuAppBar = (props) => {
             }),
         }),
     }));
+    if (window.location.pathname === '/login') return null;
     return (
         <>
             <AppBar position="fixed" open={props.open}>
