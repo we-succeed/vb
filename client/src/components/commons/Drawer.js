@@ -13,15 +13,48 @@ import ListItemText from "@mui/material/ListItemText";
 import {Icon} from "@mui/material";
 import {USER_MENUS} from '../../utils/Menus'
 import {getRoute} from '../../utils/APIs'
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import VBStyledCollection from "../VBStyledCollection";
 import {UserContext} from "../../App";
+import {makeStyles} from "@mui/styles";
+import Typography from "@mui/material/Typography";
+
+const useStyles = makeStyles({
+    drawerList: {
+        fontSize: '1.3em'
+    },
+    drawerListItem: {
+        '&:hover, &:focus, &:active, & .Mui-selected': {
+            backgroundColor: 'rgb(38 17 65 / 23%) !important',
+        },
+        '&:hover $drawerListIcon, & .Mui-selected $drawerListIcon': {
+            color:'#2E3B55',
+        },
+        '&:hover $drawerListText, & .Mui-selected $drawerListText': {
+            color:'#2E3B55',
+            fontWeight: '600'
+        },
+    },
+    drawerListIcon: {
+        color:'#838388',
+    },
+    drawerListText: {
+        color:'#838388',
+    },
+    drawerListItemButton: {
+        color: 'red',
+    }
+});
 
 const DrawerMenu = (props) => {
     const theme = useTheme();
+    const classes = useStyles();
     const navigate = useNavigate();
     const [menus] = useState(USER_MENUS);
     const user = useContext(UserContext);
+    const { pathname } = useLocation();
+    const pathArr = pathname.split('/');
+    let currentPage = pathArr[pathArr.length - 1 ].toLowerCase();
     return (
         <Drawer
             sx={{
@@ -35,6 +68,7 @@ const DrawerMenu = (props) => {
             variant="persistent"
             anchor="left"
             open={props.open}
+
         >
             <VBStyledCollection.DrawerHeader>
                 <IconButton onClick={props.drawerOpen}>
@@ -42,16 +76,18 @@ const DrawerMenu = (props) => {
                 </IconButton>
             </VBStyledCollection.DrawerHeader>
             <Divider />
-            <List>
+            <List className={classes.drawerList}>
                 {menus && menus.map((elem, index) => {
                     const path = getRoute(elem.path, {'userId':user._id})
                     return(
-                    <ListItem key={index} disablePadding>
-                        <ListItemButton onClick={() => navigate(path)}>
+                    <ListItem key={index} disablePadding className={classes.drawerListItem}>
+                        <ListItemButton onClick={() => navigate(path)} selected={elem.id.toLowerCase() === currentPage}>
                             <ListItemIcon>
-                                <Icon>{elem.icon}</Icon>
+                                <Icon className={classes.drawerListIcon}>{elem.icon}</Icon>
                             </ListItemIcon>
-                            <ListItemText primary={elem.name} />
+                            <ListItemText
+                                primary={<Typography className={classes.drawerListText}>{elem.name}</Typography>}
+                                />
                         </ListItemButton>
                     </ListItem>
                 )})}
