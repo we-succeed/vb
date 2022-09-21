@@ -32,7 +32,7 @@ const MenuAppBar = (props) => {
     }));
     return (
         <>
-            <AppBar position="fixed" open={props.open}>
+            <AppBar position="fixed" open={props.open} sx={{ boxShadow: 'none'}}>
                 <Toolbar>
                     <IconButton
                         color="inherit"
