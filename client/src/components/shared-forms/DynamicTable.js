@@ -12,7 +12,7 @@ import {useEffect, useState} from "react";
 import Typography from "@mui/material/Typography";
 import { styled } from '@mui/material/styles';
 
-const GreenSwitch = styled(Switch)(({ theme }) => ({
+const DefaultSwitch = styled(Switch)(({ theme }) => ({
 
     '& .MuiSwitch-switchBase':{
         cursor: 'default',
@@ -106,7 +106,7 @@ const DynamicTable = (props) => {
             else if(key['format'] === 'toggle')
                 return (
                 <TableCell align="center" sx={{cursor: 'default !important'}}>
-                    <GreenSwitch
+                    <DefaultSwitch
                         {...label}
                         checked={data[key['cols']]}
                         defaultChecked 
@@ -138,7 +138,7 @@ const DynamicTable = (props) => {
             .map((row, idx) => (
                 <TableRow 
                     key={row.id}
-                    sx={{'&:last-child td, &:last-child th': {border: 0}, 'cursor': 'pointer'}}
+                    sx={{'&:last-child td, &:last-child th': {border: 0}}}
                 >
                     <TableCell component="th" scope="row" align="center">
                         {page * rowsPerPage + idx + 1}
