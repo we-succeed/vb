@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@mui/styles';
 import { Checkbox, CssBaseline, FormControlLabel, Grid, Paper, Typography } from '@mui/material';
 import Link from '@mui/material/Link';
 import axios from "axios";
@@ -17,7 +17,6 @@ const initialAlert = {
     status: 0
 }
 
-// @ts-ignore
 const useStyles = makeStyles((theme) => ({
     root: {
         height: "100vh",
