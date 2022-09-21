@@ -11,7 +11,7 @@ const VBButton = (props) => {
                 sx={{
                     mt: 3,
                     mb: 2,
-                    background:'#2e3b55',
+                    background:'primary',
                     padding: '14px',
                     '&:hover': {
                         background: '#394A6A'

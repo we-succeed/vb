@@ -17,6 +17,7 @@ const initialAlert = {
     status: 0
 }
 
+// @ts-ignore
 const useStyles = makeStyles((theme) => ({
     root: {
         height: "100vh",
@@ -53,11 +54,7 @@ const useStyles = makeStyles((theme) => ({
     },
     name: {
         fontWeight: '600 !important',
-        color: '#2e3b55'
     },
-    checkbox: {
-        color: '#2e3b55!important'
-    }
 }));
 
 const Login = () => {
@@ -120,7 +117,7 @@ const Login = () => {
                         ))}
                         <Grid>
                             <FormControlLabel
-                                control={<Checkbox value="remember" className={classes.checkbox} />}
+                                control={<Checkbox value="remember" color='primary' />}
                                 label="Remember me"
                             />
                         </Grid>
@@ -129,7 +126,7 @@ const Login = () => {
                         </Grid>
                         <Grid container>
                             <Grid item>
-                                <Link href="/client/src/pages/SignUp" variant="body2" color='#2e3b55'>
+                                <Link href="/signup" variant="body2">
                                     Don't have an account? Sign Up
                                 </Link>
                             </Grid>
