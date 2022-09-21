@@ -12,9 +12,11 @@ const VBButton = (props) => {
                     mt: 3,
                     mb: 2,
                     background:'#2e3b55',
+                    padding: '14px',
                     '&:hover': {
-                        background: '#2b41cd'
-                    }
+                        background: '#394A6A'
+                    },
+                    boxShadow:'none'
                     }}
                 onClick={props.onClick}               
             >

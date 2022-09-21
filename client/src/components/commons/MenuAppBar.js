@@ -1,21 +1,21 @@
-import {useState} from "react";
+import { useState } from "react";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Typography from "@mui/material/Typography";
-import {Button} from "@mui/material";
-import {styled} from "@mui/material/styles";
+import { Button } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import ProfileMenu from "./ProfileMenu";
 import DrawerMenu from "./Drawer";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const MenuAppBar = (props) => {
     const navigate = useNavigate();
     const [isLoggedIn] = useState((localStorage.getItem('vb')));
     const AppBar = styled(MuiAppBar, {
         shouldForwardProp: (prop) => prop !== 'open',
-    })(({theme, open}) => ({
+    })(({ theme, open }) => ({
         background: '#2E3B55',
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.sharp,
@@ -44,18 +44,18 @@ const MenuAppBar = (props) => {
                             display: isLoggedIn ? 'block' : 'none',
                         }}
                     >
-                        <MenuIcon/>
+                        <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap component="div" sx={{flexGrow: 1}}>
+                    <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
                         Vancouver Bank
                     </Typography>
-                    {isLoggedIn ? <ProfileMenu/>
+                    {isLoggedIn ? <ProfileMenu />
                         :
                         <Button color="inherit" onClick={() => navigate(`/login`)}>Login</Button>
                     }
                 </Toolbar>
             </AppBar>
-            {isLoggedIn ? <DrawerMenu open={props.open} drawerOpen={props.drawerOpen}/> : ''}
+            {isLoggedIn ? <DrawerMenu open={props.open} drawerOpen={props.drawerOpen} /> : ''}
         </>
     )
 }

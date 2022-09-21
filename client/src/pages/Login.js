@@ -1,17 +1,15 @@
-import * as React from 'react';
+import { makeStyles } from "@material-ui/core/styles";
+import { Checkbox, CssBaseline, FormControlLabel, Grid, Paper, Typography } from '@mui/material';
 import Link from '@mui/material/Link';
 import axios from "axios";
+import * as React from 'react';
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import SnackbarAlert from "../components/shared-dialog/SnackbarAlert";
-import VBInputField from "../components/shared-forms/VBInputField";
-import PageTitle from "../components/shared-forms/PageTitle";
 import VBButton from "../components/shared-forms/VBButton";
+import VBInputField from "../components/shared-forms/VBInputField";
 import { API_AUTH } from '../utils/APIs';
 import { Forms } from "../utils/Forms";
-import { Avatar, Checkbox, CssBaseline, FormControlLabel, Grid, Paper } from '@mui/material';
-import LockIcon from '@mui/icons-material/Lock';
-import { makeStyles } from "@material-ui/core/styles";
 
 const initialAlert = {
     open: false,
@@ -29,10 +27,10 @@ const useStyles = makeStyles((theme) => ({
             theme.palette.type === "light"
                 ? theme.palette.grey[50]
                 : theme.palette.grey[900],
-
         display: "flex",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        marginTop: '-64px'
     },
     size: {
         display: "flex",
@@ -40,16 +38,11 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         justifyContent: "center"
     },
-
     paper: {
-        margin: theme.spacing(2, 6),
+        margin: theme.spacing(10, 6),
         display: "flex",
         flexDirection: "column",
         alignItems: "center"
-    },
-    avatar: {
-        margin: theme.spacing(0),
-        backgroundColor: theme.palette.secondary.main
     },
     form: {
         width: "100%", // Fix IE 11 issue.
@@ -57,6 +50,13 @@ const useStyles = makeStyles((theme) => ({
     },
     submit: {
         margin: theme.spacing(3, 0, 2)
+    },
+    name: {
+        fontWeight: '600 !important',
+        color: '#2e3b55'
+    },
+    checkbox: {
+        color: '#2e3b55!important'
     }
 }));
 
@@ -94,6 +94,7 @@ const Login = () => {
 
     const classes = useStyles();
 
+
     return (
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
@@ -106,28 +107,29 @@ const Login = () => {
                 component={Paper}
                 elevation={1}
                 square
+                boxShadow={0}
             >
                 <div className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <LockIcon sx={{background:'red'}}/>
-                    </Avatar>
-                    <PageTitle title="Sign in" />
+                    <Typography component="h1" variant="h5" gutterBottom mb={3}>
+                        Welcom to
+                    </Typography>
+                    <Typography className={classes.name} variant="h3" fontStyle='antialiased' mb={7}>Vancouver Bank</Typography>
                     <form className={classes.form} noValidate>
                         {Forms.Login.schema.map((form, idx) => (
                             <VBInputField key={idx} form={form} data={data} cb={PageCallBack} />
                         ))}
                         <Grid>
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
+                            <FormControlLabel
+                                control={<Checkbox value="remember" className={classes.checkbox} />}
+                                label="Remember me"
+                            />
                         </Grid>
                         <Grid>
-                        <VBButton title="Sign In" fullWidth onClick={handleSubmit} />
+                            <VBButton title="Sign In" fullWidth onClick={handleSubmit} />
                         </Grid>
                         <Grid container>
                             <Grid item>
-                                <Link href="/client/src/pages/SignUp" variant="body2">
+                                <Link href="/client/src/pages/SignUp" variant="body2" color='#2e3b55'>
                                     Don't have an account? Sign Up
                                 </Link>
                             </Grid>
