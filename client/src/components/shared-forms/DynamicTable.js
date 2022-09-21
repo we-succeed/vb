@@ -4,14 +4,31 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import {IconButton, Switch, TablePagination} from "@mui/material";
+import {IconButton, rgbToHex, Switch, TablePagination} from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import TableContainer from "@mui/material/TableContainer";
 import {useEffect, useState} from "react";
 import Typography from "@mui/material/Typography";
+import { styled } from '@mui/material/styles';
 
+const GreenSwitch = styled(Switch)(({ theme }) => ({
 
+    '& .MuiSwitch-switchBase':{
+        cursor: 'default',
+    },
+    '& .MuiSwitch-switchBase.Mui-checked.Mui-disabled': {
+      color: 'rgb(46,59,85)',
+      opacity: '0.6'
+    },
+    '& .MuiSwitch-switchBase.Mui-checked.Mui-disabled.MuiSwitch-track': {
+        backgroundColor: '#e0e0e0',
+      
+    },
+  }))
+  
+const label = { inputProps: { 'aria-label': 'Color switch demo' } };
+  
 const DynamicTable = (props) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -31,13 +48,13 @@ const DynamicTable = (props) => {
     const getHeader = () => {
         return (
             <TableHead>
-                <TableRow sx={{fontWeigh: 500}}>
-                    <TableCell component="th" scope="row">
+                <TableRow >
+                    <TableCell component="th" scope="row" sx={{fontWeight: '600 !important'}} align="center">
                         No
                     </TableCell>
                     {form.schema.map((key) => {
                         return (
-                            <TableCell component="th" scope="row">
+                            <TableCell component="th" scope="row" sx={{fontWeight: '600 !important'}} align="center">
                                 {key['head']}
                             </TableCell>
                         )
@@ -51,10 +68,16 @@ const DynamicTable = (props) => {
         return form.schema.map((key, idx) => {
             if (key['format'] === 'btnGroup')
                 return (
-                    <TableCell key={idx}>
+                    <TableCell key={idx} align="center">
                         <IconButton
                             aria-label="edit"
                             size="small"
+                            sx={{
+                                color: "rgb(46,59,85)",
+                                '&:hover': {
+                                    background: "rgb(38,17,65 / 53%)",
+                                }
+                            }}
                             onClick={()=>form.cb.handleEdit(data)}
                            >
                             <EditOutlinedIcon fontSize="inherit"/>
@@ -65,7 +88,7 @@ const DynamicTable = (props) => {
                             sx={{
                                 color: "#ff4d4d",
                                 '&:hover': {
-                                    background: 'none',
+                                    background: "rgb(38,17,65 / 53%)",
                                 }
                             }}
                             onClick={()=>form.cb.handleDelete(data)}
@@ -76,22 +99,24 @@ const DynamicTable = (props) => {
                 )
             else if(key['format'] === 'nameField')
                 return (
-                        <TableCell>
+                        <TableCell align="center">
                             {data[key['cols'][0]] +' '+ data[key['cols'][1]]}
                         </TableCell>
                 )
             else if(key['format'] === 'toggle')
                 return (
-                <TableCell>
-                    <Switch
-                        disabled
+                <TableCell align="center" sx={{cursor: 'default !important'}}>
+                    <GreenSwitch
+                        {...label}
                         checked={data[key['cols']]}
-                    />
+                        defaultChecked 
+                        disabled
+                     />
                 </TableCell>)
             else if(key['format'] === 'count')
-                return <TableCell key={idx}>{data[key['cols']].length}</TableCell>
+                return <TableCell key={idx} align="center">{data[key['cols']].length}</TableCell>
             else if(key['format'] === 'date')
-                return <TableCell key={idx}>{new Date(data[key['cols']]).toLocaleString()}</TableCell>
+                return <TableCell key={idx} align="center">{new Date(data[key['cols']]).toLocaleString()}</TableCell>
             else {
                 let field = ""
                 if (key['cols'].includes('.')){
@@ -102,7 +127,7 @@ const DynamicTable = (props) => {
                     }
                 } else
                     field = data[key['cols']];
-                return <TableCell key={idx}>{field}</TableCell>
+                return <TableCell key={idx} align="center">{field}</TableCell>
             }
         })
     }
@@ -111,11 +136,11 @@ const DynamicTable = (props) => {
             data
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((row, idx) => (
-                <TableRow
+                <TableRow 
                     key={row.id}
                     sx={{'&:last-child td, &:last-child th': {border: 0}, 'cursor': 'pointer'}}
                 >
-                    <TableCell component="th" scope="row">
+                    <TableCell component="th" scope="row" align="center">
                         {page * rowsPerPage + idx + 1}
                     </TableCell>
                     {getRenderRow(row)}
@@ -144,6 +169,7 @@ const DynamicTable = (props) => {
                         page={page}
                         onPageChange={handleChangePage}
                         onRowsPerPageChange={handleChangeRowsPerPage}
+                        align="center"
                     />
                 </TableContainer>
             }

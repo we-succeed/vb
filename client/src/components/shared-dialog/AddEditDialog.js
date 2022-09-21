@@ -51,12 +51,12 @@ BootstrapDialogTitle.propTypes = {
 const AddEditDialog = (props) => {
     const {children} = props
     return (
-        <>
+        <>    
             <BootstrapDialog
                 aria-labelledby="customized-dialog-title"
                 open={props.open}>
-                <BootstrapDialogTitle id="customized-dialog-title" onClose={props.close} color='red'>
-                    {props.form.title}
+                <BootstrapDialogTitle id="customized-dialog-title" onClose={props.close} color='#2e3b55' sx={{borderTop: '5px solid rgb(205 200 211)'}}>
+                    {props.form.title.toUpperCase()}
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
                     {children}
