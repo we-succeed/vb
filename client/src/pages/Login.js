@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        marginTop: '-64px'
+        marginTop: '-64px',
     },
     size: {
         display: "flex",
@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(10, 6),
         display: "flex",
         flexDirection: "column",
-        alignItems: "center"
     },
     form: {
         width: "100%", // Fix IE 11 issue.
@@ -50,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
     },
     name: {
         fontWeight: '600 !important',
+        color: '#2e3b55'
     },
 }));
 
@@ -103,10 +103,10 @@ const Login = () => {
                 boxShadow={0}
             >
                 <div className={classes.paper}>
-                    <Typography component="h1" variant="h5" gutterBottom mb={3}>
-                        Welcom to
+                    <Typography component="h1" variant="h5" gutterBottom mb={1.5}>
+                        Welcom Back,
                     </Typography>
-                    <Typography className={classes.name} variant="h3" fontStyle='antialiased' mb={7}>Vancouver Bank</Typography>
+                    <Typography className={classes.name} variant="h3" fontStyle='antialiased' mb={4}>Vancouver Bank</Typography>
                     <form className={classes.form} noValidate>
                         {Forms.Login.schema.map((form, idx) => (
                             <VBInputField key={idx} form={form} data={data} cb={PageCallBack} />
@@ -122,8 +122,9 @@ const Login = () => {
                         </Grid>
                         <Grid container>
                             <Grid item>
-                                <Link href="/signup" variant="body2">
-                                    Don't have an account? Sign Up
+                                Don't have an account?
+                                <Link href="/signup" variant="h6" sx={{fontSize: '15px', fontWeight: 'bold'}}>
+                                    Sign up
                                 </Link>
                             </Grid>
                         </Grid>

@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        marginTop: '-64px'
+        marginTop: '-64px',
     },
     size: {
         display: "flex",
@@ -54,14 +54,17 @@ const useStyles = makeStyles((theme) => ({
     },
     form: {
         width: "100%", // Fix IE 11 issue.
-        marginTop: theme.spacing(1)
+        marginTop: theme.spacing(1),
+
     },
     submit: {
         margin: theme.spacing(3, 0, 2)
     },
     name: {
         fontWeight: '600 !important',
-    },
+        fontSize: '2rem',
+        color: '#2e3b55'
+    }
 }));
 
 const SignUp = () => {
@@ -168,7 +171,9 @@ const SignUp = () => {
                 boxShadow={0}
             >
                 <div className={classes.paper}>
-                    <Typography className={classes.name} variant="h5" fontStyle='antialiased' mb={4.5}>Sign Up</Typography>
+                    <Typography className={classes.name} variant="h5" fontStyle='antialiased' mb={4.5}>
+                        Ready to start?
+                    </Typography>
                     <Typography mb={5}>You're a few steps away from banking online.</Typography>
                     <FormControl>
                         {/* Temporary hiding RadioGroup */}
@@ -196,8 +201,9 @@ const SignUp = () => {
                             ))}
                         </Grid>
                         <VBButton title="Sign Up" onClick={handleSubmit} fullWidth />
-                        <Link href="/client/src/pages/Login" variant="body2">
-                            Already have an account? Sign in
+                        Already have an account?
+                        <Link href="/login" variant="h6" sx={{fontSize: '15px', fontWeight: 'bold'}}>
+                            Sign in
                         </Link>
                         <SnackbarAlert alert={alert} />
                     </form>
