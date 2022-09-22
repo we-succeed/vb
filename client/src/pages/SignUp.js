@@ -1,32 +1,71 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
-import {API_ADD_USER}  from '../utils/APIs';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import { API_ADD_USER } from '../utils/APIs';
+// import Radio from '@mui/material/Radio';
+// import RadioGroup from '@mui/material/RadioGroup';
+// import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import VBInputField from "../components/shared-forms/VBInputField";
-import PageTitle from "../components/shared-forms/PageTitle";
 import VBButton from "../components/shared-forms/VBButton";
 import SnackbarAlert from "../components/shared-dialog/SnackbarAlert";
-import {Forms} from "../utils/Forms";
+import { Forms } from "../utils/Forms";
+import { makeStyles } from '@mui/styles';
+import { CssBaseline, Paper, Typography } from '@mui/material';
 
 const initialUser = {
-        role: "User",
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        province: "",
-        city: "",
-        address: "",
-        postalCode: "",
-        phoneNumber: "",
+    role: "User",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    province: "",
+    city: "",
+    address: "",
+    postalCode: "",
+    phoneNumber: "",
 }
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        height: "100vh",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        backgroundColor: "#2e3b5521",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: '-64px',
+    },
+    size: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    paper: {
+        margin: theme.spacing(10, 6),
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
+    },
+    form: {
+        width: "100%", // Fix IE 11 issue.
+        marginTop: theme.spacing(1),
+
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2)
+    },
+    name: {
+        fontWeight: '600 !important',
+        fontSize: '2rem',
+        color: '#2e3b55'
+    }
+}));
 
 const SignUp = () => {
 
@@ -52,8 +91,8 @@ const SignUp = () => {
         severity: 'info'
     });
 
-    const handleChange = ({currentTarget: input}) => {
-        setUser({...user, [input.name]: input.value});
+    const handleChange = ({ currentTarget: input }) => {
+        setUser({ ...user, [input.name]: input.value });
     }
 
     const handleSubmit = async (e) => {
@@ -67,14 +106,14 @@ const SignUp = () => {
                 error.response.status <= 500
             ) {
                 setError(error.response.data.message)
-                setAlert({...alert, open: true, message: error.response.data.message});
+                setAlert({ ...alert, open: true, message: error.response.data.message });
             }
         }
     }
     const validateInput = e => {
-        let {name, value} = e.target;
+        let { name, value } = e.target;
         setError(prev => {
-            const stateObj = {...prev, [name]: ""};
+            const stateObj = { ...prev, [name]: "" };
 
             switch (name) {
                 case "username":
@@ -111,14 +150,34 @@ const SignUp = () => {
     //Callback functions that make up page
     const PageCallBack = {
         inputChange: (e) => {
-            setUser({...user, [e.target.name]: e.target.value});
+            setUser({ ...user, [e.target.name]: e.target.value });
         }
     }
+
+    const classes = useStyles();
+
     return (
-        <Container component="main" maxWidth="xs">
-            <PageTitle title="Sign up"/>
-            <FormControl>
-                <RadioGroup
+        <Grid container component="main" className={classes.root}>
+            <CssBaseline />
+            <Grid
+                className={classes.size}
+                item
+                xs={12}
+                sm={8}
+                md={5}
+                component={Paper}
+                elevation={1}
+                square
+                boxShadow={0}
+            >
+                <div className={classes.paper}>
+                    <Typography className={classes.name} variant="h5" fontStyle='antialiased' mb={4.5}>
+                        Ready to start?
+                    </Typography>
+                    <Typography mb={5}>You're a few steps away from banking online.</Typography>
+                    <FormControl>
+                        {/* Temporary hiding RadioGroup */}
+                        {/* <RadioGroup
                     row
                     space-around
                     aria-labelledby="demo-row-radio-buttons-group-label"
@@ -129,23 +188,28 @@ const SignUp = () => {
                                       label="Admin"/>
                     <FormControlLabel value="User" name="role" onChange={handleChange} control={<Radio/>}
                                       label="User"/>
-                </RadioGroup>
-            </FormControl>
-            <Grid container spacing={2}>
-                {Forms.SignUp.schema.map((form, idx) => (
-                    <Grid key={`user-grid-${idx}`} item xs={12}
-                          sm={(['firstName', 'lastName'].includes(form.id)) ? 6 : 12}>
-                        <VBInputField key={`user-profile-grid-${idx}`} form={form} data={user}
-                                          cb={PageCallBack}/>
-                    </Grid>
-                ))}
+                </RadioGroup> */}
+                    </FormControl>
+                    <form className={classes.form} noValidate>
+                        <Grid container spacing={2}>
+                            {Forms.SignUp.schema.map((form, idx) => (
+                                <Grid key={`user-grid-${idx}`} item xs={12}
+                                    sm={(['firstName', 'lastName'].includes(form.id)) ? 6 : 12}>
+                                    <VBInputField key={`user-profile-grid-${idx}`} form={form} data={user}
+                                        cb={PageCallBack} />
+                                </Grid>
+                            ))}
+                        </Grid>
+                        <VBButton title="Sign Up" onClick={handleSubmit} fullWidth />
+                        Already have an account?
+                        <Link href="/login" variant="h6" sx={{fontSize: '15px', fontWeight: 'bold'}}>
+                            Sign in
+                        </Link>
+                        <SnackbarAlert alert={alert} />
+                    </form>
+                </div>
             </Grid>
-            <VBButton title="Sign Up" onClick={handleSubmit} fullWidth/>
-            <Link href="/client/src/pages/Login" variant="body2">
-                Sign in
-            </Link>
-            <SnackbarAlert alert={alert}/>
-        </Container>
+        </Grid>
     );
 };
 

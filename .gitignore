@@ -45,3 +45,4 @@ yarn-error.log*
 
 /client/src/env.js
 /client/src/utils/APIs.js
+/client/build
