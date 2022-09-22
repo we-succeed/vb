@@ -34,7 +34,7 @@ const MenuAppBar = (props) => {
     else if (window.location.pathname === '/signup') return null;
     return (
         <>
-            <AppBar position="fixed" open={props.open}>
+            <AppBar position="fixed" open={props.open} sx={{ boxShadow: 'none'}}>
                 <Toolbar>
                     <IconButton
                         color="inherit"
