@@ -44,5 +44,4 @@ yarn-error.log*
 /.env
 
 /client/src/env.js
-/client/src/utils/APIs.js
 /client/build
