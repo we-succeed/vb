@@ -23,10 +23,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundSize: "cover",
-        backgroundColor:
-            theme.palette.type === "light"
-                ? theme.palette.grey[50]
-                : theme.palette.grey[900],
+        backgroundColor:"#2e3b5521",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
