@@ -15,11 +15,13 @@ import FormControl from "@mui/material/FormControl";
 import {useState} from "react";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
+
 const VBInputField = (props) => {
     const [isShowPassword, setIsShowPassword] = useState(false);
     const handleClickShowPassword = () => {
         setIsShowPassword(!(isShowPassword));
     };
+
     return (
         <>
             {(()=>{
@@ -28,8 +30,9 @@ const VBInputField = (props) => {
                         return (
                             <FormControl sx={{mt: 1, mb: 1}}
                                          variant="outlined" fullWidth error={(props.errors)}>
-                                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                                <OutlinedInput
+                                <InputLabel 
+                                htmlFor="outlined-adornment-password">Password</InputLabel>
+                                <OutlinedInput    
                                     autoComplete="off"
                                     required
                                     id={props.form.id}

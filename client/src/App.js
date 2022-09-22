@@ -27,6 +27,7 @@ export const NotFound = () => {
         </>
     )
 }
+
 const App = () => {
     const [open, setOpen] = React.useState(false);
     const [auth, setAuth] = useState({});

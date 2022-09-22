@@ -4,6 +4,7 @@
   "description": "Vancouver Bank Project for learning web service",
   "private": true,
   "dependencies": {
+    "@mui/icons-material": "^5.10.6",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
@@ -29,11 +30,11 @@
     "url": "https://github.com/we-succeed/VB/issues"
   },
   "scripts": {
-    "build" : "cd client && npm run build",
+    "build": "cd client && npm run build",
     "install-client": "cd client && npm install",
     "heroku-postbuild": "npm run install-client && npm run build",
     "server": "nodemon server.js",
-    "dev":  "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
     "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\""
   },
   "browserslist": {
