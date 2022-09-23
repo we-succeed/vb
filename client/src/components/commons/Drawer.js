@@ -55,6 +55,8 @@ const DrawerMenu = (props) => {
     const { pathname } = useLocation();
     const pathArr = pathname.split('/');
     let currentPage = pathArr[pathArr.length - 1 ].toLowerCase();
+    if (pathArr[pathArr.length - 2 ].toLowerCase() === 'admin')
+        currentPage = `${pathArr[pathArr.length - 2 ].toLowerCase()}_${pathArr[pathArr.length - 1 ].toLowerCase()}`
     return (
         <Drawer
             sx={{

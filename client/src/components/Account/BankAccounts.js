@@ -22,13 +22,7 @@ export default function BankAccounts() {
     }
     return (
         <>
-            <Box sx={{
-                flexGrow: 1,
-                margin: 0,
-                width: '80%',
-                bottom: '30px',
-                position: 'absolute'
-            }}>
+            <Box>
                 <PageTitle title="Recommended Accounts"/>
                 <Grid container spacing={2}>
                     {accounts && accounts.map((account, idx) => (
