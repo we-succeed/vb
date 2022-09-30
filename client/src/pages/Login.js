@@ -10,12 +10,9 @@ import VBButton from "../components/shared-forms/VBButton";
 import VBInputField from "../components/shared-forms/VBInputField";
 import { API_AUTH } from '../utils/APIs';
 import { Forms } from "../utils/Forms";
+import {InitialAlert} from "../utils/InitialInfo";
 
-const initialAlert = {
-    open: false,
-    message: '',
-    status: 0
-}
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -54,9 +51,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = () => {
+    const classes = useStyles();
     const navigate = useNavigate();
     const [data, setData] = useState({ email: "", password: "" });
-    const [alert, setAlert] = useState(initialAlert);
+    const [alert, setAlert] = useState(InitialAlert);
 
     useEffect(() => {
         if (localStorage.getItem('vb'))
@@ -84,10 +82,6 @@ const Login = () => {
 
         }
     }
-
-    const classes = useStyles();
-
-
     return (
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
