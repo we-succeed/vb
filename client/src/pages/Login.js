@@ -104,7 +104,7 @@ const Login = () => {
             >
                 <div className={classes.paper}>
                     <Typography component="h1" variant="h5" gutterBottom mb={1.5}>
-                        Welcom Back,
+                        Welcome Back,
                     </Typography>
                     <Typography className={classes.name} variant="h3" fontStyle='antialiased' mb={4}>Vancouver Bank</Typography>
                     <form className={classes.form} noValidate>

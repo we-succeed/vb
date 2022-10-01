@@ -140,7 +140,7 @@ const TransferTxForm = (props) => {
 
     return (
         <Container component="main">
-            <PageTitle title={props.state.type === 'transfer' ? 'Trnasfer' : 'Send Money'} />
+            <PageTitle title={props.state.type === 'transfer' ? 'Transfer' : 'Send Money'} />
             {props.state.type && FormFields[props.state.type].schema.map((form, idx) => (
                 <VBInputField key={`user-profile-grid-${idx}`} form={form} data={tx} cb={PageCallBack} />
             ))}
