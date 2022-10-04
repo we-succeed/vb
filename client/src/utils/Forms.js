@@ -30,7 +30,7 @@ export const Forms = {
     },
     Login: {
         schema: [
-            {id: 'email', label: 'Email Address', name: 'email', type: 'default', required: true},
+            {id: 'email', label: 'Email', name: 'email', type: 'default', required: true},
             {id: 'password', label: 'Password', name: 'password', type: 'password', required: true}
         ]
     },
