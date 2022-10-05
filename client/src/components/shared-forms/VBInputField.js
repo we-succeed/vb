@@ -1,5 +1,4 @@
 import * as React from 'react';
-import TextField from "@mui/material/TextField";
 import {
     FormHelperText,
     IconButton,
@@ -21,17 +20,17 @@ const VBInputField = (props) => {
     const handleClickShowPassword = () => {
         setIsShowPassword(!(isShowPassword));
     };
-
     return (
         <>
             {(()=>{
                 switch (props.form.type) {
                     case 'password':
+                    case 'confirmPassword':
                         return (
                             <FormControl sx={{mt: 1, mb: 1}}
-                                         variant="outlined" fullWidth error={(props.errors)}>
+                                         variant="outlined" fullWidth error={(props.errors && props.errors[props.form.name].status)}>
                                 <InputLabel 
-                                htmlFor="outlined-adornment-password">Password</InputLabel>
+                                htmlFor="outlined-adornment-password">{props.form.label}</InputLabel>
                                 <OutlinedInput    
                                     autoComplete="off"
                                     required
@@ -54,8 +53,8 @@ const VBInputField = (props) => {
                                     onChange={props.cb.inputChange}
                                     onBlur={props.cb.inputBlur}
                                 />
-                                {(props.errors) ? (
-                                        <FormHelperText id="component-error-text">{props.errors.message}</FormHelperText>
+                                {(props.errors && props.errors[props.form.name].status) ? (
+                                        <FormHelperText id="component-error-text">{props.errors[props.form.name].message}</FormHelperText>
                                     )
                                     : ""
                                 }
@@ -103,22 +102,30 @@ const VBInputField = (props) => {
                         )
                     default:
                         return (
-                            <TextField
-                                sx={{mt: 1, mb: 1}}
-                                required={(props.form.required)}
-                                fullWidth
-                                type={(props.form.type === 'default')? 'text': 'number'}
-                                id={props.form.id}
-                                label={props.form.label}
-                                name={props.form.name}
-                                onChange={props.cb.inputChange}
-                                value={props.data[props.form.name]}
-                                autoComplete="off"
-                                disabled={(props.form.disabled)}
-                                error={(props.errors)}
-                                multiline={(props.form.type === 'multiline')}
-                                helperText={(props.errors) ? props.errors.message : ''}
-                            />
+                            <FormControl sx={{mt: 1, mb: 1}}
+                                         variant="outlined" fullWidth
+                                         error={(props.errors && props.errors[props.form.name].status)}
+                            >
+                                <InputLabel htmlFor="component-error">{props.form.label}</InputLabel>
+                                <OutlinedInput
+                                    required={(props.form.required)}
+                                    fullWidth
+                                    type={(props.form.type === 'default')? 'text': 'number'}
+                                    id={props.form.id}
+                                    label={props.form.label}
+                                    name={props.form.name}
+                                    value={props.data[props.form.name]}
+                                    autoComplete="off"
+                                    disabled={(props.form.disabled)}
+                                    onChange={props.cb.inputChange}
+                                    onBlur={props.cb.inputBlur}
+                                />
+                                {(props.errors && props.errors[props.form.name].status) ? (
+                                        <FormHelperText id="component-error-text">{props.errors[props.form.name].message}</FormHelperText>
+                                    )
+                                    : ""
+                                }
+                            </FormControl>
                         )
                 }
             })()}

@@ -10,12 +10,9 @@ import VBButton from "../components/shared-forms/VBButton";
 import VBInputField from "../components/shared-forms/VBInputField";
 import { API_AUTH } from '../utils/APIs';
 import { Forms } from "../utils/Forms";
+import {InitialAlert} from "../utils/InitialInfo";
 
-const initialAlert = {
-    open: false,
-    message: '',
-    status: 0
-}
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -54,9 +51,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = () => {
+    const classes = useStyles();
     const navigate = useNavigate();
     const [data, setData] = useState({ email: "", password: "" });
-    const [alert, setAlert] = useState(initialAlert);
+    const [alert, setAlert] = useState(InitialAlert);
+    const [error, setError] = useState({'email': {status: false, message: ''},
+        'password': {status: false, message: ''}});
 
     useEffect(() => {
         if (localStorage.getItem('vb'))
@@ -76,18 +76,33 @@ const Login = () => {
         e.preventDefault();
         login();
     };
+    const handleErrorCheck = async (e) => {
+            switch (e.target.name) {
+                case 'email':
+                    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(e.target.value) && e.target.value.length !== 0){
+                        setError({ ...error, [e.target.name]: {status:true, message: `${e.target.name} was not available.`}});
+                    } else {
+                        setError({ ...error, [e.target.name]: {status:false}});
+                    }
+                    break;
+                case 'password':
+                    if (e.target.value.length === 0)
+                        setError({ ...error, [e.target.name]: {status:false}});
+                    else if (e.target.value.length < 8)
+                        setError({ ...error, [e.target.name]: {status:true, message: `${e.target.name} to be a minimum of 8 characters`}});
+                    else if (!/^(?=.*?[0-9])(?=.*?[A-Z])(?=.*?[#?!@$%^&*\\-_]).{8,}$/.test(e.target.value))
+                        setError({ ...error, [e.target.name]: {status:true, message: `Include a special character and at least one capital letter`}});
+                    break;
+            }
+    }
     const PageCallBack = {
         inputChange: (e) => {
             setData({ ...data, [e.target.name]: e.target.value });
         },
         inputBlur: (e) => {
-
+            handleErrorCheck(e)
         }
     }
-
-    const classes = useStyles();
-
-
     return (
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
@@ -109,7 +124,7 @@ const Login = () => {
                     <Typography className={classes.name} variant="h3" fontStyle='antialiased' mb={4}>Vancouver Bank</Typography>
                     <form className={classes.form} noValidate>
                         {Forms.Login.schema.map((form, idx) => (
-                            <VBInputField key={idx} form={form} data={data} cb={PageCallBack} />
+                            <VBInputField key={idx} form={form} data={data} cb={PageCallBack} errors={error}/>
                         ))}
                         <Grid>
                             <FormControlLabel
