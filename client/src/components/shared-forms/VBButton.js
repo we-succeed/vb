@@ -18,7 +18,8 @@ const VBButton = (props) => {
                     },
                     boxShadow:'none'
                     }}
-                onClick={props.onClick}               
+                onClick={props.onClick}
+                disabled={(props.disabled)}
             >
                 {props.title}
             </Button>

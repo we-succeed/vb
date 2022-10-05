@@ -2,20 +2,16 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
-import { API_ADD_USER } from '../utils/APIs';
-// import Radio from '@mui/material/Radio';
-// import RadioGroup from '@mui/material/RadioGroup';
-// import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import VBInputField from "../components/shared-forms/VBInputField";
 import VBButton from "../components/shared-forms/VBButton";
 import SnackbarAlert from "../components/shared-dialog/SnackbarAlert";
 import { Forms } from "../utils/Forms";
+import { API_ADD_USER } from '../utils/APIs';
 import { makeStyles } from '@mui/styles';
 import { CssBaseline, Paper, Typography } from '@mui/material';
 
 const initialUser = {
-    role: "User",
     firstName: "",
     lastName: "",
     email: "",
@@ -68,32 +64,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignUp = () => {
-
     const [user, setUser] = useState(initialUser);
-
     const [error, setError] = useState({
-        role: "User",
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        province: "",
-        city: "",
-        address: "",
-        postalCode: "",
-        phoneNumber: "",
-    });
+        'firstName': {status: false, message: 'FirstName is required'},
+        'lastName': {status: false, message: 'Last Name is required'},
+        'email': {status: false, message: 'Email is required'},
+        'password': {status: false, message: 'Password is required'},
+        'confirmPassword': {status: false, message: ''}
+        });
 
     const [alert, setAlert] = useState({
         open: false,
         message: '',
         severity: 'info'
     });
-
-    const handleChange = ({ currentTarget: input }) => {
-        setUser({ ...user, [input.name]: input.value });
-    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -105,54 +89,49 @@ const SignUp = () => {
                 error.response.status >= 400 &&
                 error.response.status <= 500
             ) {
-                setError(error.response.data.message)
                 setAlert({ ...alert, open: true, message: error.response.data.message });
             }
         }
     }
-    const validateInput = e => {
-        let { name, value } = e.target;
-        setError(prev => {
-            const stateObj = { ...prev, [name]: "" };
-
-            switch (name) {
-                case "username":
-                    if (!value) {
-                        stateObj[name] = "Please enter Username.";
-                    }
-                    break;
-
-                case "password":
-                    if (!value) {
-                        stateObj[name] = "Please enter Password.";
-                    } else if (user.confirmPassword && value !== user.confirmPassword) {
-                        stateObj["confirmPassword"] = "Password and Confirm Password does not match.";
-                    } else {
-                        stateObj["confirmPassword"] = user.confirmPassword ? "" : error.confirmPassword;
-                    }
-                    break;
-
-                case "confirmPassword":
-                    if (!value) {
-                        stateObj[name] = "Please enter Confirm Password.";
-                    } else if (user.password && value !== user.password) {
-                        stateObj[name] = "Password and Confirm Password does not match.";
-                    }
-                    break;
-
-                default:
-                    break;
-            }
-
-            return stateObj;
-        });
+    const handleErrorCheck = async (e) => {
+        switch (e.target.name) {
+            case 'email':
+                if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(e.target.value) && e.target.value.length !== 0){
+                    setError({ ...error, [e.target.name]: {status:true, message: `${e.target.name} was not available.`}});
+                } else {
+                    setError({ ...error, [e.target.name]: {status:false}});
+                }
+                break;
+            case 'password':
+                if (e.target.value.length === 0)
+                    setError({ ...error, [e.target.name]: {status:false}});
+                else if (e.target.value.length < 8)
+                    setError({ ...error, [e.target.name]: {status:true, message: `${e.target.name} to be a minimum of 8 characters`}});
+                else if (!/^(?=.*?[0-9])(?=.*?[A-Z])(?=.*?[#?!@$%^&*\\-_]).{8,}$/.test(e.target.value))
+                    setError({ ...error, [e.target.name]: {status:true, message: `Include a special character and at least one capital letter`}});
+                break;
+            case 'confirmPassword':
+                if (e.target.value !== user.password)
+                    setError({ ...error, [e.target.name]: {status:true, message: 'Password and Confirm Password does not match.'}});
+                else
+                    setError({ ...error, [e.target.name]: {status:false}});
+                break;
+        }
+    }
+    const isDisabled = () => {
+        return (Object.values(error).filter(obj => obj.status === false).length !== 0)
+            && (Object.values(user).filter(value => value !== '').length === 0);
     }
     //Callback functions that make up page
     const PageCallBack = {
         inputChange: (e) => {
             setUser({ ...user, [e.target.name]: e.target.value });
+        },
+        inputBlur: (e) => {
+            handleErrorCheck(e)
         }
     }
+
 
     const classes = useStyles();
 
@@ -195,12 +174,15 @@ const SignUp = () => {
                             {Forms.SignUp.schema.map((form, idx) => (
                                 <Grid key={`user-grid-${idx}`} item xs={12}
                                     sm={(['firstName', 'lastName'].includes(form.id)) ? 6 : 12}>
-                                    <VBInputField key={`user-profile-grid-${idx}`} form={form} data={user}
+                                    <VBInputField key={`user-profile-grid-${idx}`}
+                                                  form={form}
+                                                  data={user}
+                                                  errors={error}
                                         cb={PageCallBack} />
                                 </Grid>
                             ))}
                         </Grid>
-                        <VBButton title="Sign Up" onClick={handleSubmit} fullWidth />
+                        <VBButton title="Sign Up" onClick={handleSubmit} fullWidth disabled = {isDisabled()} />
                         Already have an account?
                         <Link href="/login" variant="h6" sx={{fontSize: '15px', fontWeight: 'bold'}}>
                             Sign in

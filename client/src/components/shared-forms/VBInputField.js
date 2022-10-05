@@ -25,11 +25,12 @@ const VBInputField = (props) => {
             {(()=>{
                 switch (props.form.type) {
                     case 'password':
+                    case 'confirmPassword':
                         return (
                             <FormControl sx={{mt: 1, mb: 1}}
-                                         variant="outlined" fullWidth error={props.errors[props.form.name].status}>
+                                         variant="outlined" fullWidth error={(props.errors && props.errors[props.form.name].status)}>
                                 <InputLabel 
-                                htmlFor="outlined-adornment-password">Password</InputLabel>
+                                htmlFor="outlined-adornment-password">{props.form.label}</InputLabel>
                                 <OutlinedInput    
                                     autoComplete="off"
                                     required
@@ -102,7 +103,9 @@ const VBInputField = (props) => {
                     default:
                         return (
                             <FormControl sx={{mt: 1, mb: 1}}
-                                         variant="outlined" fullWidth error={props.errors[props.form.name].status}>
+                                         variant="outlined" fullWidth
+                                         error={(props.errors && props.errors[props.form.name].status)}
+                            >
                                 <InputLabel htmlFor="component-error">{props.form.label}</InputLabel>
                                 <OutlinedInput
                                     required={(props.form.required)}
@@ -114,7 +117,6 @@ const VBInputField = (props) => {
                                     value={props.data[props.form.name]}
                                     autoComplete="off"
                                     disabled={(props.form.disabled)}
-                                    error={(props.errors[props.form.name].status)}
                                     onChange={props.cb.inputChange}
                                     onBlur={props.cb.inputBlur}
                                 />

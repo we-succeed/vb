@@ -55,8 +55,8 @@ const Login = () => {
     const navigate = useNavigate();
     const [data, setData] = useState({ email: "", password: "" });
     const [alert, setAlert] = useState(InitialAlert);
-    const [error, setError] = useState({'email': {status: false, message: '123'},
-        'password': {status: false, message: '123'}});
+    const [error, setError] = useState({'email': {status: false, message: ''},
+        'password': {status: false, message: ''}});
 
     useEffect(() => {
         if (localStorage.getItem('vb'))
