@@ -74,7 +74,10 @@ const Login = () => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        login();
+        if (Object.values(error).filter(obj => obj.status === false).length !== 0)
+            return;
+        else
+            login();
     };
     const handleErrorCheck = async (e) => {
             switch (e.target.name) {
@@ -88,13 +91,17 @@ const Login = () => {
                 case 'password':
                     if (e.target.value.length === 0)
                         setError({ ...error, [e.target.name]: {status:false}});
-                    else if (e.target.value.length < 8)
+                    if (e.target.value.length >= 1 && e.target.value.length < 8)
                         setError({ ...error, [e.target.name]: {status:true, message: `${e.target.name} to be a minimum of 8 characters`}});
-                    else if (!/^(?=.*?[0-9])(?=.*?[A-Z])(?=.*?[#?!@$%^&*\\-_]).{8,}$/.test(e.target.value))
+                    else if (!!(/^(?=.*?[0-9])(?=.*?[A-Z])(?=.*?[#?!@$%^&*\\-_]).{8,}$/).test(e.target.value))
                         setError({ ...error, [e.target.name]: {status:true, message: `Include a special character and at least one capital letter`}});
+                    else
+                        setError({ ...error, [e.target.name]: {status:false}});
                     break;
             }
     }
+
+
     const PageCallBack = {
         inputChange: (e) => {
             setData({ ...data, [e.target.name]: e.target.value });

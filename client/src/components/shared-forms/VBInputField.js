@@ -54,7 +54,7 @@ const VBInputField = (props) => {
                                     onBlur={props.cb.inputBlur}
                                 />
                                 {(props.errors && props.errors[props.form.name].status) ? (
-                                        <FormHelperText id="component-error-text">{props.errors[props.form.name].message}</FormHelperText>
+                                        <FormHelperText id="component-error-text" sx={{marginLeft: '0px'}}>{props.errors[props.form.name].message}</FormHelperText>
                                     )
                                     : ""
                                 }
@@ -121,7 +121,7 @@ const VBInputField = (props) => {
                                     onBlur={props.cb.inputBlur}
                                 />
                                 {(props.errors && props.errors[props.form.name].status) ? (
-                                        <FormHelperText id="component-error-text">{props.errors[props.form.name].message}</FormHelperText>
+                                        <FormHelperText id="component-error-text"  sx={{marginLeft: '0px'}}>{props.errors[props.form.name].message}</FormHelperText>
                                     )
                                     : ""
                                 }
