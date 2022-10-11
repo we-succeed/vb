@@ -128,7 +128,7 @@ const SignUp = () => {
             setUser({ ...user, [e.target.name]: e.target.value });
         },
         inputBlur: (e) => {
-            handleErrorCheck(e)
+            //handleErrorCheck(e)
         }
     }
 

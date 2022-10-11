@@ -74,10 +74,11 @@ const Login = () => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (Object.values(error).filter(obj => obj.status === false).length !== 0)
-            return;
-        else
-            login();
+        login();
+        // if (Object.values(error).filter(obj => obj.status === false).length !== 0)
+        //     return;
+        // else
+        //     login();
     };
     const handleErrorCheck = async (e) => {
             switch (e.target.name) {
@@ -107,7 +108,7 @@ const Login = () => {
             setData({ ...data, [e.target.name]: e.target.value });
         },
         inputBlur: (e) => {
-            handleErrorCheck(e)
+            //handleErrorCheck(e)
         }
     }
     return (
