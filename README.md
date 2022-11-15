@@ -48,5 +48,3 @@ Run your application using npm:
 $ npm run dev
 ```
 
-## Deployment
-
